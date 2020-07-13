@@ -10,4 +10,8 @@ class TestboxApplicationTests {
     void contextLoads() {
     }
 
+    @Test
+    void test(){
+        System.out.println("Test code!!!!");
+    }
 }
