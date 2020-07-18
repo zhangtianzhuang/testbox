@@ -16,6 +16,13 @@
     <!--对一些常用的类可以起简单的名字-->
     <typeAliases>
         <typeAlias type="com.bjtu.testbox.entity.User" alias="user"/>
+        <typeAlias type="com.bjtu.testbox.entity.Worker" alias="worker"/>
+        <typeAlias type="com.bjtu.testbox.entity.Approver" alias="approver"/>
+        <typeAlias type="com.bjtu.testbox.entity.Box" alias="box"/>
+        <typeAlias type="com.bjtu.testbox.entity.Cable" alias="cable"/>
+        <typeAlias type="com.bjtu.testbox.entity.Examine" alias="examine"/>
+        <typeAlias type="com.bjtu.testbox.entity.Task" alias="task"/>
+        <typeAlias type="com.bjtu.testbox.entity.Taskbox" alias="taskbox"/>
     </typeAliases>
 
 </configuration>

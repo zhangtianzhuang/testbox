@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjtu.testbox.mapper.WorkerMapper">
+
+
+    <!-- select -->
+    <!-- by workerNumber -->
+    <select id="selectByNumber" resultType="Worker">
+        select worker_number from worker where worker_number = #{workerNumber}
+    </select>
+
+    <!-- insert -->
+    <insert id="insertWorker" parameterType="worker">
+        insert into worker (worker_Name, worker_Number, worker_Area, worker_Group,
+              worker_City, worker_Phone) VALUES
+              (#{workerName}, #{workerNumber}, #{workerArea},
+               #{workerGroup}, #{workerCity}, #{workerPhone})
+    </insert>
+
+    <!-- update -->
+
+    <update id="updateWorkerInfo">
+        update worker set
+          worker_name = #{workerName},
+          worker_area = #{workerArea},
+          worker_Group = #{workerGroup},
+          worker_city = #{workerCity},
+          worker_phone = #{workerPhone}
+        where worker_id = #{workerId}
+    </update>
+</mapper>

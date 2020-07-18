@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjtu.testbox.mapper.BoxMapper">
+
+    <resultMap id="boxMap" type="box">
+        <id property="boxId" column="box_id"/>
+        <result property="boxNumber" column="box_number"/>
+        <result property="boxName" column="box_name"/>
+        <result property="boxType" column="box_type"/>
+        <result property="boxTagId" column="box_tag_id"/>
+        <result property="boxArea" column="box_area"/>
+        <result property="boxStatus" column="box_status"/>
+        <collection property="cables" ofType="cable">
+            <id property="cableId" column="cable_id"/>
+            <result property="cableNumber" column="cable_number"/>
+            <result property="cableType" column="cable_Type"/>
+            <result property="cableTagId" column="cable_Tag_Id"/>
+            <result property="cableArea" column="cable_Area"/>
+        </collection>
+    </resultMap>
+
+    <!-- query a Box and all of cables in this box -->
+    <select id="selectBoxAndCable" parameterType="int" resultMap="boxMap">
+        select b.*, c.cable_id, c.cable_number, c.cable_type,
+                    c.cable_tag_id, c.cable_area
+        from box b, cable c
+        where b.box_id = c.cable_box_id and b.box_id = #{id}
+    </select>
+
+    <insert id="insertBox">
+        insert into box
+            (box_Number, box_Type, box_Name, box_Tag_Id, box_Area, box_Status) VALUES
+            (#{boxNumber}, #{boxType}, #{boxName}, #{boxTagId}, #{boxArea}, #{boxStatus})
+    </insert>
+
+    <!-- update box's status -->
+    <update id="updateBoxStatus">
+        update box set box_status = #{boxStatus} where box_id = #{boxId}
+    </update>
+
+    <!-- update box's basic info-->
+    <update id="updateBoxBasicInfo">
+        update box
+          <set>
+            <if test="boxArea!=null">box_area = #{boxArea},</if>
+            <if test="boxTagId!=null">box_tag_id = #{boxTagId}</if>
+          </set>
+        where box_id = #{boxId}
+    </update>
+
+</mapper>

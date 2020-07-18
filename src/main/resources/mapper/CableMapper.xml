@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjtu.testbox.mapper.CableMapper">
+
+    <resultMap id="cableMap" type="cable">
+        <id property="cableId" column="cable_id"/>
+        <result property="cableNumber" column="cable_number"/>
+        <result property="cableType" column="cable_Type"/>
+        <result property="cableTagId" column="cable_Tag_Id"/>
+        <result property="cableArea" column="cable_Area"/>
+    </resultMap>
+
+    <select id="findCableByBoxId" parameterType="int" resultMap="cableMap">
+        select c.*
+        from box b, cable c
+        where b.box_id = c.cable_box_id and b.box_id = #{id}
+    </select>
+</mapper>
