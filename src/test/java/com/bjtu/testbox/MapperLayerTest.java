@@ -152,10 +152,49 @@ public class MapperLayerTest {
         System.out.println(cableMapper.findCable(1));
     }
 
-    //////////////////  Cable   //////////////////////////
 
     @Test
-    public void insertExamine(){
+    public void cableUpdateTest1(){
+        cableMapper.updateCableInfo(1, null, null, 2);
+    }
+
+    @Test
+    public void cableDeleteTest1(){
+        cableMapper.deleteCableById(8);
+    }
+
+    //////////////////  Cable   //////////////////////////
+
+    @Autowired
+    ApproverMapper approverMapper;
+    //////////////////  Approver   //////////////////////////
+    @Test
+    public void approverSelectTest1(){
+        System.out.println(approverMapper.queryApproverById(2));
+    }
+
+    @Test
+    public void approverInsertTest1(){
+        Approver approver = new Approver();
+        approver.setApproverName("审批者1");
+        approver.setApproverNumber("APPROVER-001");
+        approver.setApproverLevel(1);
+        approver.setApproverPhone("18888888999");
+        approverMapper.insertApprover(approver);
+    }
+
+    @Test
+    public void approverUpdateTest1() {
+        approverMapper.updateApproverPhone("11111", 1);
+    }
+
+    //////////////////  Approver   //////////////////////////
+
+
+    //////////////////  Examine   //////////////////////////
+
+    @Test
+    public void examineInsertTest1(){
         Examine ex = new Examine();
         ex.setApproverId(1);
         ex.setTaskId(1);
@@ -164,6 +203,6 @@ public class MapperLayerTest {
         ex.setExamineReason("棒!");
         examineMapper.insertExamine(ex);
     }
-
+    //////////////////  Examine   //////////////////////////
 
 }

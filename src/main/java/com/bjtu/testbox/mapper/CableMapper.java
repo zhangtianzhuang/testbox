@@ -1,6 +1,7 @@
 package com.bjtu.testbox.mapper;
 
 import com.bjtu.testbox.entity.Cable;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -47,6 +48,18 @@ public interface CableMapper {
 
     // update
 
+    /**
+     *
+     * @param cableId
+     * @param cableTagId
+     * @param cableArea
+     * @param cableBoxId
+     */
+    void updateCableInfo(@Param("cableId") int cableId, @Param("cableTagId") String cableTagId,
+                         @Param("cableArea") String cableArea, @Param("cableBoxId") Integer cableBoxId);
 
+    // delete
+    @Delete("delete from cable where cable_id = #{cableId}")
+    void deleteCableById(@Param("cableId") int cableId);
 
 }

@@ -15,4 +15,16 @@
         from box b, cable c
         where b.box_id = c.cable_box_id and b.box_id = #{id}
     </select>
+
+
+    <!-- update cable basic info -->
+    <update id="updateCableInfo">
+        update cable
+        <set>
+            <if test="cableTagId!=null">cable_tag_id = #{cableTagId},</if>
+            <if test="cableArea!=null">cable_area = #{cableArea},</if>
+            <if test="cableBoxId!=null">cable_box_id = #{cableBoxId},</if>
+        </set>
+        where cable_id = #{cableId}
+    </update>
 </mapper>

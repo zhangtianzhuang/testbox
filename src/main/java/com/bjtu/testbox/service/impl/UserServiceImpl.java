@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public Approver select(int id){
-        return approverMapper.sel(id);
+        return null;
     }
 
     @Override
