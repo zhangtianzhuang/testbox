@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>成都电务维修段联锁试验模拟装置管理系统</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <!-- Font Awesome Icons 图标风格-->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+
+    <!-- Theme style 主题样式-->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <!-- 顶端导航栏 -->
+    <nav class="main-header navbar navbar-expand navbar-dark navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <!-- 压缩 -->
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+
+            <!-- 界面跳转 -->
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">成都</a>
+            </li>
+
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">重庆</a>
+            </li>
+
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">贵阳</a>
+            </li>
+        </ul>
+
+        <!-- 顶端右侧链接 私信、通知、选择 -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Messages Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-comments"></i>
+                    <span class="badge badge-danger navbar-badge">3</span>  <!-- 消息个数 -->
+                </a>
+                <!-- 下拉菜单消息 -->
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Brad Diesel
+                                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">Call me whenever you can...</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    John Pierce
+                                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">I got your message bro</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Nora Silvester
+                                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">The subject goes here</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                </div>
+            </li>
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">15</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-header">15 Notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> 4 new messages
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-users mr-2"></i> 8 friend requests
+                        <span class="float-right text-muted text-sm">12 hours</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-file mr-2"></i> 3 new reports
+                        <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <!-- 左侧标签栏 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="workerUI/taskapply.html" class="brand-link">
+            <img src="dist/img/ChengduLogo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">模拟装置管理系统</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <!-- 用户图标和信息 -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block"> 张三 </a>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <!-- 树形结构目录 -->
+                    <li class="nav-item has-treeview">
+                        <a href="" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                任务管理
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="workerUI/taskapply.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>创建表单</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="boxadmin.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>查看表单</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-treeview menu-open">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                信息管理
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="jobadmin.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>作业管理</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link active">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>试验箱管理</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- 非树形结构目录 -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Simple Link
+                                <span class="right badge badge-danger">New</span>
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <!-- 主体内容 -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- 内容顶部 -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">试验箱管理</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">成都</a></li>
+                            <li class="breadcrumb-item active">信息管理</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- 页面内容 -->
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <!-- 卡片 交流道岔型 -->
+                <div class="card" id="DJlist">
+                    <div class="card-header">
+                        <h3 class="card-title">交流道岔型试验箱</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <a href="#" class="col-lg-2 col-6" id="DJ1">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-01</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+<!--                                    </div>-->
+<!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-02</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+<!--                                    </div>-->
+<!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-03</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+<!--                                    </div>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-04</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+<!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-05</h2>
+                                        <p>状态：<span style="color: orange">出库</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-refresh" aria-hidden="true" style="color: orange"></i>-->
+<!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-06</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+<!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                            <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-07</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+<!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                            <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-08</h2>
+                                        <p>状态：<span style="color: red">丢失</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-chain" aria-hidden="true" style="color: red"></i>-->
+<!--                                    </div>-->
+                                <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-09</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+<!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DJ-10</h2>
+                                        <p>状态：<span style="color: blue">故障</span></p>
+                                    </div>
+<!--                                    <div class="icon">-->
+<!--                                        <i class="fa fa-heart-broken" aria-hidden="true" style="color: blue"></i>-->
+<!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </a>
+                            <a href="#" class="col-lg-2 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-light">
+                                <div class="inner">
+                                    <h2>DJ-11</h2>
+                                    <p>状态：<span style="color: lawngreen">正常</span></p>
+                                </div>
+<!--                                <div class="icon">-->
+<!--                                    <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+<!--                                </div>-->
+                                <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                            </div>
+                        </a>
+
+                        </div>
+                    </div>
+                    <div class="card-footer"><strong>点击图标</strong><span>以查看试验箱的详细信息</span></div>
+                </div>
+
+                <!-- 卡片 直流道岔型 -->
+                <div class="card" id="DZlist">
+                    <div class="card-header">
+                        <h3 class="card-title">直流道岔型试验箱</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-01</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-02</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-03</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-04</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-05</h2>
+                                        <p>状态：<span style="color: orange">出库</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-refresh" aria-hidden="true" style="color: orange"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-06</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-07</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-08</h2>
+                                        <p>状态：<span style="color: red">丢失</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-chain" aria-hidden="true" style="color: red"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-09</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-10</h2>
+                                        <p>状态：<span style="color: blue">故障</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart-broken" aria-hidden="true" style="color: blue"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>DZ-11</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                <div class="icon">-->
+                                    <!--                                    <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer"><strong>点击图标</strong><span>以查看试验箱的详细信息</span></div>
+                </div>
+
+                <!-- 卡片 轨道电路型 -->
+                <div class="card" id="GWlist">
+                    <div class="card-header">
+                        <h3 class="card-title">轨道电路型试验箱</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-01</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-02</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-03</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-04</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-05</h2>
+                                        <p>状态：<span style="color: orange">出库</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-refresh" aria-hidden="true" style="color: orange"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-06</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-07</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-08</h2>
+                                        <p>状态：<span style="color: red">丢失</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-chain" aria-hidden="true" style="color: red"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-09</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-10</h2>
+                                        <p>状态：<span style="color: blue">故障</span></p>
+                                    </div>
+                                    <!--                                    <div class="icon">-->
+                                    <!--                                        <i class="fa fa-heart-broken" aria-hidden="true" style="color: blue"></i>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-light">
+                                    <div class="inner">
+                                        <h2>GW-11</h2>
+                                        <p>状态：<span style="color: lawngreen">正常</span></p>
+                                    </div>
+                                    <!--                                <div class="icon">-->
+                                    <!--                                    <i class="fa fa-heart" aria-hidden="true" style="color: lawngreen"></i>-->
+                                    <!--                                </div>-->
+                                    <!--                                    <a href="#" class="small-box-footer bg-white">详细信息<i class="fas fa-arrow-circle-right"></i></a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer"><strong>点击图标</strong><span>以查看试验箱的详细信息</span></div>
+                </div>
+
+                <!-- 试验箱详细信息 -->
+                <div class="card" id="boxinfo" style="display: none">
+                    <div class="card-header">
+                        <h3 class="card-title">试验箱详细信息</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- 试验箱状态信息 -->
+                            <div class="container col-sm-6">
+                                <label class="col-sm-6">交流道岔型模拟试验装置 <span class="offset-sm-1" style="color: lawngreen">正常</span></label>
+                                <dl class="row">
+                                    <dt class="col-sm-2 offset-sm-1">
+                                        产品名称：
+                                    </dt>
+                                    <dd class="col-sm-9">
+                                        ZXJ7道岔分线柜模拟实验箱
+                                    </dd>
+                                    <dt class="col-sm-2 offset-sm-1">
+                                        出厂编号：
+                                    </dt>
+                                    <dd class="col-sm-9">
+                                        DJ-1 200501#
+                                    </dd>
+                                    <dt class="col-sm-2 offset-sm-1">
+                                        生产日期：
+                                    </dt>
+                                    <dd class="col-sm-9">
+                                        2020/05/06
+                                    </dd>
+                                    <dt class="col-sm-2 offset-sm-1">
+                                        工号：
+                                    </dt>
+                                    <dd class="col-sm-9">
+                                        65
+                                    </dd>
+                                    <dt class="col-sm-2 offset-sm-1">
+                                        检验员：
+                                    </dt>
+                                    <dd class="col-sm-9 ">
+                                        检01
+                                    </dd>
+                                </dl>
+                            </div>
+                            <!-- 试验箱装载线缆信息 -->
+                            <div class="container col-sm-6">
+                                <label class="col-sm-4">线缆信息</label>
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-4 offset-sm-1">
+                                        <div class="small-box text-center">
+                                            <label>2.2米线缆</label>
+                                            <p>4根</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-4">
+                                        <div class="small-box text-center">
+                                            <label>1.6米线缆</label>
+                                            <p>4根</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-4">
+                                        <div class="small-box text-center">
+                                            <label>其他线缆</label>
+                                            <p>4根</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <dl class="row">
+                                    <dt class="col-sm-3 offset-sm-1">
+                                        2.2米线缆编号：
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        DJ8-1、DJ8-2、DJ8-3、DJ8-4
+                                    </dd>
+                                    <dt class="col-sm-3 offset-sm-1">
+                                        1.6米线缆编号：
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        DJ8-5、DJ8-6、DJ8-7、DJ8-8
+                                    </dd>
+                                    <dt class="col-sm-3 offset-sm-1">
+                                        其他线缆编号：
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        DJ9-1、DJ9-2、DJ9-3、DJ9-4、DJ9-5、DJ9-6、DJ9-7、DJ9-8
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="reset" class="btn btn-primary" id="returnboxlist"> 返回 </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- Control Sidebar -->
+
+    <!-- 右侧呼出栏，可以设计成用户登录登出-->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            成都电务维修段联锁试验模拟装置管理系统
+        </div>
+        <!-- Default to the left -->
+        <!-- 不知道要改成什么 -->
+        <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    </footer>
+</div>
+
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+
+<script>
+    $(document).ready(function(){
+        // 提交申请，隐藏申请界面，显示申请表单
+        $("#DJ1").click(function(){
+            $("#DJlist").toggle();
+            $("#DZlist").toggle();
+            $("#GWlist").toggle();
+            $("#boxinfo").css("display","block");
+        });
+
+        $("#returnboxlist").click(function(){
+            $("#DJlist").toggle();
+            $("#DZlist").toggle();
+            $("#GWlist").toggle();
+            $("#boxinfo").css("display","none");
+        });
+    });
+</script>
+
+</body>
+</html>
+
