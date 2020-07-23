@@ -1010,7 +1010,13 @@
   });
 
   // 类型选择
-
+  // 点击顶层的分类表显示不同的样式和数据结果
+  function changecardheader(divID) {
+    var headerCSS = ["card-primary","card-info","card-orange","card-warning","card-success","card-danger"];
+    $("#condition").removeClass().addClass("card").addClass(headerCSS[divID]);
+    $("#result").removeClass().addClass("card").addClass(headerCSS[divID]);
+    $("#jobinfo").removeClass().addClass("card").addClass(headerCSS[divID]);
+  }
 </script>
 </body>
 </html>
