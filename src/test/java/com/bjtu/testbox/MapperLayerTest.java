@@ -10,6 +10,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -89,7 +90,14 @@ public class MapperLayerTest {
     public void taskUpdateTest1(){
         taskMapper.updateTaskStatus(1, 2);
     }
+
+    @Test
+    public  void taskStatusNumTest(){
+        List<Map<String,Integer>> statusCount = taskMapper.queryTaskStatusNum();
+        System.out.println(statusCount.get(0).get("num").getClass().getName());
+    }
     //////////////////  Task   //////////////////////////
+
 
 
     //////////////////  Box   //////////////////////////

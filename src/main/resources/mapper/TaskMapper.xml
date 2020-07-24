@@ -79,6 +79,7 @@
             </collection>
         </collection>
     </resultMap>
+
     <!--查询任务的详细信息-->
     <select id="queryTaskDetail" resultMap="detailTaskMap" parameterType="int">
         select
@@ -121,5 +122,12 @@
             task_status = #{taskStatus}
         where task_id = #{taskId}
     </update>
+
+    <!-- 查询所有任务处于各个状态的任务数 -->
+    <select id="queryTaskStatusNum" resultType="java.util.Map">
+        select task_status as status, count(*) as num
+        from task
+        group by task_status
+    </select>
 
 </mapper>

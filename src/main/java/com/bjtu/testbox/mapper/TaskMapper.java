@@ -1,10 +1,12 @@
 package com.bjtu.testbox.mapper;
 
 import com.bjtu.testbox.entity.Task;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface TaskMapper {
@@ -43,4 +45,12 @@ public interface TaskMapper {
      * @return
      */
     int updateTaskStatus(@Param("taskId") int taskId, @Param("taskStatus") int taskStatus);
+
+    /**
+     * 查询数据库中所有任务处于各个状态的数目
+     * Mybatis有问题，取出的int类型会变成long
+     * @return status ： 1
+     *         num : 1
+     */
+    List<Map<String,Integer>> queryTaskStatusNum();
 }

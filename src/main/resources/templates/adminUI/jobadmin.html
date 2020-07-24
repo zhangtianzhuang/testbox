@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- 作业管理 -->
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -269,7 +269,8 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h2>53</h2>
+                <!--/*@thymesVar id="checkpending" type="java.lang.Integer"*/-->
+                <h2 th:text="${checkpending}">53</h2>
                 <p>待审核</p>
               </div>
               <div class="icon">
