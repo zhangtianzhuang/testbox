@@ -41,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
          * 将不同状态码对具体状态名做映射
          * 对于不存在的状态设置为0
          */
-        List<Map<String, Integer>> statusNum = taskMapper.queryTaskStatusNum();
+        List<Map<String, Object>> statusNum = taskMapper.queryTaskStatusNum();
         Map<String,Integer> statusNumStand = new HashMap<String, Integer>();
         // 初始化为计数为0
         for(String cate: mapStatusCode.values()){
@@ -49,9 +49,9 @@ public class TaskServiceImpl implements TaskService {
         }
 
         // 根据查询结果修正类别数
-        for(Map<String, Integer> itea: statusNum){
-            int statusCode = itea.get("status");
-            int statusCount = itea.get("num");
+        for(Map<String, Object> itea: statusNum){
+            int statusCode = Integer.parseInt(String.valueOf(itea.get("status")));
+            int statusCount = Integer.parseInt(String.valueOf(itea.get("num")));
             statusNumStand.put(mapStatusCode.get(statusCode),statusCount);
         }
         return statusNumStand;

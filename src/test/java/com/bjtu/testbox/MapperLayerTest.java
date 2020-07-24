@@ -93,7 +93,7 @@ public class MapperLayerTest {
 
     @Test
     public  void taskStatusNumTest(){
-        List<Map<String,Integer>> statusCount = taskMapper.queryTaskStatusNum();
+        List<Map<String,Object>> statusCount = taskMapper.queryTaskStatusNum();
         System.out.println(statusCount.get(0).get("num").getClass().getName());
     }
     //////////////////  Task   //////////////////////////

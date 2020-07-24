@@ -52,5 +52,5 @@ public interface TaskMapper {
      * @return status ： 1
      *         num : 1
      */
-    List<Map<String,Integer>> queryTaskStatusNum();
+    List<Map<String,Object>> queryTaskStatusNum();
 }
