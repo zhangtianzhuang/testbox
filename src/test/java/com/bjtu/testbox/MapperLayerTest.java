@@ -213,4 +213,23 @@ public class MapperLayerTest {
     }
     //////////////////  Examine   //////////////////////////
 
+    //////////////////  Shiro   //////////////////////////
+
+    @Autowired
+    ShiroMapper shiroMapper;
+    @Test
+    public void getRole(){
+        User user = shiroMapper.getRoleAndPerm(1);
+        System.out.println(user.getUid());
+        List<SysRole> roles =  user.getRoleList();
+        for (SysRole role : roles) {
+            System.out.println(role.getRole());
+            List<SysPermission> perms = role.getPermissions();
+            for (SysPermission perm : perms) {
+                System.out.println(perm.getPermission());
+            }
+        }
+    }
+    //////////////////  Shiro   //////////////////////////
+
 }

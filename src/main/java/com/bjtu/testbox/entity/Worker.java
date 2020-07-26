@@ -9,6 +9,8 @@ public class Worker {
     private String workerCity;
     private String workerPhone;
 
+    public Worker(){}
+
     public Worker(String workerName, String workerNumber, String workerArea, String workerGroup, String workerCity, String workerPhone) {
         this.workerName = workerName;
         this.workerNumber = workerNumber;

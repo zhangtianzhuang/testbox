@@ -15,6 +15,14 @@ public interface WorkerMapper {
      */
     Worker selectByNumber(@Param("workerNumber") int workerNumber);
 
+    /**
+     *
+     * @param workerId
+     * @return
+     */
+    @Select("select * from worker where worker_id = #{workerId}")
+    Worker selectById(@Param("workerId")Integer workerId);
+
     // insert
 
     /**

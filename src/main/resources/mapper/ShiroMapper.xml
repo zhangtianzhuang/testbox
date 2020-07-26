@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjtu.testbox.mapper.ShiroMapper">
+
+    <resultMap id="userRoleMap" type="user">
+        <id property="uid" column="uid"/>
+        <collection property="roleList" ofType="role">
+            <result property="role" column="role"/>
+            <collection property="permissions" ofType="perm">
+                <result property="permission" column="permission"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getRoleAndPerm" resultMap="userRoleMap">
+        select
+          u.uid, r.role, p.permission
+        from user u, sys_role r, sys_permission p, sys_role_permission rp, sys_user_role ur
+        where
+          u.uid = #{id}
+          and ur.uid = u.uid
+          and r.id = ur.role_id
+          and rp.role_id = r.id
+          and p.id = rp.permission_id
+    </select>
+</mapper>

@@ -57,17 +57,5 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(value = "/test001")
-    public List<User> test001(){
-        List<User> users = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            User u = new User();
-            u.setId(i);
-            u.setPassWord("pass"+i);
-            u.setRealName("real"+i);
-            u.setUserName("name"+i);
-            users.add(u);
-        }
-        return users;
-    }
+
 }

@@ -23,6 +23,8 @@
         <typeAlias type="com.bjtu.testbox.entity.Examine" alias="examine"/>
         <typeAlias type="com.bjtu.testbox.entity.Task" alias="task"/>
         <typeAlias type="com.bjtu.testbox.entity.Taskbox" alias="taskbox"/>
+        <typeAlias type="com.bjtu.testbox.entity.SysRole" alias="role"/>
+        <typeAlias type="com.bjtu.testbox.entity.SysPermission" alias="perm"/>
     </typeAliases>
 
 </configuration>
