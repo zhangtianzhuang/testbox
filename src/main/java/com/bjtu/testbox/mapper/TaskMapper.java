@@ -31,6 +31,8 @@ public interface TaskMapper {
                          @Param("taskStatus") int taskStatus, @Param("taskPoint") String taskPoint,
                          @Param("startDate") long startDate, @Param("endDate") long endDate);
 
+    List<Task> querySimpleTask();
+
     /**
      * 查询某个表单的详细信息
      * @param taskId

@@ -1,5 +1,6 @@
 package com.bjtu.testbox.service.impl;
 
+import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.mapper.TaskMapper;
 import com.bjtu.testbox.service.TaskService;
 import org.omg.PortableInterceptor.INACTIVE;
@@ -55,5 +56,14 @@ public class TaskServiceImpl implements TaskService {
             statusNumStand.put(mapStatusCode.get(statusCode),statusCount);
         }
         return statusNumStand;
+    }
+
+    /**
+     * 查询所有任务的简单信息：任务ID、申请人姓名、申请日期、工作地点、任务状态
+     * @return
+     */
+    @Override
+    public List<Task> showSimpleTasks() {
+        return null;
     }
 }

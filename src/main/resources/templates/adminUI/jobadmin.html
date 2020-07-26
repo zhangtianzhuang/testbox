@@ -8,23 +8,24 @@
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  
 
   <!-- Font Awesome Icons 图标风格-->
-  <link rel="stylesheet" href="/static/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="static/plugins/fontawesome-free/css/all.min.css">
+  
 
   <!-- Theme style 主题样式-->
-  <link rel="stylesheet" href="/static/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="static/dist/css/adminlte.min.css">
 
   <!-- Ionicons -->
-<!--  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
-  <link rel="stylesheet" href="/static/plugins/ionicons/ionicons.min.css">
-
+  <link rel="stylesheet" href="https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css">
+  
   <!-- 日期表样式 -->
-  <link rel="stylesheet" href="/static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" href="static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
   <!-- DataTables -->
-  <link rel="stylesheet" href="/static/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="/static/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="static/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="static/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -67,7 +68,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="../../static/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="static/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -83,7 +84,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="../../static/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="static/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
@@ -99,7 +100,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="../../static/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="static/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
@@ -156,7 +157,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <img src="../../static/dist/img/ChengduLogo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="static/dist/img/ChengduLogo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">模拟装置管理系统</span>
     </a>
 
@@ -166,7 +167,7 @@
       <!-- 用户图标和信息 -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../../static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block"> 张三 </a>
@@ -255,7 +256,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h2>200</h2>
+                <h2 th:text="${sumTask}">200</h2>
                 <p>全部</p>
               </div>
               <div class="icon">
@@ -286,7 +287,8 @@
             <!-- small box -->
             <div class="small-box bg-orange">
               <div class="inner">
-                <h2>44</h2>
+                <!--/*@thymesVar id="standingby" type="java.lang.Integer"*/-->
+                <h2 th:text="${standingby}">44</h2>
 
                 <p>待领取</p>
               </div>
@@ -301,7 +303,8 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h2>2</h2>
+                <!--/*@thymesVar id="notreturn" type="java.lang.Integer"*/-->
+                <h2 th:text="${notreturn}">2</h2>
 
                 <p>待归还</p>
               </div>
@@ -316,7 +319,8 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h2>65</h2>
+                <!--/*@thymesVar id="completed" type="java.lang.Integer"*/-->
+                <h2 th:text="${completed}">65</h2>
 
                 <p>已完成</p>
               </div>
@@ -331,7 +335,8 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h2>2</h2>
+                <!--/*@thymesVar id="rejected" type="java.lang.Integer"*/-->
+                <h2 th:text="${rejected}">2</h2>
 
                 <p>已拒绝</p>
               </div>
@@ -980,24 +985,24 @@
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
-<script src="/static/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="static/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="/static/dist/js/adminlte.min.js"></script>
+<script type="text/javascript" src="static/dist/js/adminlte.min.js"></script>
 <!-- InputMask -->
 <!-- 选择日期需要-->
-<script src="/static/plugins/moment/moment.min.js"></script>
-<script src="/static/plugins/inputmask/jquery.inputmask.min.js"></script>
+<script type="text/javascript" src="static/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="static/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="/static/dist/js/demo.js"></script>
+<script type="text/javascript" src="static/dist/js/demo.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="/static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script type="text/javascript" src="static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- DataTables -->
-<script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/static/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="/static/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/static/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script type="text/javascript" src="static/plugins/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="static/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="static/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="static/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script>
   //表格汉化显示
   $(function () {

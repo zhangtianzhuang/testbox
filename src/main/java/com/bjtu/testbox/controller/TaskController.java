@@ -23,6 +23,11 @@ public class TaskController {
         // 查询所有任务的状态数目
         Map<String, Integer> statusCount = taskService.getTaskStatusNum();
         model.addAllAttributes(statusCount);
+        int sumTask = 0;
+        for(String key:statusCount.keySet()){
+            sumTask += statusCount.get(key);
+        }
+        model.addAttribute("sumTask",sumTask);
         return "adminUI/jobadmin";
     }
 }

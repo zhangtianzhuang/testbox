@@ -1,5 +1,7 @@
 package com.bjtu.testbox.service;
 
+import com.bjtu.testbox.entity.Task;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,4 +14,9 @@ public interface TaskService {
      * @return
      */
     public  Map<String,Integer> getTaskStatusNum();
+
+    /**
+     * 查询所有任务的简单信息
+     */
+    public List<Task> showSimpleTasks();
 }
