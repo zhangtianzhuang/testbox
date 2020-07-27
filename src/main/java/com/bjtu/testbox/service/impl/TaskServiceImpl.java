@@ -18,7 +18,7 @@ import java.util.Map;
 @Service
 public class TaskServiceImpl implements TaskService {
     /* 状态码到状态名的映射 */
-    private static Map<Integer,String> mapStatusCode = new HashMap<Integer, String>();
+    public static Map<Integer,String> mapStatusCode = new HashMap<Integer, String>();
     static {
         mapStatusCode.put(0,"checkpending");    // 待审核
         mapStatusCode.put(1,"rejected");        // 被拒绝
@@ -26,7 +26,6 @@ public class TaskServiceImpl implements TaskService {
         mapStatusCode.put(3,"notreturn");       // 待归还
         mapStatusCode.put(4,"completed");       // 已完成
     }
-
 
     @Autowired
     TaskMapper taskMapper;
@@ -64,6 +63,15 @@ public class TaskServiceImpl implements TaskService {
      */
     @Override
     public List<Task> showSimpleTasks() {
-        return null;
+        return taskMapper.queryAllTasks();
+    }
+
+    /**
+     * 根据状态码查询任务的简单信息
+     * @param taskStatus
+     * @return
+     */
+    public List<Task> showSimpleTasks(int taskStatus){
+        return  taskMapper.queryTaskByStatus(taskStatus);
     }
 }

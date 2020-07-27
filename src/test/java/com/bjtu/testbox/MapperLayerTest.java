@@ -96,6 +96,14 @@ public class MapperLayerTest {
         List<Map<String,Object>> statusCount = taskMapper.queryTaskStatusNum();
         System.out.println(statusCount.get(0).get("num").getClass().getName());
     }
+
+    @Test
+    public void taskInfoTest(){
+        List<Task> tasks = taskMapper.queryAllTasks();
+        for(Task t: tasks){
+            System.out.println(t);
+        }
+    }
     //////////////////  Task   //////////////////////////
 
 

@@ -31,7 +31,11 @@ public interface TaskMapper {
                          @Param("taskStatus") int taskStatus, @Param("taskPoint") String taskPoint,
                          @Param("startDate") long startDate, @Param("endDate") long endDate);
 
-    List<Task> querySimpleTask();
+    /**
+     * 查询所有任务的信息
+     * @return
+     */
+    List<Task> queryAllTasks();
 
     /**
      * 查询某个表单的详细信息
@@ -50,9 +54,16 @@ public interface TaskMapper {
 
     /**
      * 查询数据库中所有任务处于各个状态的数目
-     * Mybatis有问题，取出的int类型会变成long
      * @return status ： 1
      *         num : 1
      */
     List<Map<String,Object>> queryTaskStatusNum();
+
+
+    /**
+     * 根据状态查询任务
+     * @param taskStatus
+     * @return
+     */
+    List<Task>  queryTaskByStatus(@Param("taskStatus") int taskStatus);
 }
