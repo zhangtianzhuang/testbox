@@ -20,5 +20,8 @@ public interface TaskService {
      */
     public List<Task> showSimpleTasks();
 
-
+    /**
+     * 根据状态查询所有任务的简单信息
+     */
+    public List<Task> showSimpleTasksByStatus(int taskStatus);
 }
