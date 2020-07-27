@@ -49,7 +49,7 @@
     <!-- 查询所有任务的信息 -->
     <select id="queryAllTasks" resultMap="simpleTaskMap">
         select * from task
-        order by task_date;
+        order by task_date desc;
     </select>
 
     <!-- 一个任务的详细信息，包含使用的试验箱和线缆的信息 -->
@@ -140,7 +140,7 @@
     <select id="queryTaskByStatus" resultMap="simpleTaskMap" parameterType="int">
         select * from task
         where taskStatus = #{taskStatus}
-        order by task_date;
+        order by task_date desc;
     </select>
 
 </mapper>
