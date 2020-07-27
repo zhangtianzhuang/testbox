@@ -7,9 +7,9 @@ server:
 # database configuration
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/testbox?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-    username: root
-    password: root
+    url: jdbc:mysql://59.110.223.75/testbox?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: user_testbox
+    password: bjtu1234.COM
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 

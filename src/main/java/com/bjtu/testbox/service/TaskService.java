@@ -19,4 +19,6 @@ public interface TaskService {
      * 查询所有任务的简单信息
      */
     public List<Task> showSimpleTasks();
+
+
 }

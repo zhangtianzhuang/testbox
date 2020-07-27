@@ -46,6 +46,12 @@
         order by t.task_date desc;
     </select>
 
+    <!-- 查询所有任务的信息 -->
+    <select id="queryAllTasks" resultMap="simpleTaskMap">
+        select * from task
+        order by task_date;
+    </select>
+
     <!-- 一个任务的详细信息，包含使用的试验箱和线缆的信息 -->
     <resultMap id="detailTaskMap" type="task">
         <id property="taskId" column="task_id"/>
@@ -128,6 +134,13 @@
         select task_status as status, count(*) as num
         from task
         group by task_status
+    </select>
+
+    <!-- 查询某个状态条件的所有任务 -->
+    <select id="queryTaskByStatus" resultMap="simpleTaskMap" parameterType="int">
+        select * from task
+        where taskStatus = #{taskStatus}
+        order by task_date;
     </select>
 
 </mapper>

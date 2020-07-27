@@ -1,5 +1,6 @@
 package com.bjtu.testbox.entity;
 
+import java.util.Date;
 import java.util.List;
 
 public class Task {
@@ -90,6 +91,15 @@ public class Task {
 
     public long getTaskDate() {
         return taskDate;
+    }
+
+    public String getTaskDate(boolean timestamp){
+        if(timestamp)
+            return String.valueOf(taskDate);
+        else{
+            Date date = new Date(taskDate);
+            return String.valueOf(date);
+        }
     }
 
     public void setTaskDate(long taskDate) {
