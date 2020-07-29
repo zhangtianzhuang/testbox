@@ -254,7 +254,7 @@
           <!-- 全部 -->
           <div class="col-lg-2 col-6" id="all" onclick="changecardheader(0)">
             <!-- small box -->
-            <a th:href="@{jobadmin(taskStatusCode=-1)}" class="small-box bg-primary">
+            <a href="#" class="small-box bg-primary">
               <div class="inner">
                 <h2 th:text="${sumTask}">200</h2>
                 <p>全部</p>
@@ -266,14 +266,14 @@
             </a>
           </div>
           <!-- ./col -->
-          <!-- 待审核 -->
-          <div class="col-lg-2 col-6" id="pending" onclick="changecardheader(1)">
+          <!-- 待一级审核 -->
+          <div class="col-lg-2 col-6" id="pending1" onclick="changecardheader(1)">
             <!-- small box -->
-            <a th:href="@{jobadmin(taskStatusCode=0)}" class="small-box bg-info">
+            <a href="#" class="small-box bg-info">
               <div class="inner">
-                <!--/*@thymesVar id="checkpending" type="java.lang.Integer"*/-->
-                <h2 th:text="${checkpending}">53</h2>
-                <p>待审核</p>
+                <!--/*@thymesVar id="checkpending1" type="java.lang.Integer"*/-->
+                <h2 th:text="${checkpending1}">53</h2>
+                <p>待一级审核</p>
               </div>
               <div class="icon">
                 <i class="ion ion-load-a"></i>
@@ -281,11 +281,26 @@
 <!--              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
             </a>
           </div>
+          <!-- 待二级级审核 -->
+          <div class="col-lg-2 col-6" id="pending2" onclick="changecardheader(2)">
+            <!-- small box -->
+            <a href="#" class="small-box bg-info">
+              <div class="inner">
+                <!--/*@thymesVar id="checkpending2" type="java.lang.Integer"*/-->
+                <h2 th:text="${checkpending2}">53</h2>
+                <p>待二级审核</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-load-a"></i>
+              </div>
+              <!--              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
+            </a>
+          </div>
           <!-- ./col -->
           <!-- 待领取 -->
-          <div class="col-lg-2 col-6" id="receive" onclick="changecardheader(2)">
+          <div class="col-lg-2 col-6" id="receive" onclick="changecardheader(3)">
             <!-- small box -->
-            <a th:href="@{jobadmin(taskStatusCode=2)}" class="small-box bg-orange">
+            <a href="#" class="small-box bg-orange">
               <div class="inner">
                 <!--/*@thymesVar id="standingby" type="java.lang.Integer"*/-->
                 <h2 th:text="${standingby}">44</h2>
@@ -299,9 +314,9 @@
           </div>
           <!-- ./col -->
           <!-- 待归还 -->
-          <div class="col-lg-2 col-6" id="giveback" onclick="changecardheader(3)">
+          <div class="col-lg-2 col-6" id="giveback" onclick="changecardheader(4)">
             <!-- small box -->
-            <a th:href="@{jobadmin(taskStatusCode=3)}" class="small-box bg-warning">
+            <a href="#" class="small-box bg-warning">
               <div class="inner">
                 <!--/*@thymesVar id="notreturn" type="java.lang.Integer"*/-->
                 <h2 th:text="${notreturn}">2</h2>
@@ -315,9 +330,9 @@
           </div>
           <!-- ./col -->
           <!-- 已完成-->
-          <div class="col-lg-2 col-6" id="completed" onclick="changecardheader(4)">
+          <div class="col-lg-2 col-6" id="completed" onclick="changecardheader(5)">
             <!-- small box -->
-            <a th:href="@{jobadmin(taskStatusCode=4)}" class="small-box bg-success">
+            <a href="#" class="small-box bg-success">
               <div class="inner">
                 <!--/*@thymesVar id="completed" type="java.lang.Integer"*/-->
                 <h2 th:text="${completed}">65</h2>
@@ -331,9 +346,9 @@
           </div>
           <!-- ./col -->
           <!-- 已拒绝 -->
-          <div class="col-lg-2 col-6" id="refuse" onclick="changecardheader(5)">
+          <div class="col-lg-2 col-6" id="refuse" onclick="changecardheader(6)">
             <!-- small box -->
-            <a th:href="@{jobadmin(taskStatusCode=1)}" class="small-box bg-danger">
+            <a href="#" class="small-box bg-danger">
               <div class="inner">
                 <!--/*@thymesVar id="rejected" type="java.lang.Integer"*/-->
                 <h2 th:text="${rejected}">2</h2>
@@ -411,7 +426,7 @@
             <h3 class="card-title">详细信息</h3>
           </div>
           <!-- /.card-header -->
-          <div class="card-body">
+          <div id = "resultbystatus" class="card-body" th:fragment="resultbystatus">
             <table id="table1" class="table table-bordered table-striped">
               <thead>
               <tr>
@@ -512,13 +527,16 @@
     });
   });
 
-  类型选择
-  点击顶层的分类表显示不同的样式和数据结果
+  //类型选择
+  //点击顶层的分类表显示不同的样式和数据结果
   function changecardheader(divID) {
-    var headerCSS = ["card-primary","card-info","card-orange","card-warning","card-success","card-danger"];
+    var headerCSS = ["card-primary", "card-info", "card-info", "card-orange","card-warning","card-success","card-danger"];
     $("#condition").removeClass().addClass("card").addClass(headerCSS[divID]);
     $("#result").removeClass().addClass("card").addClass(headerCSS[divID]);
     $("#jobinfo").removeClass().addClass("card").addClass(headerCSS[divID]);
+
+    // ajax更新数据
+    $('#resultbystatus').load("/testbox/jobadmin/status?statusCode="+divID);
   }
 </script>
 </body>

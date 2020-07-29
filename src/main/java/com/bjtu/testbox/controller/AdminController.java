@@ -4,41 +4,46 @@ import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
 public class AdminController {
+    // 查询所有任务的状态数目
+    static final Map<Integer,String> mapStatusCode;
+    static {
+        mapStatusCode = new HashMap<Integer, String>();
+        mapStatusCode.put(1,"checkpending1");    // 待一级审核
+        mapStatusCode.put(2,"checkpending2");    // 待二级审核
+        mapStatusCode.put(3,"standingby");       // 待领用
+        mapStatusCode.put(4,"notreturn");        // 待归还
+        mapStatusCode.put(5,"completed");        // 已完成
+        mapStatusCode.put(6,"rejected");         // 被拒绝
+    }
 
+    static final Map<Integer,String> mapStatusShow;
+    static {
+        mapStatusShow = new HashMap<>();
+        mapStatusShow.put(1,"待一级审核");
+        mapStatusShow.put(2,"待二级审核");
+        mapStatusShow.put(3,"待领用");
+        mapStatusShow.put(4,"待归还");
+        mapStatusShow.put(5,"已完成");
+        mapStatusShow.put(6,"被拒绝");
+    }
     @Autowired
     private AdminService adminService;
 
 
     @RequestMapping("/jobadmin")
-    public String taskAdmin(HttpServletRequest request, @RequestParam(value = "taskStatusCode",required = false)int taskStatusCode, Model model){
-        // 查询所有任务的状态数目
-        Map<Integer,String> mapStatusCode = new HashMap<Integer, String>();
-        mapStatusCode.put(0,"checkpending");    // 待审核
-        mapStatusCode.put(1,"rejected");        // 被拒绝
-        mapStatusCode.put(2,"standingby");      // 待领用
-        mapStatusCode.put(3,"notreturn");       // 待归还
-        mapStatusCode.put(4,"completed");       // 已完成
-
-        Map<Integer,String> mapStatusShow = new HashMap<>();
-        mapStatusShow.put(0,"待审核");
-        mapStatusShow.put(1,"被拒绝");
-        mapStatusShow.put(2,"待领用");
-        mapStatusShow.put(3,"待归还");
-        mapStatusShow.put(4,"已完成");
-
+    public String taskAdmin(Model model){
+        System.out.println("管理员界面");
         List<Map<String, Object>> statusNum = adminService.getTaskStatusNum();
         Map<String,Integer> statusNumStand = new HashMap<String, Integer>();
         // 初始化为计数为0
@@ -59,13 +64,10 @@ public class AdminController {
             sumTask += statusNumStand.get(key);
         }
         model.addAttribute("sumTask",sumTask);
+        System.out.println("状态数查询完毕");
 
         // 根据状态码显示的任务信息
-        List<Task> taskInfo = null;
-        if(taskStatusCode < 0 || taskStatusCode > 4)
-            taskInfo = adminService.showSimpleTasks();
-        else
-            taskInfo = adminService.showSimpleTasksByStatus(taskStatusCode);
+        List<Task> taskInfo = adminService.showSimpleTasks();
 
         // 整理，只要任务ID、申请人姓名、申请日期、工作地点、任务状态
         List<Map> taskList = new ArrayList<>();
@@ -82,11 +84,40 @@ public class AdminController {
             taskList.add(taskMap);
         }
         model.addAttribute("taskList",taskList);
+        System.out.println("查询结果完毕");
         return "adminUI/jobadmin";
     }
 
+    @RequestMapping("/jobadmin/status")
+    public String showJobByStatus(Model model,@RequestParam(value = "statusCode") int statusCode){
+        System.out.println("ajax请求:statusCode="+statusCode);
+        List<Task> taskInfo = new ArrayList<>();
+        if (statusCode > 0 && statusCode < 7){
+            taskInfo = adminService.showSimpleTasksByStatus(statusCode);
+        }else {
+            taskInfo = adminService.showSimpleTasks();
+        }
+        // 整理，只要任务ID、申请人姓名、申请日期、工作地点、任务状态
+        List<Map> taskList = new ArrayList<>();
+        for(Task task: taskInfo){
+            Map<String,String> taskMap = new HashMap<>();
+            taskMap.put("taskKeyID",String.valueOf(task.getTaskId()));
+            taskMap.put("taskID",task.getTaskNumber().toString());
+            taskMap.put("approverName",task.getTaskWorkerName());
+            Date date = new Date(task.getTaskDate());
+            taskMap.put("approveDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+//            taskMap.put("approveDate",String.valueOf(task.getTaskDate()));
+            taskMap.put("taskPoint",task.getTaskPoint());
+            String taskStatus = mapStatusShow.get(task.getTaskStatus());
+            taskMap.put("taskStatus",taskStatus);
+            taskList.add(taskMap);
+        }
+        model.addAttribute("taskList",taskList);
+        return "adminUI/jobadmin::resultbystatus";
+    }
+
     @RequestMapping("/jobinfo")
-    public String jobInfo(HttpServletRequest request, @RequestParam(value="taskId")String taskId, Model model){
+    public String jobInfo(@RequestParam(value="taskId")String taskId, Model model){
         System.out.println("查看详情："+taskId);
         // 根据taskId填充信息表
         Task task = adminService.queryTaskDetial(Integer.parseInt(taskId));

@@ -196,7 +196,7 @@
                 <!-- 全部 -->
                 <div class="col-lg-2 col-6" id="all" onclick="changecardheader(0)">
                     <!-- small box -->
-                    <a th:href="@{task/status(taskStatusCode=-1)}" class="small-box bg-primary">
+                    <div class="small-box bg-primary">
                         <div class="inner">
                             <h2 th:text="${sumTask}">200</h2>
                             <p>全部</p>
@@ -205,13 +205,13 @@
                             <i class="ion ion-navicon-round"></i>
                         </div>
                         <!--              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
-                    </a>
+                    </div>
                 </div>
                 <!-- ./col -->
                 <!-- 待审核 -->
                 <div class="col-lg-2 col-6" id="pending" onclick="changecardheader(1)">
                     <!-- small box -->
-                    <a th:href="@{task/status(taskStatusCode=0)}" class="small-box bg-info">
+                    <div class="small-box bg-info">
                         <div class="inner">
                             <!--/*@thymesVar id="checkpending" type="java.lang.Integer"*/-->
                             <h2 th:text="${checkpending}">53</h2>
@@ -221,13 +221,13 @@
                             <i class="ion ion-load-a"></i>
                         </div>
                         <!--              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
-                    </a>
+                    </div>
                 </div>
                 <!-- ./col -->
                 <!-- 待领取 -->
                 <div class="col-lg-2 col-6" id="receive" onclick="changecardheader(2)">
                     <!-- small box -->
-                    <a th:href="@{task/status(taskStatusCode=2)}" class="small-box bg-orange">
+                    <div class="small-box bg-orange">
                         <div class="inner">
                             <!--/*@thymesVar id="standingby" type="java.lang.Integer"*/-->
                             <h2 th:text="${standingby}">44</h2>
@@ -237,13 +237,13 @@
                         <div class="icon">
                             <i class="ion ion-person"></i>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 <!-- ./col -->
                 <!-- 待归还 -->
                 <div class="col-lg-2 col-6" id="giveback" onclick="changecardheader(3)">
                     <!-- small box -->
-                    <a th:href="@{task/status(taskStatusCode=3)}" class="small-box bg-warning">
+                    <div class="small-box bg-warning">
                         <div class="inner">
                             <!--/*@thymesVar id="notreturn" type="java.lang.Integer"*/-->
                             <h2 th:text="${notreturn}">2</h2>
@@ -253,13 +253,13 @@
                         <div class="icon">
                             <i class="ion ion-archive"></i>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 <!-- ./col -->
                 <!-- 已完成-->
                 <div class="col-lg-2 col-6" id="completed" onclick="changecardheader(4)">
                     <!-- small box -->
-                    <a th:href="@{task/status(taskStatusCode=4)}" class="small-box bg-success">
+                    <div class="small-box bg-success">
                         <div class="inner">
                             <!--/*@thymesVar id="completed" type="java.lang.Integer"*/-->
                             <h2 th:text="${completed}">65</h2>
@@ -269,13 +269,13 @@
                         <div class="icon">
                             <i class="ion ion-checkmark-round"></i>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 <!-- ./col -->
                 <!-- 已拒绝 -->
                 <div class="col-lg-2 col-6" id="refuse" onclick="changecardheader(5)">
                     <!-- small box -->
-                    <a th:href="@{task/status(taskStatusCode=1)}" class="small-box bg-danger">
+                    <div class="small-box bg-danger">
                         <div class="inner">
                             <!--/*@thymesVar id="rejected" type="java.lang.Integer"*/-->
                             <h2 th:text="${rejected}">2</h2>
@@ -285,7 +285,7 @@
                         <div class="icon">
                             <i class="ion ion-alert-circled"></i>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 <!-- ./col -->
             </div>
@@ -295,7 +295,7 @@
                     <h3 class="card-title">详细信息</h3>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body" th:fragment="task-list">
+                <div id = "task-list" class="card-body" th:fragment="task-list">
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
@@ -367,9 +367,9 @@
 <script type="text/javascript" src="static/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript" src="static/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="static/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script>
-    //表格汉化显示
+<script th:inline="javascript">
     $(function () {
+        //表格汉化显示
         $("#table").DataTable({
             "responsive": true,
             "autoWidth": false,
@@ -385,10 +385,11 @@
         // 更换风格
         var headerCSS = ["card-primary","card-info","card-orange","card-warning","card-success","card-danger"];
         $("#result").removeClass().addClass("card").addClass(headerCSS[divID]);
-
         // ajax更新数据
-        $('#task-list').load("/task/status?statusCode="+divID);
+        $('#task-list').load("/testbox/task/status?statusCode="+divID);
     }
+
+
 </script>
 </body>
 </html>
