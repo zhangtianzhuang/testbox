@@ -24,6 +24,8 @@ spring:
 #  #这个是关键，放开springboot对静态资源的拦截
 #  mvc:
 #    static-path-pattern: /static/**
+swagger:
+  enable : true
 
 
 mybatis:
@@ -37,3 +39,4 @@ logging:
     com:
       ztz:
         mapper : info
+

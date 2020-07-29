@@ -1,16 +1,25 @@
 package com.bjtu.testbox.controller;
 
+import com.bjtu.testbox.config.shiroconfig.AppSecurityUtils;
 import com.bjtu.testbox.entity.Task;
+import com.bjtu.testbox.entity.User;
+import com.bjtu.testbox.entity.Worker;
 import com.bjtu.testbox.service.WorkerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+@Api(description = "工人Controller API接口")
 @Controller
 @RequestMapping("/worker")
-@RequiresRoles("worker")
+//@RequiresRoles("worker")
 public class WorkerController {
 
     @Autowired
@@ -36,10 +45,12 @@ public class WorkerController {
      * 工人查询个人信息
      * @return
      */
-    @RequestMapping("/personInfo")
-    public String queryWorkerPersonInfo(){
-
-        return null;
+    @ApiOperation(value="工人查询个人信息", notes="说明notes", produces="application/json")
+    @RequestMapping(value = "/personInfo")
+    public String queryWorkerPersonInfo(Model model){
+        Worker worker = workerService.showWorkerInfo(1);
+        model.addAttribute(worker);
+        return "SUCCESS";
     }
 
     /**
