@@ -8,9 +8,10 @@ public class User implements Serializable {
     private Integer uid;
     private String username;
     private String password;
-    private Integer workerId;
+    private Integer bindUser;
     private String salt;//加密密码的盐
     private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
+    private int type;
     private List<SysRole> roleList;// 一个用户具有多个角色
 
     private Worker worker;
@@ -21,9 +22,10 @@ public class User implements Serializable {
                 "uid=" + uid +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", workerId=" + workerId +
+                ", bindUser=" + bindUser +
                 ", salt='" + salt + '\'' +
                 ", state=" + state +
+                ", type=" + type +
                 ", roleList=" + roleList +
                 ", worker=" + worker +
                 '}';
@@ -86,12 +88,12 @@ public class User implements Serializable {
     }
     //重新对盐重新进行了定义，用户名+salt，这样就更加不容易被破解
 
-    public Integer getWorkerId() {
-        return workerId;
+    public Integer getBindUser() {
+        return bindUser;
     }
 
-    public void setWorkerId(Integer workerId) {
-        this.workerId = workerId;
+    public void setBindUser(Integer bindUser) {
+        this.bindUser = bindUser;
     }
 
     public Worker getWorker() {
@@ -100,5 +102,13 @@ public class User implements Serializable {
 
     public void setWorker(Worker worker) {
         this.worker = worker;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

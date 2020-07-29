@@ -26,6 +26,6 @@
           worker_Group = #{workerGroup},
           worker_city = #{workerCity},
           worker_phone = #{workerPhone}
-        where worker_id = #{workerId}
+        where worker_id = #{bindUser}
     </update>
 </mapper>
