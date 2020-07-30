@@ -15,6 +15,7 @@ public class User implements Serializable {
     private List<SysRole> roleList;// 一个用户具有多个角色
 
     private Worker worker;
+    private Approver approver;
 
     @Override
     public String toString() {
@@ -110,5 +111,13 @@ public class User implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public Approver getApprover() {
+        return approver;
+    }
+
+    public void setApprover(Approver approver) {
+        this.approver = approver;
     }
 }

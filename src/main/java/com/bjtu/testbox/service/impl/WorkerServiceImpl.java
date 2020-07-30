@@ -1,6 +1,10 @@
 package com.bjtu.testbox.service.impl;
 
+import com.bjtu.testbox.config.constant.Status;
+import com.bjtu.testbox.config.shiroconfig.AppSecurityUtils;
+import com.bjtu.testbox.entity.Approver;
 import com.bjtu.testbox.entity.Task;
+import com.bjtu.testbox.entity.User;
 import com.bjtu.testbox.entity.Worker;
 import com.bjtu.testbox.mapper.TaskMapper;
 import com.bjtu.testbox.mapper.WorkerMapper;
@@ -22,13 +26,15 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public int applyTask(Task task) {
-        // other operation
-        int workerId = task.getTaskWorkerId();
-        Worker worker = workerMapper.selectById(workerId);
+        // 获取当前登录的工人信息
+        Worker worker = workerMapper.selectById(AppSecurityUtils.obtainLoginedUser().getBindUser());
+        // 系统自动设置字段
         task.setTaskCity(worker.getWorkerCity());
         task.setTaskArea(worker.getWorkerArea());
         task.setTaskWorkerName(worker.getWorkerName());
         task.setTaskNumber(TestboxTool.randomTaskNum());
+        task.setTaskStatus(Status.TASK_WAIT_WORKSHOP);
+        task.setTaskWorkerId(worker.getWorkerId());
         try{
             taskMapper.insertTask(task);
         }catch (Exception e){

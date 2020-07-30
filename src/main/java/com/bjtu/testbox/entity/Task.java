@@ -1,9 +1,10 @@
 package com.bjtu.testbox.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Task {
+public class Task implements Serializable {
     private int taskId;
     private String taskNumber;
     private String taskName;

@@ -1,9 +1,10 @@
 package com.bjtu.testbox.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class Box {
+public class Box implements Serializable {
     private int boxId;
     private String boxNumber;
     private int boxType;

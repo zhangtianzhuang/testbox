@@ -240,4 +240,11 @@ public class MapperLayerTest {
     }
     //////////////////  Shiro   //////////////////////////
 
+    @Test
+    public void test_queryTaskStatusNum(){
+        List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum();
+        for (Map<String, Object> map : maps) {
+            System.out.println(map);
+        }
+    }
 }

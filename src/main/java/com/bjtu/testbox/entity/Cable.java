@@ -1,6 +1,8 @@
 package com.bjtu.testbox.entity;
 
-public class Cable {
+import java.io.Serializable;
+
+public class Cable implements Serializable {
     private int cableId;
     private String cableNumber;
     private int cableType;

@@ -5,7 +5,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
 public class AppSecurityUtils {
-	
+
 	/**
 	 * 获取当前登录用户
 	 * @return

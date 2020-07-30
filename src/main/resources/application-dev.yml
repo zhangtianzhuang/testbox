@@ -13,6 +13,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
+  mvc:
+    static-path-pattern: /static/**
+
   #thymeleaf
   thymeleaf:
     cache: false
@@ -20,7 +23,7 @@ spring:
     check-template-location: true
     suffix: .html
     encoding: utf-8
-    mode: HTML
+    mode: HTML5
 #  #这个是关键，放开springboot对静态资源的拦截
 #  mvc:
 #    static-path-pattern: /static/**

@@ -56,7 +56,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，
         // 2分钟内不会重复执行该方法
         User userInfo = userMapper.selectByUsername(username);
-        System.out.println(" 当前登录用户: --->>  userInfo="+userInfo.toString());
+        // System.out.println(" 当前登录用户: --->>  userInfo="+userInfo.toString());
         if(userInfo == null){
             return null;
         }

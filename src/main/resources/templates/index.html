@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--<script type="text/javascript" th:src="@{js/jquery.min.js}"></script>-->
+    <!--<script type="text/javascript">-->
+        <!--alert("测试")-->
+        <!--$.ajax({-->
+            <!--url:"/worker/taskList",-->
+            <!--type:"get",-->
+            <!--success:function (data) {-->
+                <!--$("#div2").html(data);-->
+                <!--console.log(data)-->
+            <!--}-->
+        <!--});-->
+    <!--</script>-->
 </head>
 <body>
     HELLO SPRING BOOT!
+    <!--<h4>当前登录的用户信息是:</h4>-->
+    <!--<input type="button" value="获取数据" id="get"/>-->
+    <!--<table id="div2" th:fragment="div2">-->
+        <!--<tr>-->
+            <!--<td>任务编号</td>-->
+            <!--<td>申请日期</td>-->
+            <!--<td>地点</td>-->
+            <!--<td>任务状态</td>-->
+        <!--</tr>-->
+        <!--<tr th:each="task:${taskList}">-->
+            <!--<td th:text="${task.taskNumber}"></td>-->
+            <!--<td th:text="${task.taskDate}"></td>-->
+            <!--<td th:text="${task.taskPoint}"></td>-->
+            <!--<td th:text="${task.taskStatus}"></td>-->
+        <!--</tr>-->
+    <!--</table>-->
 </body>
 </html>

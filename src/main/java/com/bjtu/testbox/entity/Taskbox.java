@@ -1,6 +1,8 @@
 package com.bjtu.testbox.entity;
 
-public class Taskbox {
+import java.io.Serializable;
+
+public class Taskbox implements Serializable {
     private int taskBoxId;
     private int taskId;
     private int boxId;

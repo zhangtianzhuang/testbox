@@ -25,19 +25,19 @@ public class UserController {
 
     @RequestMapping("getApprover/{id}")
     public Approver GetUser(@PathVariable int id) {
-        return userService.select(id);
+        return null;
     }
 
     @RequestMapping("getWorker/{id}")
     public Worker GetWorker(@PathVariable int id) {
-        return userService.selectWorker(id);
+        return null;
     }
 
     @RequestMapping(value = "get", method = RequestMethod.GET)
     public User GetUser(HttpServletRequest request,
                         @RequestParam(value = "id", required = true,
                                 defaultValue = "1") int id) {
-        return userService.Sel(id);
+        return null;
     }
 
     @RequestMapping("get/{username}")

@@ -17,7 +17,7 @@ public class TestboxTool {
         return currentTime;
     }
 
-    public static String currentTimeString(){
+    public static String currentTimeString() {
         return currentTimeString("yyyyMMdd");
     }
 
@@ -30,7 +30,7 @@ public class TestboxTool {
         return String.valueOf(strings);
     }
 
-    public static String randomNumber(int n){
+    public static String randomNumber(int n) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < n; i++) {
             sb.append(new Random().nextInt(10));
@@ -38,10 +38,11 @@ public class TestboxTool {
         return sb.toString();
     }
 
-    public static String randomTaskNum(){
-        return currentTimeString()+randomNumber(4)+randomString(4);
+    public static String randomTaskNum() {
+        return "T" + currentTimeString() + randomNumber(4) + randomString(4);
     }
 
     public static void main(String[] args) {
+        System.out.println(randomTaskNum());
     }
 }

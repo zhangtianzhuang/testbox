@@ -1,6 +1,8 @@
 package com.bjtu.testbox.entity;
 
-public class Worker {
+import java.io.Serializable;
+
+public class Worker implements Serializable {
     private int workerId;
     private String workerName;
     private String workerNumber;

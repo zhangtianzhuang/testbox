@@ -1,6 +1,8 @@
 package com.bjtu.testbox.entity;
 
-public class Examine {
+import java.io.Serializable;
+
+public class Examine implements Serializable {
     private int examineId;
     private int approverId;
     private int taskId;
