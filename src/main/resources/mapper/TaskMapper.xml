@@ -139,7 +139,7 @@
     <!-- 查询某个状态条件的所有任务 -->
     <select id="queryTaskByStatus" resultMap="simpleTaskMap" parameterType="int">
         select * from task
-        where taskStatus = #{taskStatus}
+        where task_status = #{taskStatus}
         order by task_date desc;
     </select>
 

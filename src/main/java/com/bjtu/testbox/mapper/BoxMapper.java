@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BoxMapper {
 
@@ -31,6 +33,9 @@ public interface BoxMapper {
 
     @Select("select box_id from box where box_id = #{boxId}")
     Integer selectBoxId(int boxId);
+
+    @Select("select * from box where box_type = #{boxType}")
+    List<Box> selectBoxByType(int boxType);
 
     // +++++++++++++++++ insert
 
