@@ -25,6 +25,10 @@ public interface AdminService {
      */
     public List<Task> showSimpleTasksByStatus(int taskStatus);
 
-
+    /**
+     * 根据任务的ID号查询任务的详细信息
+     * @param taskId
+     * @return
+     */
     public Task queryTaskDetial(int taskId);
 }

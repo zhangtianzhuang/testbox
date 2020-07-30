@@ -3,6 +3,7 @@ package com.bjtu.testbox.controller;
 import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.AdminService;
+import com.bjtu.testbox.service.BoxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,13 +38,17 @@ public class AdminController {
         mapStatusShow.put(5,"已完成");
         mapStatusShow.put(6,"被拒绝");
     }
+
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private BoxService boxService;
 
 
     @RequestMapping("/jobadmin")
     public String taskAdmin(Model model){
-        System.out.println("管理员界面");
+
         List<Map<String, Object>> statusNum = adminService.getTaskStatusNum();
         Map<String,Integer> statusNumStand = new HashMap<String, Integer>();
         // 初始化为计数为0
@@ -59,18 +64,20 @@ public class AdminController {
         }
 
         model.addAllAttributes(statusNumStand);
+        System.out.println(statusNumStand);
         int sumTask = 0;
         for(String key:statusNumStand.keySet()){
             sumTask += statusNumStand.get(key);
         }
         model.addAttribute("sumTask",sumTask);
-        System.out.println("状态数查询完毕");
+        System.out.println(sumTask);
 
-        // 根据状态码显示的任务信息
+        // 显示所有任务
         List<Task> taskInfo = adminService.showSimpleTasks();
 
         // 整理，只要任务ID、申请人姓名、申请日期、工作地点、任务状态
         List<Map> taskList = new ArrayList<>();
+
         for(Task task: taskInfo){
             Map<String,String> taskMap = new HashMap<>();
             taskMap.put("taskKeyID",String.valueOf(task.getTaskId()));
@@ -84,14 +91,14 @@ public class AdminController {
             taskList.add(taskMap);
         }
         model.addAttribute("taskList",taskList);
-        System.out.println("查询结果完毕");
+        System.out.println(taskList);
         return "adminUI/jobadmin";
     }
 
     @RequestMapping("/jobadmin/status")
     public String showJobByStatus(Model model,@RequestParam(value = "statusCode") int statusCode){
         System.out.println("ajax请求:statusCode="+statusCode);
-        List<Task> taskInfo = new ArrayList<>();
+        List<Task> taskInfo;
         if (statusCode > 0 && statusCode < 7){
             taskInfo = adminService.showSimpleTasksByStatus(statusCode);
         }else {
@@ -113,7 +120,7 @@ public class AdminController {
             taskList.add(taskMap);
         }
         model.addAttribute("taskList",taskList);
-        return "adminUI/jobadmin::resultbystatus";
+        return "adminUI/jobadmin::queryresult";
     }
 
     @RequestMapping("/jobinfo")
@@ -152,5 +159,43 @@ public class AdminController {
         taskInfo.desc = task.getTaskDesc();
         model.addAttribute("taskinfo",taskInfo);
         return "adminUI/jobinfo";
+    }
+
+    @RequestMapping("/boxadmin")
+    public String boxAdmin(Model model){
+        // 查询所有试验箱的信息，将试验箱的编号、状态列表加入到model中
+        class BoxInfo{
+            public String boxID;
+            public int boxStatus;
+            public BoxInfo(String id,int status){
+                this.boxID=id;
+                this.boxStatus=status;
+            }
+        }
+        // 交流道岔型 1
+        List<BoxInfo> DJList = new ArrayList<>();
+        for(Box box: boxService.queryBoxByType(1)){
+            BoxInfo boxInfo = new BoxInfo(box.getBoxNumber(),box.getBoxStatus());
+            DJList.add(boxInfo);
+        }
+
+        // 直流道岔型 0
+        List<BoxInfo> DZList = new ArrayList<>();
+        for(Box box: boxService.queryBoxByType(0)){
+            BoxInfo boxInfo = new BoxInfo(box.getBoxNumber(),box.getBoxStatus());
+            DZList.add(boxInfo);
+        }
+
+        // 轨道电路型 2
+        List<BoxInfo> GWList = new ArrayList<>() ;
+        for(Box box: boxService.queryBoxByType(2)){
+            BoxInfo boxInfo = new BoxInfo(box.getBoxNumber(),box.getBoxStatus());
+            GWList.add(boxInfo);
+        }
+
+        model.addAttribute("DJList",DJList);
+        model.addAttribute("DZList",DZList);
+        model.addAttribute("GWList",GWList);
+        return "adminUI/boxadmin";
     }
 }
