@@ -53,7 +53,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         String username = (String)token.getPrincipal();
         System.out.println(token.getCredentials().toString());
         //通过username从数据库中查找 User对象，如果找到，没找到.
-        //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
+        //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，
+        // 2分钟内不会重复执行该方法
         User userInfo = userMapper.selectByUsername(username);
         System.out.println(" 当前登录用户: --->>  userInfo="+userInfo.toString());
         if(userInfo == null){
