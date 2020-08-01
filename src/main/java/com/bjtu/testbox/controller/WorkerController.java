@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/workers")
 @Controller
+//@RequestMapping("/workers")
+//@RequiresRoles("worker")
 public class WorkerController {
 
     private static Logger logger = LoggerFactory.getLogger(WorkerController.class);
@@ -31,23 +32,41 @@ public class WorkerController {
     private UserService userService;
 
     /**
+     * 工人UI的入口
+     */
+    @RequestMapping("/workers")
+    public String workersUI(){
+        return "workerUI/taskapply";
+    }
+
+    /**
+     * 测试前端发送测试表单
+     * @return
+     */
+    public String workerApplyTest(){
+
+        return "workerUI/apply_success";
+    };
+    /**
      * 工人申请任务
      *
      * @param task
      * @param boxes
      * @return
      */
-    @RequestMapping(value = "/applyTask", method = RequestMethod.POST)
+    @RequestMapping(value = "/workers/task", method = RequestMethod.POST)
     public String applyTask(Task task, String boxes) {
+        System.out.println(task);
+        return "workerUI/apply_success";
         // 判断参数是否合法
-        if (task.getTaskName() != null && task.getTaskWorkerName() != null
-                && task.getTaskArea() != null && task.getTaskPoint() != null) {
-            logger.info(task.toString());
-            int i = workerService.applyTask(task);
-            if (i == 1)
-                return "apply_success";
-        }
-        return "apply_failure";
+//        if (task.getTaskName() != null && task.getTaskWorkerName() != null
+//                && task.getTaskArea() != null && task.getTaskPoint() != null) {
+//            logger.info(task.toString());
+//            int i = workerService.applyTask(task);
+//            if (i == 1)
+//                return "apply_success";
+//        }
+//        return "apply_failure";
     }
 
     /**
@@ -55,6 +74,7 @@ public class WorkerController {
      *
      * @return
      */
+    @ApiOperation(value = "工人查询个人信息", notes = "说明notes", produces = "application/json")
     @RequestMapping(value = "/personInfo")
     public String queryWorkerPersonInfo(Model model) {
         User user = userService.obtainUserDetailInfo();
@@ -96,8 +116,8 @@ public class WorkerController {
     }
 
     @RequestMapping("/taskStatusNumber")
-    @ResponseBody
     public String taskStatusNumber() {
+
         return null;
     }
 }
