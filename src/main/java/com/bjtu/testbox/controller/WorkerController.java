@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping("/workers")
-//@RequiresRoles("worker")
+@Controller
 public class WorkerController {
 
     private static Logger logger = LoggerFactory.getLogger(WorkerController.class);
