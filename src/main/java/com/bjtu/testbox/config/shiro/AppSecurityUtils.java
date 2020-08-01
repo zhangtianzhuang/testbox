@@ -1,4 +1,4 @@
-package com.bjtu.testbox.config.shiroconfig;
+package com.bjtu.testbox.config.shiro;
 
 import com.bjtu.testbox.entity.User;
 import org.apache.shiro.SecurityUtils;

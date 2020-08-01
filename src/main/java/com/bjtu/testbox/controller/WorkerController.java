@@ -1,30 +1,24 @@
 package com.bjtu.testbox.controller;
 
-import com.bjtu.testbox.config.shiroconfig.AppSecurityUtils;
+import com.bjtu.testbox.config.api.Code;
+import com.bjtu.testbox.config.api.R;
+import com.bjtu.testbox.config.api.ResultBean;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.User;
-import com.bjtu.testbox.entity.Worker;
 import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "工人Controller API接口")
-@Controller
-@RequestMapping("/worker")
+@RequestMapping("/workers")
 //@RequiresRoles("worker")
 public class WorkerController {
 
@@ -61,7 +55,6 @@ public class WorkerController {
      *
      * @return
      */
-    @ApiOperation(value = "工人查询个人信息", notes = "说明notes", produces = "application/json")
     @RequestMapping(value = "/personInfo")
     public String queryWorkerPersonInfo(Model model) {
         User user = userService.obtainUserDetailInfo();
@@ -95,17 +88,16 @@ public class WorkerController {
         return "index::div2";
     }
 
-    @RequestMapping("/taskDetail")
+    @GetMapping("/taskDetail")
     public String queryTaskDetail(@RequestParam(value = "taskId", required = true) int taskId,
-                                  Model model) {
+                             Model model) {
         Task task = workerService.showTaskDetail(taskId);
-        model.addAttribute("task", task);
-        return "";
+        return null;
     }
 
     @RequestMapping("/taskStatusNumber")
+    @ResponseBody
     public String taskStatusNumber() {
-
         return null;
     }
 }

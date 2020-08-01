@@ -1,7 +1,7 @@
 package com.bjtu.testbox.service.impl;
 
 import com.bjtu.testbox.config.constant.Status;
-import com.bjtu.testbox.config.shiroconfig.AppSecurityUtils;
+import com.bjtu.testbox.config.shiro.AppSecurityUtils;
 import com.bjtu.testbox.entity.Approver;
 import com.bjtu.testbox.entity.User;
 import com.bjtu.testbox.entity.Worker;

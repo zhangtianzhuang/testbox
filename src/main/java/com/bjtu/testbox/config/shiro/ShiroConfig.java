@@ -1,4 +1,4 @@
-package com.bjtu.testbox.config.shiroconfig;
+package com.bjtu.testbox.config.shiro;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
