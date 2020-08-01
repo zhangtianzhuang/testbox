@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -10,13 +10,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
   <!-- Font Awesome Icons 图标风格-->
-  <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="static/plugins/fontawesome-free/css/all.min.css">
 
   <!-- Theme style 主题样式-->
-  <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="static/dist/css/adminlte.min.css">
 
   <!-- 日期表样式 -->
-  <link rel="stylesheet" href="../../static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" href="static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
 
 </head>
@@ -32,19 +32,6 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-
-<!--      &lt;!&ndash; 界面跳转 &ndash;&gt;-->
-<!--      <li class="nav-item d-none d-sm-inline-block">-->
-<!--        <a href="#" class="nav-link">成都</a>-->
-<!--      </li>-->
-
-<!--      <li class="nav-item d-none d-sm-inline-block">-->
-<!--        <a href="#" class="nav-link">重庆</a>-->
-<!--      </li>-->
-
-<!--      <li class="nav-item d-none d-sm-inline-block">-->
-<!--        <a href="#" class="nav-link">贵阳</a>-->
-<!--      </li>-->
     </ul>
 
     <!-- 顶端右侧链接 私信、通知、选择 -->
@@ -148,8 +135,8 @@
   <!-- 左侧标签栏 -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="taskapply.html" class="brand-link">
-      <img src="../../static/dist/img/ChengduLogo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="#" class="brand-link">
+      <img src="static/dist/img/ChengduLogo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">模拟装置管理系统</span>
     </a>
 
@@ -159,7 +146,7 @@
       <!-- 用户图标和信息 -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../../static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block"> 张三 </a>
@@ -184,7 +171,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="taskapply.html" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>提交任务申请</p>
                 </a>
@@ -246,16 +233,6 @@
         <div class="card card-default" id="apply">
           <div class="card-header">
             <h3 class="card-title">填写任务申请表</h3>
-
-<!--            &lt;!&ndash; 缩小键、放大键 &ndash;&gt;-->
-<!--            <div class="card-tools">-->
-<!--              <button type="button" class="btn btn-tool" data-card-widget="collapse">-->
-<!--                <i class="fas fa-minus"></i>-->
-<!--              </button>-->
-<!--              <button type="button" class="btn btn-tool" data-card-widget="remove">-->
-<!--                <i class="fas fa-times"></i>-->
-<!--              </button>-->
-<!--            </div>-->
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -276,7 +253,7 @@
                 </div>
                 <div class="form-group">
                   <label>任务描述</label>
-                  <textarea class="form-control" rows="3" placeholder="一些描述信息..."></textarea>
+                  <textarea class="form-control" id="taskDesc" rows="3" placeholder="一些描述信息..."></textarea>
                 </div>
               </div>
               <!-- /.col -->
@@ -288,7 +265,7 @@
                   <!-- 日历暂时调不出来 -->
 <!--                  <div class="input-group date" id="reservationdate" data-target-input="nearest">-->
                   <div class="input-group date" id="getDate" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#getDate"/>
+                    <input type="text" id="borrowDate" class="form-control datetimepicker-input" data-target="#getDate"/>
                     <div class="input-group-append" data-target="#getDate" data-toggle="datetimepicker">
                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
@@ -299,7 +276,7 @@
                   <label>归还日期</label>
                   <!-- 日历暂时调不出来 -->
                   <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                    <input type="text" id="returnDate" class="form-control datetimepicker-input" data-target="#reservationdate"/>
                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
@@ -429,7 +406,6 @@
               <dd class="col-sm-8">20200517AZTBDSA</dd>
               <dt class="col-sm-4">申请人</dt>
               <dd class="col-sm-8">张三</dd>
-<!--              <dd class="col-sm-8 offset-sm-4">Donec id elit non mi porta gravida at eget metus.</dd>-->
               <dt class="col-sm-4">所属工区</dt>
               <dd class="col-sm-8">成都</dd>
               <dt class="col-sm-4">工程名称</dt>
@@ -489,21 +465,19 @@
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
-<script src="../../static/plugins/jquery/jquery.min.js"></script>
+<script src="static/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <!-- 一些动态响应 -->
-<script src="../../static/dist/js/adminlte.min.js"></script>
+<script src="static/dist/js/adminlte.min.js"></script>
 
 <!-- InputMask -->
 <!-- 选择日期需要-->
-<script src="../../static/plugins/moment/moment.min.js"></script>
-<script src="../../static/plugins/inputmask/jquery.inputmask.min.js"></script>
-<!--&lt;!&ndash; date-range-picker &ndash;&gt;-->
-<!--<script src="plugins/daterangepicker/daterangepicker.js"></script>-->
+<script src="static/plugins/moment/moment.min.js"></script>
+<script src="static/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="../../static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <script>
   $(document).ready(function(){
@@ -511,6 +485,30 @@
     $("#submitapp").click(function(){
       $("#apply").toggle();
       $("#applysuccess").css("display","block");
+
+      // ajax前端发送数据
+      var applyForm = {
+        "taskName": $('#projectName').val(),
+        "workerName": "张三",
+        "taskArea": $('#workArea').val(),
+        "taskPoint": $('#targetRegion').val(),
+        "borrowDate": $('#borrowDate').val(),
+        "returnDate": $('#returnDate').val(),
+        "taskDesc": $('#taskDesc').val(),
+        "boxes": $('#boxList').val(),
+        "taskWorkerId": "001"
+        };
+      $.ajax({
+        url: window.location.pathname + "/task",
+        type:'POST',
+        dataType:'json',
+        contentType:'application/json;charset=UTF-8',
+        data:JSON.stringify(applyForm),
+        success:function(data){
+          console.log(data);
+        }
+      });
+
     });
     // 确认申请，隐藏表单信息，回到清空后的申请界面
     $("#confirm").click(function () {
