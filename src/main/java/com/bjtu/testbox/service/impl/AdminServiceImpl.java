@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
          * 将不同状态码对具体状态名做映射
          * 对于不存在的状态设置为0
          */
-        return taskMapper.queryTaskStatusNum();
+        return taskMapper.queryTaskStatusNum(-1);
     }
 
 

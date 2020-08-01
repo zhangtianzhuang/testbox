@@ -8,10 +8,13 @@ import com.bjtu.testbox.mapper.TaskMapper;
 import com.bjtu.testbox.mapper.WorkerMapper;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.TestboxTool;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
@@ -62,5 +65,22 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public Task showTaskDetail(int taskId) {
         return taskMapper.queryTaskDetail(taskId);
+    }
+
+
+    /**
+     * 查询ID为@workerId的工人所申请所有任务状态以及数量
+     * @param workerId
+     * @return 以Map数据结构返回{状态名,数量}，状态名在TestboxTool类中定义
+     */
+    public Map<String, Integer> selectTaskStatusNumber(int workerId){
+        List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum(workerId);
+        Map<String, Integer> hashMap = new HashMap<>();
+        for (Map<String, Object> map : maps) {
+            Integer num = Integer.valueOf(String.valueOf(map.get("num")));
+            Integer status = Integer.valueOf(String.valueOf(map.get("status")));
+            hashMap.put(TestboxTool.mapStatusCode.get(status), num);
+        }
+        return hashMap;
     }
 }

@@ -5,6 +5,7 @@ import com.bjtu.testbox.entity.Worker;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface WorkerService {
 
@@ -41,4 +42,6 @@ public interface WorkerService {
      * @return
      */
     Task showTaskDetail(int taskId);
+
+    public Map<String, Integer> selectTaskStatusNumber(int workerId);
 }

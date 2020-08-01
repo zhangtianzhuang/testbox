@@ -130,9 +130,14 @@
     </update>
 
     <!-- 查询所有任务处于各个状态的任务数 -->
-    <select id="queryTaskStatusNum" resultType="java.util.Map">
+    <select id="queryTaskStatusNum" resultType="java.util.Map" parameterType="int">
         select task_status as status, count(*) as num
         from task
+        <where>
+            <if test="workerId!=-1">
+                task.task_worker_id = #{workerId}
+            </if>
+        </where>
         group by task_status
     </select>
 

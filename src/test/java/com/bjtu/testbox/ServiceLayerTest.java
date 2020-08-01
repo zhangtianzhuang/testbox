@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,6 +58,13 @@ public class ServiceLayerTest {
         Task task = workerService.showTaskDetail(5);
         System.out.println(task);
     }
+
+    @Test
+    public void queryTaskStatusNumber(){
+        Map<String, Integer> stringIntegerMap = workerService.selectTaskStatusNumber(-1);
+        System.out.println(stringIntegerMap);
+    }
+
 
     /////////////////////// Worker ///////////////////////////
 
