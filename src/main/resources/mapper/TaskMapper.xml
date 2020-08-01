@@ -29,8 +29,8 @@
             <if test="taskCity!=null">
                 t.task_city = #{taskCity}
             </if>
-            <if test="bindUser!=-1">
-                and t.task_worker_id = #{bindUser}
+            <if test="workerId!=-1">
+                and t.task_worker_id = #{workerId}
             </if>
             <if test="taskStatus!=-1">
                 and t.task_status = #{taskStatus}

@@ -48,4 +48,14 @@ class ControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
     }
+
+    @Test
+    public void test_queryTaskList() throws Exception{
+        MvcResult mvcResult = mockMvc.perform(
+                MockMvcRequestBuilders.get("/approvers/taskList")
+                        .characterEncoding("utf-8")
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
 }
