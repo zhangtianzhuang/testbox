@@ -3,6 +3,7 @@ package com.bjtu.testbox.controller;
 import com.bjtu.testbox.config.api.Code;
 import com.bjtu.testbox.config.api.R;
 import com.bjtu.testbox.config.api.ResultBean;
+import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.User;
 import com.bjtu.testbox.service.UserService;
@@ -53,7 +54,6 @@ public class WorkerController {
      * 工人申请任务
      *
      * @param task
-     * @param boxes
      * @return
      */
     @PostMapping(value = "/workers/task")
@@ -103,13 +103,22 @@ public class WorkerController {
         List<Task> tasks = workerService.showWorkerTask(1, taskCity, taskStatus,
                 taskPoint, startDate, endDate);
         model.addAttribute("taskList", tasks);
-        return "index::div2";
+        return "index";
+    }
+
+
+    @GetMapping("/workers/boxes")
+    public String queryUsableBox(Model model){
+        List<Box> boxes = workerService.selectUsableBox();
+        model.addAttribute("usable_boxes", boxes);
+        return "index";
     }
 
     @GetMapping("/workers/taskDetail")
     public String queryTaskDetail(@RequestParam(value = "taskId", required = true) int taskId,
                              Model model) {
         Task task = workerService.showTaskDetail(taskId);
+        model.addAttribute("task_detail", task);
         return null;
     }
 
