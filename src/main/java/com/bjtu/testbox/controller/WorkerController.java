@@ -40,7 +40,7 @@ public class WorkerController {
      */
     @RequestMapping("/workers")
     public String workersUI(){
-        return "index";
+        return "workerUI/taskapply";
     }
 
     @RequestMapping("/workers/boxes")

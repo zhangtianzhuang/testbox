@@ -297,13 +297,6 @@
                   <label>试验箱</label>
                   <div class="select2-blue">
                     <select class="select2" id="boxList" multiple="multiple" data-placeholder="选择试验箱编号" style="width: 100%">
-                      <option>DJ-1</option>
-                      <option>DJ-2</option>
-                      <option>DJ-3</option>
-                      <option>DZ-1</option>
-                      <option>DZ-2</option>
-                      <option>GW-1</option>
-                      <option>GW-2</option>
                     </select>
                   </div>
                 </div>
@@ -443,28 +436,6 @@
   });
 
   $(document).ready(function(){
-    var data = [
-      {
-        id: 0,
-        text: 'enhancement'
-      },
-      {
-        id: 1,
-        text: 'bug'
-      },
-      {
-        id: 2,
-        text: 'duplicate'
-      },
-      {
-        id: 3,
-        text: 'invalid'
-      },
-      {
-        id: 4,
-        text: 'wontfix'
-      }
-    ];
     // 初始化多选框主题
     $('#boxList').select2({
       // 绑定服务器的json数据
@@ -473,11 +444,11 @@
         type:'GET',
         dataType: 'json',
         // data: function(){ return {'projectId':$('#projectSel').val()}},
-        processResults: function (data) {
-          return {
-            results: data.result // 返回的data转换格式
-          };
-        }
+        // processResults: function (data) {
+        //   return {
+        //     results: data.result // 返回的data转换格式
+        //   };
+        // }
       }
     });
 
@@ -508,12 +479,14 @@
       
 
       // 将试验箱列表select2转成json列表
-      var boxesStr = $('#boxList').val();
+      var boxesID = $('#boxList').val();
+      var boxedNum = $('#boxList').text();
+
       var boxesList = new Array();
-      for (var i = 0; i < boxesStr.length; i++) {
+      for (var i = 0; i < boxesID.length; i++) {
         boxesList.push({
-          "boxNumber": boxesStr[i],
-          "boxID": 1
+          "boxNumber": $("#boxList").select2("data")[i].text,
+          "boxId": boxesID[i]
         });
       }
 
