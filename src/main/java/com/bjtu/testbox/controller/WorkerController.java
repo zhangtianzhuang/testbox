@@ -37,7 +37,12 @@ public class WorkerController {
      */
     @RequestMapping("/workers")
     public String workersUI(){
-        return "workerUI/taskapply";
+        return "index";
+    }
+
+    @RequestMapping("/workers/boxes")
+    public String workersboxes(){
+        return "index";
     }
 
     /**
@@ -53,7 +58,6 @@ public class WorkerController {
      * 工人申请任务
      *
      * @param task
-     * @param boxes
      * @return
      */
     @PostMapping(value = "/workers/task")
