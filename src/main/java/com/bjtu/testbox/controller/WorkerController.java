@@ -9,6 +9,7 @@ import com.bjtu.testbox.entity.User;
 import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.model.BoxOption;
+import com.bjtu.testbox.tools.model.BoxOption;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
@@ -39,7 +40,12 @@ public class WorkerController {
      */
     @RequestMapping("/workers")
     public String workersUI(){
-        return "workerUI/taskapply";
+        return "index";
+    }
+
+    @RequestMapping("/workers/boxes")
+    public String workersboxes(){
+        return "index";
     }
 
     /**

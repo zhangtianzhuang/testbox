@@ -18,6 +18,11 @@
   <!-- 日期表样式 -->
   <link rel="stylesheet" href="static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="static/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="static/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="static/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -290,81 +295,17 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>试验箱</label>
-                  <input type="text" class="form-control" id="boxList" placeholder="选择的试验箱编号，空格分开">
-                </div>
-
-                <div class="form-group card">
-                  <!--              <div class="card">-->
-                  <!-- TO DO List -->
-                  <div class="card-header">
-                    <h3 class="card-title">
-                      <i class="ion ion-clipboard mr-1"></i>
-                      选择要使用的试验箱
-                    </h3>
-
-                    <div class="card-tools">
-                      <ul class="pagination pagination-sm">
-                        <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-                      </ul>
-                    </div>
+                  <div class="select2-blue">
+                    <select class="select2" id="boxList" multiple="multiple" data-placeholder="选择试验箱编号" style="width: 100%">
+                      <option>DJ-1</option>
+                      <option>DJ-2</option>
+                      <option>DJ-3</option>
+                      <option>DZ-1</option>
+                      <option>DZ-2</option>
+                      <option>GW-1</option>
+                      <option>GW-2</option>
+                    </select>
                   </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                    <ul class="todo-list" data-widget="todo-list">
-                      <li>
-                        <!-- drag handle -->
-                        <span class="handle">
-                          <i class="fas fa-briefcase"></i>
-                        </span>
-                        <!-- checkbox -->
-                        <div  class="icheck-primary d-inline ml-2"> <!-- 勾选框 一行显示 大小 -->
-                          <input type="checkbox" value="DJ-1" name="todo1" id="todoCheck1">
-                          <label for="todoCheck1"></label>
-                        </div>
-                        <!-- todo text -->
-                        <span class="text">DJ-1</span>
-                      </li>
-                      <li>
-                    <span class="handle">
-                      <i class="fas fa-briefcase"></i>
-                    </span>
-                        <div  class="icheck-primary d-inline ml-2">
-                          <input type="checkbox" value="DJ-2" name="todo2" id="todoCheck2">
-                          <label for="todoCheck2"></label>
-                        </div>
-                        <span class="text">DJ-2</span>
-                      </li>
-                      <li>
-                    <span class="handle">
-                      <i class="fas fa-briefcase"></i>
-                    </span>
-                        <div  class="icheck-primary d-inline ml-2">
-                          <input type="checkbox" value="DZ-1" name="todo3" id="todoCheck3">
-                          <label for="todoCheck3"></label>
-                        </div>
-                        <span class="text">DZ-1</span>
-                      </li>
-                      <li>
-                    <span class="handle">
-                      <i class="fas fa-briefcase"></i>
-                    </span>
-                        <div  class="icheck-primary d-inline ml-2">
-                          <input type="checkbox" value="GW-1" name="todo4" id="todoCheck4">
-                          <label for="todoCheck4"></label>
-                        </div>
-                        <span class="text">GW-1</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer clearfix">
-                    <button type="button" class="btn btn-info float-right"  onclick="addbox()"><i class="fas fa-plus"></i> 添加试验箱 </button>
-                  </div>
-                  <!-- /.card -->
                 </div>
               </div>
             </div>
@@ -472,14 +413,19 @@
 <!-- 一些动态响应 -->
 <script src="static/dist/js/adminlte.min.js"></script>
 
-<!-- InputMask -->
-<!-- 选择日期需要-->
+<!-- moment -->
+<!-- 日期转换 -->
 <script src="static/plugins/moment/moment.min.js"></script>
 <script src="static/plugins/moment/moment-with-locales.min.js"></script>
 
-<script src="static/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Select2 -->
+<script src="static/plugins/select2/js/select2.full.min.js"></script>
+
+<!-- bootstrap color picker -->
+<script src="static/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
 
 <script>
   $('#getDate').datetimepicker({
@@ -496,8 +442,46 @@
     autoclose: true,                  //Boolean. 默认值：false。当选择一个日期之后是否立即关闭此日期时间选择器。
   });
 
-
   $(document).ready(function(){
+    var data = [
+      {
+        id: 0,
+        text: 'enhancement'
+      },
+      {
+        id: 1,
+        text: 'bug'
+      },
+      {
+        id: 2,
+        text: 'duplicate'
+      },
+      {
+        id: 3,
+        text: 'invalid'
+      },
+      {
+        id: 4,
+        text: 'wontfix'
+      }
+    ];
+    // 初始化多选框主题
+    $('#boxList').select2({
+      // 绑定服务器的json数据
+      ajax: {
+        url: window.location.pathname + "/boxes",
+        type:'GET',
+        dataType: 'json',
+        // data: function(){ return {'projectId':$('#projectSel').val()}},
+        processResults: function (data) {
+          return {
+            results: data.result // 返回的data转换格式
+          };
+        }
+      }
+    });
+
+
     // 提交申请，隐藏申请界面，显示申请表单
     $("#submitapp").click(function(){
       $("#apply").toggle();
@@ -523,11 +507,14 @@
       // console.log(date);
       
 
-      // 将试验箱列表转成json列表
-      var boxesStr = $('#boxList').val().split(" ");
+      // 将试验箱列表select2转成json列表
+      var boxesStr = $('#boxList').val();
       var boxesList = new Array();
       for (var i = 0; i < boxesStr.length; i++) {
-        boxesList.push({"boxNumber": boxesStr[i]});
+        boxesList.push({
+          "boxNumber": boxesStr[i],
+          "boxID": 1
+        });
       }
 
       var applyForm = {
