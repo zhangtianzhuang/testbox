@@ -2,6 +2,8 @@ package com.bjtu.testbox.tools;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class TestboxTool {
@@ -44,5 +46,27 @@ public class TestboxTool {
 
     public static void main(String[] args) {
         System.out.println(randomTaskNum());
+    }
+
+
+    public static final Map<Integer,String> mapStatusCode;
+    public static final Map<Integer,String> mapStatusShow;
+
+    static {
+        mapStatusCode = new HashMap<Integer, String>();
+        mapStatusCode.put(1,"checkpending1");    // 待一级审核
+        mapStatusCode.put(2,"checkpending2");    // 待二级审核
+        mapStatusCode.put(3,"standingby");       // 待领用
+        mapStatusCode.put(4,"notreturn");        // 待归还
+        mapStatusCode.put(5,"completed");        // 已完成
+        mapStatusCode.put(6,"rejected");         // 被拒绝
+
+        mapStatusShow = new HashMap<>();
+        mapStatusShow.put(1,"待一级审核");
+        mapStatusShow.put(2,"待二级审核");
+        mapStatusShow.put(3,"待领用");
+        mapStatusShow.put(4,"待归还");
+        mapStatusShow.put(5,"已完成");
+        mapStatusShow.put(6,"被拒绝");
     }
 }

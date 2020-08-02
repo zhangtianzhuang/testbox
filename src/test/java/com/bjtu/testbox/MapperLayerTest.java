@@ -6,9 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +93,7 @@ public class MapperLayerTest {
 
     @Test
     public  void taskStatusNumTest(){
-        List<Map<String,Object>> statusCount = taskMapper.queryTaskStatusNum();
+        List<Map<String,Object>> statusCount = taskMapper.queryTaskStatusNum(-1);
         System.out.println(statusCount.get(0).get("num").getClass().getName());
     }
 
@@ -242,9 +242,13 @@ public class MapperLayerTest {
 
     @Test
     public void test_queryTaskStatusNum(){
-        List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum();
+        List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum(1);
+        Map<String, String> m = new HashMap<>();
         for (Map<String, Object> map : maps) {
-            System.out.println(map);
+            String num = String.valueOf(map.get("num"));
+            String status = String.valueOf(map.get("status"));
+            m.put(status, num);
         }
+        System.out.println(m);
     }
 }

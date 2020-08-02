@@ -4,6 +4,7 @@ import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.AdminService;
 import com.bjtu.testbox.service.BoxService;
+import com.bjtu.testbox.tools.TestboxTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,28 +17,6 @@ import java.util.*;
 
 @Controller
 public class AdminController {
-    // 查询所有任务的状态数目
-    static final Map<Integer,String> mapStatusCode;
-    static {
-        mapStatusCode = new HashMap<Integer, String>();
-        mapStatusCode.put(1,"checkpending1");    // 待一级审核
-        mapStatusCode.put(2,"checkpending2");    // 待二级审核
-        mapStatusCode.put(3,"standingby");       // 待领用
-        mapStatusCode.put(4,"notreturn");        // 待归还
-        mapStatusCode.put(5,"completed");        // 已完成
-        mapStatusCode.put(6,"rejected");         // 被拒绝
-    }
-
-    static final Map<Integer,String> mapStatusShow;
-    static {
-        mapStatusShow = new HashMap<>();
-        mapStatusShow.put(1,"待一级审核");
-        mapStatusShow.put(2,"待二级审核");
-        mapStatusShow.put(3,"待领用");
-        mapStatusShow.put(4,"待归还");
-        mapStatusShow.put(5,"已完成");
-        mapStatusShow.put(6,"被拒绝");
-    }
 
     @Autowired
     private AdminService adminService;
@@ -52,7 +31,7 @@ public class AdminController {
         List<Map<String, Object>> statusNum = adminService.getTaskStatusNum();
         Map<String,Integer> statusNumStand = new HashMap<String, Integer>();
         // 初始化为计数为0
-        for(String cate: mapStatusCode.values()){
+        for(String cate: TestboxTool.mapStatusCode.values()){
             statusNumStand.put(cate,0);
         }
 
@@ -60,17 +39,17 @@ public class AdminController {
         for(Map<String, Object> itea: statusNum){
             int statusCode = Integer.parseInt(String.valueOf(itea.get("status")));
             int statusCount = Integer.parseInt(String.valueOf(itea.get("num")));
-            statusNumStand.put(mapStatusCode.get(statusCode),statusCount);
+            statusNumStand.put(TestboxTool.mapStatusCode.get(statusCode),statusCount);
         }
 
         model.addAllAttributes(statusNumStand);
-
-
+        System.out.println("dddddddddddddd  " +statusNumStand);
         int sumTask = 0;
         for(String key:statusNumStand.keySet()){
             sumTask += statusNumStand.get(key);
         }
         model.addAttribute("sumTask",sumTask);
+        System.out.println(sumTask);
 
         // 显示所有任务
         List<Task> taskInfo = adminService.showSimpleTasks();
@@ -86,11 +65,12 @@ public class AdminController {
             Date date = new Date(task.getTaskDate());
             taskMap.put("approveDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
             taskMap.put("taskPoint",task.getTaskPoint());
-            String taskStatus = mapStatusShow.get(task.getTaskStatus());
+            String taskStatus = TestboxTool.mapStatusShow.get(task.getTaskStatus());
             taskMap.put("taskStatus",taskStatus);
             taskList.add(taskMap);
         }
         model.addAttribute("taskList",taskList);
+        System.out.println(taskList);
         return "adminUI/jobadmin";
     }
 
@@ -114,7 +94,7 @@ public class AdminController {
             taskMap.put("approveDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 //            taskMap.put("approveDate",String.valueOf(task.getTaskDate()));
             taskMap.put("taskPoint",task.getTaskPoint());
-            String taskStatus = mapStatusShow.get(task.getTaskStatus());
+            String taskStatus = TestboxTool.mapStatusShow.get(task.getTaskStatus());
             taskMap.put("taskStatus",taskStatus);
             taskList.add(taskMap);
         }

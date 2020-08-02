@@ -9,6 +9,7 @@ import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 //@RequestMapping("/workers")
-//@RequiresRoles("worker")
 public class WorkerController {
 
     private static Logger logger = LoggerFactory.getLogger(WorkerController.class);
@@ -52,21 +53,18 @@ public class WorkerController {
      * 工人申请任务
      *
      * @param task
+     * @param boxes
      * @return
      */
-    @RequestMapping(value = "/workers/task", method = RequestMethod.POST)
-    public String applyTask(Task task) {
-        System.out.println(task);
-        return "workerUI/apply_success";
+    @PostMapping(value = "/workers/task")
+    public String applyTask(@RequestBody Task task) {
         // 判断参数是否合法
-//        if (task.getTaskName() != null && task.getTaskWorkerName() != null
-//                && task.getTaskArea() != null && task.getTaskPoint() != null) {
-//            logger.info(task.toString());
-//            int i = workerService.applyTask(task);
-//            if (i == 1)
-//                return "apply_success";
-//        }
-//        return "apply_failure";
+        if (task.getTaskName() != null && task.getTaskWorkerName() != null
+                && task.getTaskArea() != null && task.getTaskPoint() != null) {
+            logger.info(task.toString());
+            int i = workerService.applyTask(task);
+        }
+        return "workerUI/apply_success";
     }
 
     /**
@@ -74,9 +72,8 @@ public class WorkerController {
      *
      * @return
      */
-    @ApiOperation(value = "工人查询个人信息", notes = "说明notes", produces = "application/json")
-    @RequestMapping(value = "/personInfo")
-    public String queryWorkerPersonInfo(Model model) {
+    @GetMapping(value = "/workers/personInfo")
+    public String queryWorkerPersonInfo(@Param("workerId") int workerId, Model model) {
         User user = userService.obtainUserDetailInfo();
         model.addAttribute("user", user);
         return "index::div1";
@@ -92,13 +89,14 @@ public class WorkerController {
      * @param endDate
      * @return
      */
-    @RequestMapping("/taskList")
+    @GetMapping("/workers/taskList")
     public String queryTaskList(
-            @RequestParam(value = "taskStatus", required = false, defaultValue = "0") Integer taskStatus,
-            @RequestParam(value = "taskPoint", required = false, defaultValue = "null") String taskPoint,
-            @RequestParam(value = "taskCity", required = false, defaultValue = "null") String taskCity,
-            @RequestParam(value = "startDate", required = false, defaultValue = "-1") long startDate,
-            @RequestParam(value = "endDate", required = false, defaultValue = "-1") long endDate,
+            @RequestParam(value = "taskStatus", defaultValue = "0") Integer taskStatus,
+            @RequestParam(value = "taskPoint", defaultValue = "null") String taskPoint,
+            @RequestParam(value = "taskCity", defaultValue = "null") String taskCity,
+            @RequestParam(value = "startDate", defaultValue = "-1") long startDate,
+            @RequestParam(value = "endDate", defaultValue = "-1") long endDate,
+            @RequestParam(value = "workerId", defaultValue = "-1") int workerId,
             Model model) {
 //        User user = userService.obtainUserDetailInfo();
 //        int id = user.getWorker().getWorkerId();
@@ -108,16 +106,17 @@ public class WorkerController {
         return "index::div2";
     }
 
-    @GetMapping("/taskDetail")
+    @GetMapping("/workers/taskDetail")
     public String queryTaskDetail(@RequestParam(value = "taskId", required = true) int taskId,
                              Model model) {
         Task task = workerService.showTaskDetail(taskId);
         return null;
     }
 
-    @RequestMapping("/taskStatusNumber")
-    public String taskStatusNumber() {
-
+    @GetMapping("/workers/taskStatusNumber")
+    public String taskStatusNumber(@Param("workerId")int workerId, Model model) {
+        Map<String, Integer> map = workerService.selectTaskStatusNumber(workerId);
+        model.addAllAttributes(map);
         return null;
     }
 }
