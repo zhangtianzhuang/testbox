@@ -43,19 +43,19 @@ public class WorkerController {
      * 测试前端发送测试表单
      * @return
      */
-    public String workerApplyTest(){
-
+    @PostMapping(value="/workers/taskTest",produces = "application/json;charset=UTF-8")
+    public String workerApplyTest(@RequestBody Task task){
+        System.out.println(task);
         return "workerUI/apply_success";
     };
     /**
      * 工人申请任务
      *
      * @param task
-     * @param boxes
      * @return
      */
     @RequestMapping(value = "/workers/task", method = RequestMethod.POST)
-    public String applyTask(Task task, String boxes) {
+    public String applyTask(Task task) {
         System.out.println(task);
         return "workerUI/apply_success";
         // 判断参数是否合法

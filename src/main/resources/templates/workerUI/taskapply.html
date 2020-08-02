@@ -47,7 +47,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="../../static/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="static/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -63,7 +63,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="../../static/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="static/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
@@ -79,7 +79,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="../../static/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="static/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
@@ -475,31 +475,78 @@
 <!-- InputMask -->
 <!-- 选择日期需要-->
 <script src="static/plugins/moment/moment.min.js"></script>
+<script src="static/plugins/moment/moment-with-locales.min.js"></script>
+
 <script src="static/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <script>
+  $('#getDate').datetimepicker({
+    fontAwesome:'font-awesome',       // 指定
+    locale: moment.locale("zh-cn"),   // 中文
+    format: 'YYYY-MM-DD HH:mm:00 A',  // 日期格式化
+    autoclose: true,                  // Boolean. 默认值：false。当选择一个日期之后是否立即关闭此日期时间选择器。
+  });
+
+  $('#reservationdate').datetimepicker({
+    fontAwesome:'font-awesome',        //指定
+    locale: moment.locale("zh-cn"),
+    format: 'YYYY-MM-DD HH:mm:00 A',  //日期格式化
+    autoclose: true,                  //Boolean. 默认值：false。当选择一个日期之后是否立即关闭此日期时间选择器。
+  });
+
+
   $(document).ready(function(){
     // 提交申请，隐藏申请界面，显示申请表单
     $("#submitapp").click(function(){
       $("#apply").toggle();
       $("#applysuccess").css("display","block");
 
-      // ajax前端发送数据
+      // 将日期转成moment后再转换成时间戳保存
+      var borrowDate = $('#borrowDate').val().split(" ");
+      var returnDate = $('#returnDate').val().split(" ");
+      
+
+
+      // // moment 转日期格式
+      // var mom = moment();
+      // var current = mom.format("YYYY-MM-DD HH:mm:ss");
+      // console.log(current);
+      //
+      // // moment 转时间戳
+      // var currentTimeStamp = mom.valueOf();
+      // console.log(currentTimeStamp);
+      //
+      // // 时间戳转日期格式
+      // var date = moment(currentTimeStamp).format("YYYY-MM-DD HH:mm:ss");
+      // console.log(date);
+      
+
+      // 将试验箱列表转成json列表
+      var boxesStr = $('#boxList').val().split(" ");
+      var boxesList = new Array();
+      for (var i = 0; i < boxesStr.length; i++) {
+        boxesList.push({"boxNumber": boxesStr[i]});
+      }
+
       var applyForm = {
         "taskName": $('#projectName').val(),
         "workerName": "张三",
         "taskArea": $('#workArea').val(),
         "taskPoint": $('#targetRegion').val(),
-        "borrowDate": $('#borrowDate').val(),
-        "returnDate": $('#returnDate').val(),
+        "borrowDate": moment(borrowDate[0]+" "+borrowDate[1]).valueOf(),  // 将bootstrap的时间表格式转换成时间戳
+                                                                          // 2020/08/01 23:17:00 晚上
+                                                                          // 去掉后缀的一个字符
+        "returnDate": moment(returnDate[0]+" "+returnDate[1]).valueOf(),
         "taskDesc": $('#taskDesc').val(),
-        "boxes": $('#boxList').val(),
-        "taskWorkerId": "001"
+        "boxes": boxesList,
+        "taskWorkerId": "001",
+        "taskDate": moment().valueOf()     //当前时间的时间戳
         };
+
       $.ajax({
-        url: window.location.pathname + "/task",
+        url: window.location.pathname + "/taskTest",
         type:'POST',
         dataType:'json',
         contentType:'application/json;charset=UTF-8',
@@ -508,8 +555,9 @@
           console.log(data);
         }
       });
-
     });
+
+
     // 确认申请，隐藏表单信息，回到清空后的申请界面
     $("#confirm").click(function () {
       resetAll();
@@ -536,8 +584,10 @@
       $(this).prop("checked",false);
     });
     // 将结果写入inputID对应的输入框中
-    $("#boxList").val(ids);
+    // 去掉最后的“ ”
+    $("#boxList").val(ids.trim());
   }
+
 </script>
 </body>
 </html>

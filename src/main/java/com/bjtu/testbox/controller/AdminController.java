@@ -64,13 +64,13 @@ public class AdminController {
         }
 
         model.addAllAttributes(statusNumStand);
-        System.out.println(statusNumStand);
+
+
         int sumTask = 0;
         for(String key:statusNumStand.keySet()){
             sumTask += statusNumStand.get(key);
         }
         model.addAttribute("sumTask",sumTask);
-        System.out.println(sumTask);
 
         // 显示所有任务
         List<Task> taskInfo = adminService.showSimpleTasks();
@@ -91,7 +91,6 @@ public class AdminController {
             taskList.add(taskMap);
         }
         model.addAttribute("taskList",taskList);
-        System.out.println(taskList);
         return "adminUI/jobadmin";
     }
 
