@@ -116,7 +116,7 @@ public class WorkerController {
     public String queryUsableBox(Model model){
         List<Box> boxes = workerService.selectUsableBox();
         model.addAttribute("usable_boxes", boxes);
-        return "index";
+        return "workerUI/taskapply::boxList";
     }
 
     @GetMapping("/workers/taskDetail")
