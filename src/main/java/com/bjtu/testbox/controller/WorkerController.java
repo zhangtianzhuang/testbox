@@ -70,6 +70,14 @@ public class WorkerController {
                 && task.getTaskArea() != null && task.getTaskPoint() != null) {
             logger.info(task.toString());
             int i = workerService.applyTask(task);
+            // 成功
+            if (i == 1){
+                // 可在这里做一些处理,给前台反馈
+            }
+            // 失败
+            else{
+                // 可在这里做一些处理,给前台反馈
+            }
         }
         return "workerUI/apply_success";
     }

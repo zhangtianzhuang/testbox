@@ -36,7 +36,7 @@ public class WorkerServiceImpl implements WorkerService {
         // 获取当前登录的工人信息
         Worker worker = workerMapper.selectById(AppSecurityUtils.obtainLoginedUser().getBindUser());
         // 系统自动设置字段
-        if (worker != null){
+        if (worker != null) {
             task.setTaskCity(worker.getWorkerCity());
             task.setTaskArea(worker.getWorkerArea());
             task.setTaskWorkerName(worker.getWorkerName());
@@ -45,8 +45,15 @@ public class WorkerServiceImpl implements WorkerService {
             task.setTaskWorkerId(worker.getWorkerId());
         }
         try {
-
+            // 查询任务表中ID最大值
+            int taskId = taskMapper.selectMaxId() + 1;
+            task.setTaskId(taskId);
             taskMapper.insertTask(task);
+            // 记录该任务使用的所有试验箱
+            for (Box box : task.getBoxes()) {
+                int boxId = box.getBoxId();
+                taskMapper.insertTaskBox(taskId, boxId);
+            }
         } catch (Exception e) {
             return -1;
         }

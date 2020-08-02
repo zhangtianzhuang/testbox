@@ -106,6 +106,12 @@ public class MapperLayerTest {
             System.out.println(t);
         }
     }
+
+    @Test
+    public void test_task_insertTaskBox(){
+        taskMapper.insertTaskBox(1, 2);
+    }
+
     //////////////////  Task   //////////////////////////
 
 
