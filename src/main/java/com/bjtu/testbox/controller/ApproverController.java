@@ -9,15 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/approvers")
+//@RequestMapping("/approvers")
 public class ApproverController {
 
     private static final String TAG = "ApproverController";
@@ -25,6 +22,30 @@ public class ApproverController {
 
     @Autowired
     private ApproverService approverService;
+
+    /**
+     * 审批者主界面
+     * @return
+     */
+    @RequestMapping("/approver")
+    public String approverUITest(){
+        return "approverUI/re-check";
+    }
+
+    /**
+     * 测试审批表单的ajax请求
+     * @return
+     */
+    @GetMapping("/approver/taskListTest")
+    @ResponseBody
+    public String approverTaskListTest(){
+        String datastr = "{ \"data\":[" +
+                "{ \"taskId\" : 25543254345325, \"approverName\" : \"张三\", \"approveDate\" : 12288087, \"projectArea\" : false, \"taskStatus\" : 0 }, " +
+                "{ \"taskId\" : 43242354325432, \"approverName\" : \"张三\", \"approveDate\" : 37601280, \"projectArea\" : false, \"taskStatus\" : 1 }, " +
+                "{ \"taskId\" : 35432543254325, \"approverName\" : \"张三\", \"approveDate\" : 40783872, \"projectArea\" : true, \"taskStatus\" : 2 }, " +
+                "{ \"taskId\" : 45432543253253, \"approverName\" : \"张三\", \"approveDate\" : 29380608, \"projectArea\" : true, \"taskStatus\" : 3 }]}";
+        return datastr;
+    }
 
     /**
      * 审批者查询要审批的任务

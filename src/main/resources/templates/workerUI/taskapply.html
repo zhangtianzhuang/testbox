@@ -535,19 +535,6 @@
     });
   }
 
-  // 添加试验箱
-  function addbox() {
-    var ids = "";
-    //获取所有选中的值，将其用逗号隔开
-    $('input[type="checkbox"]:checked').each(function(index,value) {
-      ids += $(this).val() + " ";
-      $(this).prop("checked",false);
-    });
-    // 将结果写入inputID对应的输入框中
-    // 去掉最后的“ ”
-    $("#boxList").val(ids.trim());
-  }
-
 </script>
 </body>
 </html>
