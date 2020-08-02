@@ -3,6 +3,7 @@ package com.bjtu.testbox.service;
 import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
+import com.bjtu.testbox.tools.model.BoxOption;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,5 +56,5 @@ public interface WorkerService {
      * query usable box when a worker apply for a task.
      * @return
      */
-    List<Box> selectUsableBox();
+    BoxOption selectUsableBox();
 }

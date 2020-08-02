@@ -38,6 +38,28 @@
         </where>
     </select>
 
+    <resultMap id="boxShowMap" type="com.bjtu.testbox.tools.model.BoxOption">
+        <collection property="results" ofType="com.bjtu.testbox.tools.model.BoxGroup">
+            <result property="text" column="results_text"/>
+            <collection property="children" ofType="com.bjtu.testbox.tools.model.BoxSub">
+                <result property="id" column="box_id"/>
+                <result property="text" column="box_number"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="selectBoxNumberMul2" resultMap="boxShowMap">
+        select
+          box_id as box_id,
+          box_number as box_number,
+          box_type as results_text
+        from box
+        <where>
+            <if test="boxStatus!=null">box_status = #{boxStatus}</if>
+            <if test="boxArea!=null">box_area = #{boxArea}</if>
+            <if test="boxType!=null">box_type = #{boxType}</if>
+        </where>
+        group by box_type
+    </select>
 
     <!-- insert -->
     <insert id="insertBox">

@@ -1,6 +1,7 @@
 package com.bjtu.testbox.mapper;
 
 import com.bjtu.testbox.entity.Box;
+import com.bjtu.testbox.tools.model.BoxOption;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -47,6 +48,11 @@ public interface BoxMapper {
     List<Box> selectBoxNumberMul(@Param("boxStatus") Integer boxStatus,
                               @Param("boxArea") String boxArea,
                               @Param("boxType") Integer boxType);
+
+    BoxOption selectBoxNumberMul2(@Param("boxStatus") Integer boxStatus,
+                                  @Param("boxArea") String boxArea,
+                                  @Param("boxType") Integer boxType);
+
 
     // +++++++++++++++++ insert
 

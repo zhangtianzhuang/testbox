@@ -65,6 +65,10 @@ public class ServiceLayerTest {
         System.out.println(stringIntegerMap);
     }
 
+    @Test
+    public void test_worker_selectUsableBox(){
+        workerService.selectUsableBox();
+    }
 
     /////////////////////// Worker ///////////////////////////
 

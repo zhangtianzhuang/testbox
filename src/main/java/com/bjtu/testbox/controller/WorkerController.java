@@ -8,6 +8,7 @@ import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.User;
 import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
+import com.bjtu.testbox.tools.model.BoxOption;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
@@ -108,10 +109,11 @@ public class WorkerController {
 
 
     @GetMapping("/workers/boxes")
-    public String queryUsableBox(Model model){
-        List<Box> boxes = workerService.selectUsableBox();
-        model.addAttribute("usable_boxes", boxes);
-        return "index";
+    @ResponseBody
+    public BoxOption queryUsableBox(Model model){
+        BoxOption boxOption = workerService.selectUsableBox();
+        // model.addAttribute("usable_boxes", boxes);
+        return boxOption;
     }
 
     @GetMapping("/workers/taskDetail")

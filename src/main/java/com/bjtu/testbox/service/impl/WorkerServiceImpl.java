@@ -10,6 +10,7 @@ import com.bjtu.testbox.mapper.TaskMapper;
 import com.bjtu.testbox.mapper.WorkerMapper;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.TestboxTool;
+import com.bjtu.testbox.tools.model.BoxOption;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,15 +36,18 @@ public class WorkerServiceImpl implements WorkerService {
         // 获取当前登录的工人信息
         Worker worker = workerMapper.selectById(AppSecurityUtils.obtainLoginedUser().getBindUser());
         // 系统自动设置字段
-        task.setTaskCity(worker.getWorkerCity());
-        task.setTaskArea(worker.getWorkerArea());
-        task.setTaskWorkerName(worker.getWorkerName());
-        task.setTaskNumber(TestboxTool.randomTaskNum());
-        task.setTaskStatus(Status.TASK_WAIT_WORKSHOP);
-        task.setTaskWorkerId(worker.getWorkerId());
-        try{
+        if (worker != null){
+            task.setTaskCity(worker.getWorkerCity());
+            task.setTaskArea(worker.getWorkerArea());
+            task.setTaskWorkerName(worker.getWorkerName());
+            task.setTaskNumber(TestboxTool.randomTaskNum());
+            task.setTaskStatus(Status.TASK_WAIT_WORKSHOP);
+            task.setTaskWorkerId(worker.getWorkerId());
+        }
+        try {
+
             taskMapper.insertTask(task);
-        }catch (Exception e){
+        } catch (Exception e) {
             return -1;
         }
         return 1;
@@ -63,9 +67,10 @@ public class WorkerServiceImpl implements WorkerService {
     /**
      * 展示任务的详细信息，包含该任务申请的试验箱以及试验箱中的线缆信息
      * 如果该任务没有申请任何试验箱，则返回为null
+     *
      * @param taskId
      * @return 如果该任务申请了大于等于1个试验箱，则返回所有的信息
-     *         如果该任务没有申请试验箱，则返回为空。
+     * 如果该任务没有申请试验箱，则返回为空。
      */
     @Override
     public Task showTaskDetail(int taskId) {
@@ -75,10 +80,11 @@ public class WorkerServiceImpl implements WorkerService {
 
     /**
      * 查询ID为@workerId的工人所申请所有任务状态以及数量
+     *
      * @param workerId
      * @return 以Map数据结构返回{状态名,数量}，状态名在TestboxTool类中定义
      */
-    public Map<String, Integer> selectTaskStatusNumber(int workerId){
+    public Map<String, Integer> selectTaskStatusNumber(int workerId) {
         List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum(workerId);
         Map<String, Integer> hashMap = new HashMap<>();
         for (Map<String, Object> map : maps) {
@@ -90,7 +96,9 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
-    public List<Box> selectUsableBox() {
-        return boxMapper.selectBoxNumberMul(0, null, null);
+    public BoxOption selectUsableBox() {
+        List<Box> boxes = boxMapper.selectBoxNumberMul(0, null, null);
+        BoxOption convert = new BoxOption().convert(boxes);
+        return convert;
     }
 }

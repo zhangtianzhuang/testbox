@@ -3,6 +3,7 @@ package com.bjtu.testbox;
 import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.entity.*;
 import com.bjtu.testbox.mapper.*;
+import com.bjtu.testbox.tools.model.BoxOption;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,9 +158,14 @@ public class MapperLayerTest {
         }
     }
 
+    @Test
+    public void boxTest_selectBoxNumber2(){
+        BoxOption boxOption = boxMapper.selectBoxNumberMul2(null, null, null);
+        System.out.println(boxOption);
+    }
+
 
     //////////////////  Box   //////////////////////////
-
 
     //////////////////  Cable   //////////////////////////
 
