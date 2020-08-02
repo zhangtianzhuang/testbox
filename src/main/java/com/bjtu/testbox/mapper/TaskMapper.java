@@ -1,8 +1,10 @@
 package com.bjtu.testbox.mapper;
 
 import com.bjtu.testbox.entity.Task;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +18,10 @@ public interface TaskMapper {
      * @return
      */
     void insertTask(Task task);
+
+    @Insert("insert into taskbox (task_id, box_id) values (#{taskId}, #{boxId})")
+    void insertTaskBox(@Param("taskId") int taskId, @Param("boxId") int boxId);
+
 
     /**
      * 查询所申请的任务的列表，简单信息
@@ -44,6 +50,9 @@ public interface TaskMapper {
      */
     Task queryTaskDetail(@Param("taskId") int taskId);
 
+    // 查询任务最大的ID
+    @Select("select max(task_id) from task")
+    int selectMaxId();
     /**
      * 修改任务状态
      * @param taskId
