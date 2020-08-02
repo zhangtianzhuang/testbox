@@ -1,5 +1,6 @@
 package com.bjtu.testbox.service;
 
+import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,16 @@ public interface WorkerService {
      */
     Task showTaskDetail(int taskId);
 
-    public Map<String, Integer> selectTaskStatusNumber(int workerId);
+    /**
+     * show the number of tasks by different status.
+     * @param workerId
+     * @return
+     */
+    Map<String, Integer> selectTaskStatusNumber(int workerId);
+
+    /**
+     * query usable box when a worker apply for a task.
+     * @return
+     */
+    List<Box> selectUsableBox();
 }

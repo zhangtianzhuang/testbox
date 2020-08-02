@@ -37,6 +37,17 @@ public interface BoxMapper {
     @Select("select * from box where box_type = #{boxType}")
     List<Box> selectBoxByType(int boxType);
 
+    /**
+     * 根据条件筛选试验箱
+     * @param boxStatus 状态
+     * @param boxArea 所属城市
+     * @param boxType 类型
+     * @return
+     */
+    List<Box> selectBoxNumberMul(@Param("boxStatus") Integer boxStatus,
+                              @Param("boxArea") String boxArea,
+                              @Param("boxType") Integer boxType);
+
     // +++++++++++++++++ insert
 
     /**

@@ -1,5 +1,6 @@
 package com.bjtu.testbox;
 
+import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.entity.*;
 import com.bjtu.testbox.mapper.*;
 import org.junit.Test;
@@ -145,6 +146,16 @@ public class MapperLayerTest {
     public void boxUpdateTest2(){
         boxMapper.updateBoxBasicInfo("杭州", "ABCDEFG", 1);
     }
+
+    @Test
+    public void boxTest_selectBoxNumber(){
+        List<Box> boxes = boxMapper.selectBoxNumberMul(null, null, null);
+        for (Box box : boxes) {
+            System.out.println("编号:"+box.getBoxNumber()+", 类型:"+Status.BOX_TYPE.get(box.getBoxType())
+                    +", 区域:"+box.getBoxArea());
+        }
+    }
+
 
     //////////////////  Box   //////////////////////////
 

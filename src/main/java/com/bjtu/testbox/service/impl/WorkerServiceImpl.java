@@ -2,8 +2,10 @@ package com.bjtu.testbox.service.impl;
 
 import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.config.shiro.AppSecurityUtils;
+import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
+import com.bjtu.testbox.mapper.BoxMapper;
 import com.bjtu.testbox.mapper.TaskMapper;
 import com.bjtu.testbox.mapper.WorkerMapper;
 import com.bjtu.testbox.service.WorkerService;
@@ -24,6 +26,9 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Autowired
     private TaskMapper taskMapper;
+
+    @Autowired
+    private BoxMapper boxMapper;
 
     @Override
     public int applyTask(Task task) {
@@ -82,5 +87,10 @@ public class WorkerServiceImpl implements WorkerService {
             hashMap.put(TestboxTool.mapStatusCode.get(status), num);
         }
         return hashMap;
+    }
+
+    @Override
+    public List<Box> selectUsableBox() {
+        return boxMapper.selectBoxNumberMul(null, null, null);
     }
 }
