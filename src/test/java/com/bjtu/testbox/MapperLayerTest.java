@@ -151,8 +151,9 @@ public class MapperLayerTest {
     public void boxTest_selectBoxNumber(){
         List<Box> boxes = boxMapper.selectBoxNumberMul(null, null, null);
         for (Box box : boxes) {
-            System.out.println("编号:"+box.getBoxNumber()+", 类型:"+Status.BOX_TYPE.get(box.getBoxType())
-                    +", 区域:"+box.getBoxArea());
+//            System.out.println("编号:"+box.getBoxNumber()+", 类型:"+Status.BOX_TYPE.get(box.getBoxType())
+//                    +", 区域:"+box.getBoxArea()+", ID:"+box.getBoxId());
+            System.out.println(box);
         }
     }
 

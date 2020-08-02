@@ -91,6 +91,6 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public List<Box> selectUsableBox() {
-        return boxMapper.selectBoxNumberMul(null, null, null);
+        return boxMapper.selectBoxNumberMul(0, null, null);
     }
 }

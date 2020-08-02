@@ -29,7 +29,7 @@
 
     <!-- query tht list of the boxes by status, type, area -->
     <select id="selectBoxNumberMul" resultType="box">
-        select box_number, box_type, box_area
+        select box_id, box_number, box_type, box_area, box_name, box_tag_id
         from box
         <where>
             <if test="boxStatus!=null">box_status = #{boxStatus}</if>
