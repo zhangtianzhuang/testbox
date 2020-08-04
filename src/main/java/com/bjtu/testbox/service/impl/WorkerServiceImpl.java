@@ -12,6 +12,8 @@ import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.TestboxTool;
 import com.bjtu.testbox.tools.model.BoxOption;
 import io.swagger.models.auth.In;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import java.util.Map;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
+
+    private Logger logger = LoggerFactory.getLogger(WorkerServiceImpl.class);
 
     @Autowired
     private WorkerMapper workerMapper;
@@ -33,13 +37,19 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public int applyTask(Task task) {
+        System.out.println("打印新--------------");
         // 获取当前登录的工人信息
-        Worker worker = workerMapper.selectById(AppSecurityUtils.obtainLoginedUser().getBindUser());
+//        Worker worker = workerMapper.selectById(AppSecurityUtils.obtainLoginedUser().getBindUser());
+        // 判断workerId是否合法
+        Worker worker = workerMapper.selectById(task.getTaskWorkerId());
+        System.out.println("+++++++++++++++" + worker.toString());
         // 系统自动设置字段
         if (worker != null) {
             task.setTaskCity(worker.getWorkerCity());
-            task.setTaskArea(worker.getWorkerArea());
-            task.setTaskWorkerName(worker.getWorkerName());
+            if (task.getTaskArea() == null)
+                task.setTaskArea(worker.getWorkerArea());
+            if (task.getTaskWorkerName() == null)
+                task.setTaskWorkerName(worker.getWorkerName());
             task.setTaskNumber(TestboxTool.randomTaskNum());
             task.setTaskStatus(Status.TASK_WAIT_WORKSHOP);
             task.setTaskWorkerId(worker.getWorkerId());

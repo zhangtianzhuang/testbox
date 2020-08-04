@@ -66,18 +66,14 @@ public class WorkerController {
     @PostMapping(value = "/workers/task")
     public String applyTask(@RequestBody Task task) {
         // 判断参数是否合法
-        if (task.getTaskName() != null && task.getTaskWorkerName() != null
-                && task.getTaskArea() != null && task.getTaskPoint() != null) {
-            logger.info(task.toString());
-            int i = workerService.applyTask(task);
-            // 成功
-            if (i == 1){
-                // 可在这里做一些处理,给前台反馈
-            }
-            // 失败
-            else{
-                // 可在这里做一些处理,给前台反馈
-            }
+        int i = workerService.applyTask(task);
+        // 成功
+        if (i == 1){
+            // 可在这里做一些处理,给前台反馈
+        }
+        // 失败
+        else{
+            // 可在这里做一些处理,给前台反馈
         }
         return "workerUI/apply_success";
     }
