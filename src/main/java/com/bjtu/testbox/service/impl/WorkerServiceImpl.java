@@ -36,38 +36,51 @@ public class WorkerServiceImpl implements WorkerService {
     private BoxMapper boxMapper;
 
     @Override
-    public int applyTask(Task task) {
-        System.out.println("打印新--------------");
+    public Task applyTask(Task task) {
         // 获取当前登录的工人信息
 //        Worker worker = workerMapper.selectById(AppSecurityUtils.obtainLoginedUser().getBindUser());
         // 判断workerId是否合法
         Worker worker = workerMapper.selectById(task.getTaskWorkerId());
-        System.out.println("+++++++++++++++" + worker.toString());
         // 系统自动设置字段
         if (worker != null) {
+            // 城市
             task.setTaskCity(worker.getWorkerCity());
+            // 申请人的工区
             if (task.getTaskArea() == null)
                 task.setTaskArea(worker.getWorkerArea());
+            // 申请人的名字
             if (task.getTaskWorkerName() == null)
                 task.setTaskWorkerName(worker.getWorkerName());
+            // 申请编号
             task.setTaskNumber(TestboxTool.randomTaskNum());
+            // 申请日期
+            task.setTaskDate(System.currentTimeMillis());
+            // 待动态车间审核的状态
             task.setTaskStatus(Status.TASK_WAIT_WORKSHOP);
             task.setTaskWorkerId(worker.getWorkerId());
         }
         try {
             // 查询任务表中ID最大值
-            int taskId = taskMapper.selectMaxId() + 1;
+            Integer taskId = taskMapper.selectMaxId();
+            if (taskId == null) {
+                taskId = 1;
+            } else {
+                taskId++;
+            }
             task.setTaskId(taskId);
             taskMapper.insertTask(task);
             // 记录该任务使用的所有试验箱
             for (Box box : task.getBoxes()) {
                 int boxId = box.getBoxId();
+                logger.info("为任务添加试验箱:" + boxId);
                 taskMapper.insertTaskBox(taskId, boxId);
             }
         } catch (Exception e) {
-            return -1;
+            logger.info("发生异常:" + e.toString());
+            return null;
         }
-        return 1;
+        logger.info("当前任务对象是否为空?" + task == null ? "是的" : "不是");
+        return task;
     }
 
     @Override
@@ -76,7 +89,8 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
-    public List<Task> showWorkerTask(int workerId, String taskCity, int taskStatus, String taskPoint, long startDate, long endDate) {
+    public List<Task> showWorkerTask(int workerId, String taskCity, int taskStatus, String taskPoint,
+                                     long startDate, long endDate) {
         // if workId
         return taskMapper.queryTask(taskCity, workerId, taskStatus, taskPoint, startDate, endDate);
     }

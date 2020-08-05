@@ -39,24 +39,28 @@ public class WorkerController {
      * 工人UI的入口
      */
     @RequestMapping("/workers")
-    public String workersUI(){
+    public String workersUI() {
         return "workerUI/taskapply";
     }
 
     @RequestMapping("/workers/boxes")
-    public String workersboxes(){
+    public String workersboxes() {
         return "index";
     }
 
     /**
      * 测试前端发送测试表单
+     *
      * @return
      */
-    @PostMapping(value="/workers/taskTest",produces = "application/json;charset=UTF-8")
-    public String workerApplyTest(@RequestBody Task task){
+    @PostMapping(value = "/workers/taskTest", produces = "application/json;charset=UTF-8")
+    public String workerApplyTest(@RequestBody Task task) {
         System.out.println(task);
         return "workerUI/apply_success";
-    };
+    }
+
+    ;
+
     /**
      * 工人申请任务
      *
@@ -64,18 +68,15 @@ public class WorkerController {
      * @return
      */
     @PostMapping(value = "/workers/task")
-    public String applyTask(@RequestBody Task task) {
+    @ResponseBody
+    public R applyTask(@RequestBody Task task) {
         // 判断参数是否合法
-        int i = workerService.applyTask(task);
-        // 成功
-        if (i == 1){
-            // 可在这里做一些处理,给前台反馈
+        Task returnTask = workerService.applyTask(task);
+        if (returnTask != null) {
+            return R.success().msg("success").code(200).data(returnTask);
+        } else {
+            return R.fail().code(500).msg("failure");
         }
-        // 失败
-        else{
-            // 可在这里做一些处理,给前台反馈
-        }
-        return "workerUI/apply_success";
     }
 
     /**
@@ -120,7 +121,7 @@ public class WorkerController {
 
     @GetMapping("/workers/boxes")
     @ResponseBody
-    public BoxOption queryUsableBox(Model model){
+    public BoxOption queryUsableBox(Model model) {
         BoxOption boxOption = workerService.selectUsableBox();
         // model.addAttribute("usable_boxes", boxes);
         return boxOption;
@@ -128,14 +129,14 @@ public class WorkerController {
 
     @GetMapping("/workers/taskDetail")
     public String queryTaskDetail(@RequestParam(value = "taskId", required = true) int taskId,
-                             Model model) {
+                                  Model model) {
         Task task = workerService.showTaskDetail(taskId);
         model.addAttribute("task_detail", task);
         return null;
     }
 
     @GetMapping("/workers/taskStatusNumber")
-    public String taskStatusNumber(@Param("workerId")int workerId, Model model) {
+    public String taskStatusNumber(@Param("workerId") int workerId, Model model) {
         Map<String, Integer> map = workerService.selectTaskStatusNumber(workerId);
         model.addAllAttributes(map);
         return null;

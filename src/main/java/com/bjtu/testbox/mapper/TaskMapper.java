@@ -52,7 +52,7 @@ public interface TaskMapper {
 
     // 查询任务最大的ID
     @Select("select max(task_id) from task")
-    int selectMaxId();
+    Integer selectMaxId();
     /**
      * 修改任务状态
      * @param taskId

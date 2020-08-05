@@ -115,10 +115,10 @@
     <insert id="insertTask" parameterType="task">
         insert into
             task
-            (task_number, task_name, task_worker_id, task_worker_name,
+            (task_id, task_number, task_name, task_worker_id, task_worker_name,
              task_point, task_date, borrow_date, return_date, task_status, task_desc, task_city, task_area)
         values
-            (#{taskNumber}, #{taskName}, #{taskWorkerId}, #{taskWorkerName},#{taskPoint},
+            (#{taskId}, #{taskNumber}, #{taskName}, #{taskWorkerId}, #{taskWorkerName},#{taskPoint},
              #{taskDate}, #{borrowDate}, #{returnDate}, #{taskStatus}, #{taskDesc}, #{taskCity}, #{taskArea})
     </insert>
 

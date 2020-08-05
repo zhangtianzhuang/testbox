@@ -108,6 +108,12 @@ public class MapperLayerTest {
     }
 
     @Test
+    public void test_task_selectMaxId(){
+        Integer integer = taskMapper.selectMaxId();
+        System.out.println(integer);
+    }
+
+    @Test
     public void test_task_insertTaskBox(){
         taskMapper.insertTaskBox(1, 2);
     }
