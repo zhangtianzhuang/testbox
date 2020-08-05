@@ -56,7 +56,8 @@ public class WorkerController {
     @PostMapping(value = "/workers/taskTest", produces = "application/json;charset=UTF-8")
     public String workerApplyTest(@RequestBody Task task) {
         System.out.println(task);
-        return "workerUI/apply_success";
+
+        return null;
     }
 
     ;
