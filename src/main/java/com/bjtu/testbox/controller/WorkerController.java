@@ -6,6 +6,7 @@ import com.bjtu.testbox.config.api.ResultBean;
 import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.User;
+import com.bjtu.testbox.entity.Worker;
 import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.model.BoxOption;
@@ -86,10 +87,18 @@ public class WorkerController {
      * @return
      */
     @GetMapping(value = "/workers/personInfo")
-    public String queryWorkerPersonInfo(@Param("workerId") int workerId, Model model) {
-        User user = userService.obtainUserDetailInfo();
-        model.addAttribute("user", user);
-        return "index::div1";
+    @ResponseBody
+    // 如果workerId 没有接收到值，则会自动置为空，所以不用int类型，而是用Integer类型
+    public R queryWorkerPersonInfo(@Param("workerId") Integer workerId, Model model) {
+        // User user = userService.obtainUserDetailInfo();
+        // model.addAttribute("user", user);
+        // 测试
+        Worker worker = workerService.showWorkerInfo(1);
+        worker.setWorkerId(-1);
+        if (worker != null){
+            return R.success().msg("success").code(200).data(worker);
+        }
+        return R.fail().msg("failure").code(500);
     }
 
     /**
