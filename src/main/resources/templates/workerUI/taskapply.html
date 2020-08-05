@@ -376,11 +376,6 @@
 
   <!-- 右侧呼出栏，可以设计成用户登录登出-->
   <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-<!--    <div class="p-3">-->
-<!--      <h5>个人信息</h5>-->
-<!--      <p>Sidebar content</p>-->
-<!--    </div>-->
     <!-- Profile Image -->
     <div class="card card-primary card-outline">
       <div class="card-body box-profile">
@@ -390,7 +385,7 @@
                alt="User profile picture">
         </div>
 
-        <h3 class="profile-username text-center">张三</h3>
+        <h3 class="profile-username text-center ">张三</h3>
 
         <p class="text-muted text-center">20209527</p>
 
@@ -479,8 +474,6 @@
 
     // 提交申请，隐藏申请界面，显示申请表单
     $("#submitapp").click(function(){
-      $("#apply").toggle();
-      $("#applysuccess").css("display","block");
 
       // 将日期转成moment后再转换成时间戳保存
       var borrowDate = $('#borrowDate').val().split(" ");
@@ -557,25 +550,19 @@
           $("#info_approveDate").text(moment(task.taskDate).format("YYYY/MM/DD HH:mm:ss"));
         }
       });
+
+      // 显示表单申请结果，隐藏表单界面
+      $("#apply").toggle();
+      $("#applysuccess").css("display","block");
     });
 
 
     // 确认申请，隐藏表单信息，回到清空后的申请界面
     $("#confirm").click(function () {
-      resetAll();
-      $("#apply").toggle();
-      $("#applysuccess").css("display","none");
+      window.location.reload()  // 刷新当前页面.
     });
   });
 
-  // 清空输入框和textarea,重置复选框
-  function resetAll() {
-    $("div input").val("");
-    $("div textarea").val("");
-    $('input[type="checkbox"]:checked').each(function(index,value) {
-      $(this).prop("checked",false);
-    });
-  }
 
 </script>
 </body>
