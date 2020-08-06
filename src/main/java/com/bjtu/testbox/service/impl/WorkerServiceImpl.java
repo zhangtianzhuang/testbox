@@ -120,6 +120,10 @@ public class WorkerServiceImpl implements WorkerService {
     public Map<String, Integer> selectTaskStatusNumber(int workerId) {
         List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum(workerId);
         Map<String, Integer> hashMap = new HashMap<>();
+        // 初始值
+        for (int i = 1; i <= 6; i++) {
+            hashMap.put(TestboxTool.mapStatusCode.get(i), 0);
+        }
         for (Map<String, Object> map : maps) {
             Integer num = Integer.valueOf(String.valueOf(map.get("num")));
             Integer status = Integer.valueOf(String.valueOf(map.get("status")));

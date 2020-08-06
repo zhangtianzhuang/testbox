@@ -132,9 +132,10 @@ public class WorkerController {
     }
 
     @GetMapping("/workers/taskStatusNumber")
-    public String taskStatusNumber(@Param("workerId") int workerId, Model model) {
+    @ResponseBody
+    public R taskStatusNumber() {
+        int workerId = 1;
         Map<String, Integer> map = workerService.selectTaskStatusNumber(workerId);
-        model.addAllAttributes(map);
-        return null;
+        return R.success().msg(R.SUCCESS).code(Code.OK).data(map);
     }
 }
