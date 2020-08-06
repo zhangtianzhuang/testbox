@@ -1,5 +1,6 @@
 package com.bjtu.testbox.service;
 
+import com.bjtu.testbox.entity.Approver;
 import com.bjtu.testbox.entity.Examine;
 import com.bjtu.testbox.entity.Task;
 
@@ -33,4 +34,7 @@ public interface ApproverService {
      * @return
      */
     Examine examineTask(Examine examine);
+
+
+    Approver showApproverInfo(Integer approverId);
 }

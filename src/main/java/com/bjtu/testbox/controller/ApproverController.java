@@ -3,6 +3,7 @@ package com.bjtu.testbox.controller;
 import com.bjtu.testbox.config.api.Code;
 import com.bjtu.testbox.config.api.R;
 import com.bjtu.testbox.config.constant.Status;
+import com.bjtu.testbox.entity.Approver;
 import com.bjtu.testbox.entity.Examine;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.ApproverService;
@@ -81,6 +82,18 @@ public class ApproverController {
         int taskId = map.get("taskId");
         Task task = approverService.showTaskDetail(taskId);
         return R.success().code(Code.OK).msg("success").data(task);
+    }
+
+    /**
+     *
+     * @return
+     */
+    @PostMapping("/approvers/approverInfo")
+    @ResponseBody
+    public R approverInfo(){
+        Integer approverId = 1;
+        Approver approver = approverService.showApproverInfo(approverId);
+        return R.success().msg(R.SUCCESS).code(Code.OK).data(approver);
     }
 
     /**

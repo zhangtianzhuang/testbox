@@ -82,4 +82,9 @@ public class ApproverServiceImpl implements ApproverService {
         }
         return examine;
     }
+
+    @Override
+    public Approver showApproverInfo(Integer approverId) {
+        return approverMapper.queryApproverById(approverId);
+    }
 }
