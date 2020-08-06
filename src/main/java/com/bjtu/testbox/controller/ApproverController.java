@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/approvers")
@@ -52,21 +53,16 @@ public class ApproverController {
 
     /**
      * 审批者查询要审批的任务
-     * @param taskCity
-     * @param taskPoint
-     * @param startDate
-     * @param endDate
+     * @param map
      * @return
      */
     @GetMapping("/taskList")
     @ResponseBody
-    public R queryTaskList(
-            // 参数接收测试没有问题
-            @RequestParam(value = "taskCity" , required = false) String taskCity,
-            @RequestParam(value = "taskPoint", required = false) String taskPoint,
-            @RequestParam(value = "startDate", required = false) Long startDate,
-            @RequestParam(value = "endDate"  , required = false) Long endDate
-        ){
+    public R queryTaskList( @RequestBody Map<String, Object> map){
+        String taskCity = (String) map.get("taskCity");
+        String taskPoint = (String) map.get("taskPoint");
+        Long startDate = (Long) map.get("startDate");
+        Long endDate = (Long) map.get("endDate");
         // 测试，待动态车间审批
         Integer taskStatus = Status.TASK_WAIT_WORKSHOP;
         List<Task> tasks = approverService.showTaskListByStatus(null, taskCity, taskStatus,
@@ -76,12 +72,13 @@ public class ApproverController {
 
     /**
      * 审批者查询任务的详情
-     * @param taskId
+     * @param map
      * @return
      */
     @GetMapping("/taskDetail")
     @ResponseBody
-    public R queryTaskDetail(@RequestParam("taskId") int taskId){
+    public R queryTaskDetail(@RequestBody Map<String, Integer> map){
+        int taskId = map.get("taskId");
         Task task = approverService.showTaskDetail(taskId);
         return R.success().code(Code.OK).msg("success").data(task);
     }
@@ -92,19 +89,10 @@ public class ApproverController {
      */
     @PostMapping("/examine")
     @ResponseBody
-    public R workshopExamineTask(
-            @RequestParam Integer taskId,
-            @RequestParam Integer examineResult,
-            @RequestParam String examineReason
-            ){
-         Examine examine = new Examine();
-         examine.setTaskId(taskId);
-         examine.setExamineResult(examineResult);
-         examine.setExamineReason(examineReason);
-
+    public R workshopExamineTask(@RequestBody Examine examine){
          Examine examineTask = approverService.examineTask(examine);
-         String info = "taskID:"+taskId+", Result:" +
-                 examineResult + ", Reason:"+examineReason;
+         String info = "taskID:"+examine.getTaskId()+", Result:" +
+                 examine.getExamineResult() + ", Reason:"+examine.getExamineReason();
          logger.info(info);
          if (examineTask != null)
              return R.success().data(examineTask).msg(R.SUCCESS).code(Code.OK);
