@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/approvers")
+//@RequestMapping("/approvers")
 public class ApproverController {
 
     private static final String TAG = "ApproverController";
@@ -31,7 +31,7 @@ public class ApproverController {
      * 审批者主界面
      * @return
      */
-    @RequestMapping("/approver")
+    @RequestMapping("/approvers")
     public String approverUITest(){
         return "approverUI/re-check";
     }
@@ -40,14 +40,14 @@ public class ApproverController {
      * 测试审批表单的ajax请求
      * @return
      */
-    @GetMapping("/approver/taskListTest")
+    @GetMapping("/approvers/taskListTest")
     @ResponseBody
     public String approverTaskListTest(){
         String datastr = "{ \"data\":[" +
-                "{ \"taskId\" : 25543254345325, \"approverName\" : \"张三\", \"approveDate\" : 12288087, \"projectArea\" : false, \"taskStatus\" : 0 }, " +
-                "{ \"taskId\" : 43242354325432, \"approverName\" : \"张三\", \"approveDate\" : 37601280, \"projectArea\" : false, \"taskStatus\" : 1 }, " +
-                "{ \"taskId\" : 35432543254325, \"approverName\" : \"张三\", \"approveDate\" : 40783872, \"projectArea\" : true, \"taskStatus\" : 2 }, " +
-                "{ \"taskId\" : 45432543253253, \"approverName\" : \"张三\", \"approveDate\" : 29380608, \"projectArea\" : true, \"taskStatus\" : 3 }]}";
+                "{ \"taskNumber\" : 25543254345325, \"approverName\" : \"张三\", \"approveDate\" : 12288087, \"projectArea\" : false, \"taskStatus\" : 0, \"taskId\" : 1}, " +
+                "{ \"taskNumber\" : 43242354325432, \"approverName\" : \"张三\", \"approveDate\" : 37601280, \"projectArea\" : false, \"taskStatus\" : 1, \"taskId\" : 2}, " +
+                "{ \"taskNumber\" : 35432543254325, \"approverName\" : \"张三\", \"approveDate\" : 40783872, \"projectArea\" : true, \"taskStatus\" : 2, \"taskId\" : 3}, " +
+                "{ \"taskNumber\" : 45432543253253, \"approverName\" : \"张三\", \"approveDate\" : 29380608, \"projectArea\" : true, \"taskStatus\" : 3, \"taskId\" : 4}]}";
         return datastr;
     }
 
@@ -75,7 +75,7 @@ public class ApproverController {
      * @param map
      * @return
      */
-    @GetMapping("/taskDetail")
+    @GetMapping("/approvers/taskDetail")
     @ResponseBody
     public R queryTaskDetail(@RequestBody Map<String, Integer> map){
         int taskId = map.get("taskId");

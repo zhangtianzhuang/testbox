@@ -154,7 +154,7 @@
           <img src="static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"> 张三 </a>
+          <a href="#" class="d-block" id="user_nameshow"> 张三 </a>
         </div>
       </div>
 
@@ -288,6 +288,11 @@
                   </div>
                 </div>
 
+                <div class="form-group">
+                  <label>申请人</label>
+                  <input type="text" class="form-control" id="approverName" placeholder="请输入申请人姓名">
+                </div>
+
               </div>
               <!-- /.col -->
 
@@ -375,7 +380,7 @@
   <!-- Control Sidebar -->
 
   <!-- 右侧呼出栏，可以设计成用户登录登出-->
-  <aside class="control-sidebar control-sidebar-dark">
+  <aside class="control-sidebar">
     <!-- Profile Image -->
     <div class="card card-primary card-outline">
       <div class="card-body box-profile">
@@ -385,19 +390,19 @@
                alt="User profile picture">
         </div>
 
-        <h3 class="profile-username text-center ">张三</h3>
+        <h3 class="profile-username text-center " id="user_name">张三</h3>
 
-        <p class="text-muted text-center">20209527</p>
+        <p class="text-muted text-center" id="user_id">20209527</p>
 
         <ul class="list-group list-group-unbordered mb-3">
           <li class="list-group-item">
-            <b>班组</b> <a class="float-right">尖刀班</a>
+            <b>班组</b> <a class="float-right" id="user_groupName">尖刀班</a>
           </li>
           <li class="list-group-item">
-            <b>工区</b> <a class="float-right">成都铁路局</a>
+            <b>工区</b> <a class="float-right" id="user_projectArea">成都铁路局</a>
           </li>
           <li class="list-group-item">
-            <b>电话</b> <a class="float-right">15600928615</a>
+            <b>电话</b> <a class="float-right" id="user_phone">15600928615</a>
           </li>
         </ul>
 
@@ -471,97 +476,114 @@
       }
     });
 
-
-    // 提交申请，隐藏申请界面，显示申请表单
-    $("#submitapp").click(function(){
-
-      // 将日期转成moment后再转换成时间戳保存
-      var borrowDate = $('#borrowDate').val().split(" ");
-      var returnDate = $('#returnDate').val().split(" ");
-
-      // // moment 转日期格式
-      // var mom = moment();
-      // var current = mom.format("YYYY-MM-DD HH:mm:ss");
-      // console.log(current);
-      //
-      // // moment 转时间戳
-      // var currentTimeStamp = mom.valueOf();
-      // console.log(currentTimeStamp);
-      //
-      // // 时间戳转日期格式
-      // var date = moment(currentTimeStamp).format("YYYY-MM-DD HH:mm:ss");
-      // console.log(date);
-
-      // 将试验箱列表select2转成json列表
-      var boxesID = $('#boxList').val();
-
-      var boxesList = new Array();
-      for (var i = 0; i < boxesID.length; i++) {
-        boxesList.push({
-          "boxNumber": $("#boxList").select2("data")[i].text,
-          "boxId": boxesID[i]
-        });
+    // 获得登录用户信息
+    $.ajax({
+      url: window.location.pathname + "/personInfo",
+      type:'GET',
+      dataType:'json',
+      contentType:'application/json;charset=UTF-8',
+      success:function(result){
+        console.log(result);
+        var userInfo = result.data;
+        // 渲染到界面上
+        $("#user_nameshow").text(userInfo.workerName);
+        $("#user_name").text(userInfo.workerName);
+        $("#user_id").text(userInfo.workerNumber);
+        $("#user_phone").text(userInfo.workerPhone);
+        $("#user_projectArea").text(userInfo.workerArea);
+        $("#user_groupName").text(userInfo.workerGroup);
       }
-
-      var applyForm = {
-        "taskName": $('#projectName').val(),
-        "workerName": "张三",
-        "taskWorkerId": "001",
-        "taskArea": $('#workArea').val(),
-        "taskPoint": $('#targetRegion').val(),
-        "borrowDate": moment(borrowDate[0]+" "+borrowDate[1]).valueOf(),  // 将bootstrap的时间表格式转换成时间戳
-                                                                          // 2020/08/01 23:17:00 晚上
-                                                                          // 去掉后缀的一个字符
-        "returnDate": moment(returnDate[0]+" "+returnDate[1]).valueOf(),
-        "taskDesc": $('#taskDesc').val(),
-        "boxes": boxesList,
-        // "taskDate": moment().valueOf()     //当前时间的时间戳
-        };
-
-      // 将数据表发送给服务器的对应端口
-      $.ajax({
-        url: window.location.pathname + "/task",
-        type:'POST',
-        dataType:'json',
-        contentType:'application/json;charset=UTF-8',
-        data:JSON.stringify(applyForm),   // 转换成json格式,其实是不是可以不要
-        success:function(data){
-          console.log("接收服务器的数据:");
-          console.log(data);
-          // 解析返回的数据，修改显示申请的表单内容
-          var task = data.data;
-          console.log(task)
-          var borrowDate = moment(task.borrowDate).format("YYYY/MM/DD HH:mm:ss");
-          var returnDate = moment(task.returnDate).format("YYYY/MM/DD HH:mm:ss");
-          var boxList = "";
-          for(var i = 0; i < task.boxes.length; i++){
-            boxList += task.boxes[i].boxNumber;
-            boxList += " ";
-          }
-
-          $("#info_taskID").text(task.taskNumber);
-          $("#info_approverName").text(task.taskWorkerName);
-          $("#info_projectArea").text(task.Area);
-          $("#info_projectName").text(task.taskName);
-          $("#info_projectPoint").text(task.taskPoint);
-          $("#info_boxlist").text(boxList);
-          $("#info_dateRange").text(borrowDate + "—" + returnDate);
-          $("#info_remark").text(task.taskDesc);
-          $("#info_approveDate").text(moment(task.taskDate).format("YYYY/MM/DD HH:mm:ss"));
-        }
-      });
-
-      // 显示表单申请结果，隐藏表单界面
-      $("#apply").toggle();
-      $("#applysuccess").css("display","block");
-    });
-
-
-    // 确认申请，隐藏表单信息，回到清空后的申请界面
-    $("#confirm").click(function () {
-      window.location.reload()  // 刷新当前页面.
-    });
+    })
   });
+
+  // 提交申请，隐藏申请界面，显示申请表单
+  $("#submitapp").click(function(){
+
+    // 将日期转成moment后再转换成时间戳保存
+    var borrowDate = $('#borrowDate').val().split(" ");
+    var returnDate = $('#returnDate').val().split(" ");
+
+    // // moment 转日期格式
+    // var mom = moment();
+    // var current = mom.format("YYYY-MM-DD HH:mm:ss");
+    // console.log(current);
+    //
+    // // moment 转时间戳
+    // var currentTimeStamp = mom.valueOf();
+    // console.log(currentTimeStamp);
+    //
+    // // 时间戳转日期格式
+    // var date = moment(currentTimeStamp).format("YYYY-MM-DD HH:mm:ss");
+    // console.log(date);
+
+    // 将试验箱列表select2转成json列表
+    var boxesID = $('#boxList').val();
+
+    var boxesList = new Array();
+    for (var i = 0; i < boxesID.length; i++) {
+      boxesList.push({
+        "boxNumber": $("#boxList").select2("data")[i].text,
+        "boxId": boxesID[i]
+      });
+    }
+
+    var applyForm = {
+      "taskName": $('#projectName').val(),
+      "workerName": $("#user_name").text(),
+      "taskArea": $('#workArea').val(),
+      "taskPoint": $('#targetRegion').val(),
+      "borrowDate": moment(borrowDate[0]+" "+borrowDate[1]).valueOf(),  // 将bootstrap的时间表格式转换成时间戳
+                                                                        // 2020/08/01 23:17:00 晚上
+                                                                        // 去掉后缀的一个字符
+      "returnDate": moment(returnDate[0]+" "+returnDate[1]).valueOf(),
+      "taskDesc": $('#taskDesc').val(),
+      "boxes": boxesList,
+      // "taskDate": moment().valueOf()     //当前时间的时间戳
+    };
+
+    // 将数据表发送给服务器的对应端口
+    $.ajax({
+      url: window.location.pathname + "/task",
+      type:'POST',
+      dataType:'json',
+      contentType:'application/json;charset=UTF-8',
+      data:JSON.stringify(applyForm),   // 转换成json格式,其实是不是可以不要
+      success:function(data){
+        console.log("接收服务器的数据:");
+        console.log(data);
+        // 解析返回的数据，修改显示申请的表单内容
+        var task = data.data;
+        console.log(task)
+        var borrowDate = moment(task.borrowDate).format("YYYY-MM-DD HH:mm:ss");
+        var returnDate = moment(task.returnDate).format("YYYY-MM-DD HH:mm:ss");
+        var boxList = "";
+        for(var i = 0; i < task.boxes.length; i++){
+          boxList += task.boxes[i].boxNumber;
+          boxList += " ";
+        }
+
+        $("#info_taskID").text(task.taskNumber);
+        $("#info_approverName").text(task.taskWorkerName);
+        $("#info_projectArea").text(task.Area);
+        $("#info_projectName").text(task.taskName);
+        $("#info_projectPoint").text(task.taskPoint);
+        $("#info_boxlist").text(boxList);
+        $("#info_dateRange").text(borrowDate + "~" + returnDate);
+        $("#info_remark").text(task.taskDesc);
+        $("#info_approveDate").text(moment(task.taskDate).format("YYYY-MM-DD HH:mm:ss"));
+      }
+    });
+
+    // 显示表单申请结果，隐藏表单界面
+    $("#apply").toggle();
+    $("#applysuccess").css("display","block");
+  });
+
+  // 确认申请，隐藏表单信息，回到清空后的申请界面
+  $("#confirm").click(function () {
+    window.location.reload()  // 刷新当前页面.
+  });
+
 
 
 </script>
