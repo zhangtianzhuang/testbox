@@ -50,20 +50,6 @@ public class WorkerController {
     }
 
     /**
-     * 测试前端发送测试表单
-     *
-     * @return
-     */
-    @PostMapping(value = "/workers/taskTest", produces = "application/json;charset=UTF-8")
-    public String workerApplyTest(@RequestBody Task task) {
-        System.out.println(task);
-
-        return null;
-    }
-
-    ;
-
-    /**
      * 工人申请任务
      *
      * @param task
@@ -75,9 +61,9 @@ public class WorkerController {
         // 判断参数是否合法
         Task returnTask = workerService.applyTask(task);
         if (returnTask != null) {
-            return R.success().msg("success").code(200).data(returnTask);
+            return R.success().msg("success").code(Code.OK).data(returnTask);
         } else {
-            return R.fail().code(500).msg("failure");
+            return R.fail().code(Code.SERVER_ERROR).msg("failure");
         }
     }
 
@@ -96,9 +82,9 @@ public class WorkerController {
         Worker worker = workerService.showWorkerInfo(1);
         worker.setWorkerId(-1);
         if (worker != null){
-            return R.success().msg("success").code(200).data(worker);
+            return R.success().msg("success").code(Code.OK).data(worker);
         }
-        return R.fail().msg("failure").code(500);
+        return R.fail().msg("failure").code(Code.SERVER_ERROR);
     }
 
     /**
@@ -112,20 +98,21 @@ public class WorkerController {
      * @return
      */
     @GetMapping("/workers/taskList")
-    public String queryTaskList(
-            @RequestParam(value = "taskStatus", defaultValue = "0") Integer taskStatus,
-            @RequestParam(value = "taskPoint", defaultValue = "null") String taskPoint,
-            @RequestParam(value = "taskCity", defaultValue = "null") String taskCity,
-            @RequestParam(value = "startDate", defaultValue = "-1") long startDate,
-            @RequestParam(value = "endDate", defaultValue = "-1") long endDate,
-            @RequestParam(value = "workerId", defaultValue = "-1") int workerId,
-            Model model) {
+    @ResponseBody
+    public R queryTaskList(
+            @RequestParam(value = "taskStatus", required = false) Integer taskStatus,
+            @RequestParam(value = "taskPoint" , required = false) String taskPoint,
+            @RequestParam(value = "taskCity"  , required = false) String taskCity,
+            @RequestParam(value = "startDate" , required = false) Long startDate,
+            @RequestParam(value = "endDate"   , required = false) Long endDate) {
+        String info = "taskStatus:"+taskStatus+", taskPoint:"+taskPoint+", taskCity:"+taskCity+
+                ", startDate:"+startDate+", endDate:"+endDate;
+        logger.info(info);
 //        User user = userService.obtainUserDetailInfo();
-//        int id = user.getWorker().getWorkerId();
-        List<Task> tasks = workerService.showWorkerTask(1, taskCity, taskStatus,
+        Integer taskWorkerId = 1;
+        List<Task> tasks = workerService.showWorkerTask(taskWorkerId, taskCity, taskStatus,
                 taskPoint, startDate, endDate);
-        model.addAttribute("taskList", tasks);
-        return "index";
+        return R.success().data(tasks).code(Code.OK).msg("success");
     }
 
 
@@ -138,11 +125,10 @@ public class WorkerController {
     }
 
     @GetMapping("/workers/taskDetail")
-    public String queryTaskDetail(@RequestParam(value = "taskId", required = true) int taskId,
-                                  Model model) {
+    @ResponseBody
+    public R queryTaskDetail(@RequestParam(value = "taskId") Integer taskId) {
         Task task = workerService.showTaskDetail(taskId);
-        model.addAttribute("task_detail", task);
-        return null;
+        return R.success().data(task);
     }
 
     @GetMapping("/workers/taskStatusNumber")

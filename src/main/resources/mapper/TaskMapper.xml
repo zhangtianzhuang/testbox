@@ -29,16 +29,16 @@
             <if test="taskCity!=null">
                 t.task_city = #{taskCity}
             </if>
-            <if test="workerId!=-1">
+            <if test="workerId!=null">
                 and t.task_worker_id = #{workerId}
             </if>
-            <if test="taskStatus!=-1">
+            <if test="taskStatus!=null">
                 and t.task_status = #{taskStatus}
             </if>
             <if test="taskPoint!=null">
                 and t.task_point = #{taskPoint}
             </if>
-            <if test="startDate!=-1 and endDate!=-1">
+            <if test="startDate!=null and endDate!=null">
                 and t.task_date &lt;= #{endDate}
                 and t.task_date &gt;= #{startDate}
             </if>

@@ -66,8 +66,8 @@ public class ServiceLayerTest {
 
     @Test
     public void queryAppliedTask(){
-        List<Task> tasks = workerService.showWorkerTask(1, null, -1,
-                null, -1, -1);
+        List<Task> tasks = workerService.showWorkerTask(1, null, null,
+                null, null, null);
         for (Task task : tasks) {
             System.out.println(task);
         }
@@ -96,8 +96,8 @@ public class ServiceLayerTest {
     /////////////////////// Approver ///////////////////////////
     @Test
     public void queryAllTask(){
-        List<Task> tasks = approverService.showTaskListByStatus(-1, null, -1,
-                null, -1, -1);
+        List<Task> tasks = approverService.showTaskListByStatus(null, null, null,
+                null, null, null);
         for (Task task : tasks) {
             System.out.println(task);
         }

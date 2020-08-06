@@ -6,6 +6,8 @@ import com.bjtu.testbox.mapper.*;
 import com.bjtu.testbox.tools.model.BoxOption;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,6 +30,8 @@ public class MapperLayerTest {
     TaskMapper taskMapper;
     @Autowired
     ExamineMapper examineMapper;
+
+    private Logger logger = LoggerFactory.getLogger(MapperLayerTest.class);
 
     //////////////////  Worker   //////////////////////////
 
@@ -71,14 +75,8 @@ public class MapperLayerTest {
     }
     @Test
     public void taskSelectTest1(){
-        String taskCity = null;
-        int workerId = 2;
-        int taskStatus = -1;
-        String taskPoint = null;
-        long startDate = System.currentTimeMillis()-1000*60*60*24;
-        long endDate = System.currentTimeMillis();
-
-        List<Task> tasks = taskMapper.queryTask(taskCity, workerId, taskStatus, taskPoint, startDate, endDate);
+        List<Task> tasks = taskMapper.queryTask(null, 1, null,
+                null, null, null);
         for (Task task : tasks) {
             System.out.println(task);
         }
@@ -249,6 +247,14 @@ public class MapperLayerTest {
         ex.setExamineReason("棒!");
         examineMapper.insertExamine(ex);
     }
+
+    @Test
+    public void test_hasExamined(){
+        Examine examine = examineMapper.hasExamined(1, 13);
+        String info = "examine是否为空?" + examine;
+        logger.info(info);
+    }
+
     //////////////////  Examine   //////////////////////////
 
     //////////////////  Shiro   //////////////////////////

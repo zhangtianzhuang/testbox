@@ -1,5 +1,8 @@
 package com.bjtu.testbox.controller;
 
+import com.bjtu.testbox.config.api.Code;
+import com.bjtu.testbox.config.api.R;
+import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.entity.Examine;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.ApproverService;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/approvers")
+@RequestMapping("/approvers")
 public class ApproverController {
 
     private static final String TAG = "ApproverController";
@@ -56,19 +59,19 @@ public class ApproverController {
      * @return
      */
     @GetMapping("/taskList")
-    public String queryTaskList(
+    @ResponseBody
+    public R queryTaskList(
             // 参数接收测试没有问题
-            @RequestParam(value = "taskStatus", defaultValue = "0") int taskStatus,
-            @RequestParam(value = "taskCity", defaultValue = "null") String taskCity,
-            @RequestParam(value = "taskPoint", defaultValue = "null") String taskPoint,
-            @RequestParam(value = "startDate", defaultValue = "-1") long startDate,
-            @RequestParam(value = "endDate", defaultValue = "-1") long endDate,
-            Model model
+            @RequestParam(value = "taskCity" , required = false) String taskCity,
+            @RequestParam(value = "taskPoint", required = false) String taskPoint,
+            @RequestParam(value = "startDate", required = false) Long startDate,
+            @RequestParam(value = "endDate"  , required = false) Long endDate
         ){
-        List<Task> tasks = approverService.showTaskListByStatus(-1, taskCity, taskStatus,
+        // 测试，待动态车间审批
+        Integer taskStatus = Status.TASK_WAIT_WORKSHOP;
+        List<Task> tasks = approverService.showTaskListByStatus(null, taskCity, taskStatus,
                 taskPoint, startDate, endDate);
-        model.addAttribute("tasks", tasks);
-        return null;
+        return R.success().data(tasks).code(Code.OK);
     }
 
     /**
@@ -77,33 +80,35 @@ public class ApproverController {
      * @return
      */
     @GetMapping("/taskDetail")
-    public String queryTaskDetail(@RequestParam("taskId") int taskId, Model model){
+    @ResponseBody
+    public R queryTaskDetail(@RequestParam("taskId") int taskId){
         Task task = approverService.showTaskDetail(taskId);
-        model.addAttribute("task", task);
-        return null;
+        return R.success().code(Code.OK).msg("success").data(task);
     }
 
     /**
      * 审批者审批
-     * @param approverId
-     * @param taskId
-     * @param examineResult
-     * @param examineReason
      * @return
      */
     @PostMapping("/examine")
-    public String workshopExamineTask(@Param("approverId") int approverId,
-                                      @Param("taskId") int taskId,
-                                      @Param("examineResult") int examineResult,
-                                      @Param("examineReason") String examineReason,
-                                      @Param("examineLevel") int examineLevel){
-        Examine examine = new Examine();
-        examine.setApproverId(approverId);
-        examine.setTaskId(taskId);
-        examine.setExamineResult(examineResult);
-        examine.setExamineReason(examineReason);
-        examine.setExamineLevel(examineLevel);
-        int i = approverService.examineTask(examine);
-        return null;
+    @ResponseBody
+    public R workshopExamineTask(
+            @RequestParam Integer taskId,
+            @RequestParam Integer examineResult,
+            @RequestParam String examineReason
+            ){
+         Examine examine = new Examine();
+         examine.setTaskId(taskId);
+         examine.setExamineResult(examineResult);
+         examine.setExamineReason(examineReason);
+
+         Examine examineTask = approverService.examineTask(examine);
+         String info = "taskID:"+taskId+", Result:" +
+                 examineResult + ", Reason:"+examineReason;
+         logger.info(info);
+         if (examineTask != null)
+             return R.success().data(examineTask).msg(R.SUCCESS).code(Code.OK);
+         else
+             return R.fail().code(Code.SERVER_ERROR).msg(R.FAILURE);
     }
 }

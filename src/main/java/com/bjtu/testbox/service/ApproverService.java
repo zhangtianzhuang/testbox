@@ -17,8 +17,8 @@ public interface ApproverService {
      * @param endDate
      * @return
      */
-    List<Task> showTaskListByStatus(int workId, String taskCity, int taskStatus,
-                                    String taskPoint, long startDate, long endDate);
+    List<Task> showTaskListByStatus(Integer workId, String taskCity, Integer taskStatus,
+                                    String taskPoint, Long startDate, Long endDate);
 
     /**
      * show task detail
@@ -32,5 +32,5 @@ public interface ApproverService {
      * @param examine
      * @return
      */
-    int examineTask(Examine examine);
+    Examine examineTask(Examine examine);
 }

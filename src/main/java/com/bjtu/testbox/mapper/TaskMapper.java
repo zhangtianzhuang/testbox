@@ -33,9 +33,9 @@ public interface TaskMapper {
      * @param endDate  终止日期
      * @return
      */
-    List<Task> queryTask(@Param("taskCity") String taskCity, @Param("workerId") int workerId,
-                         @Param("taskStatus") int taskStatus, @Param("taskPoint") String taskPoint,
-                         @Param("startDate") long startDate, @Param("endDate") long endDate);
+    List<Task> queryTask(@Param("taskCity") String taskCity, @Param("workerId") Integer workerId,
+                         @Param("taskStatus") Integer taskStatus, @Param("taskPoint") String taskPoint,
+                         @Param("startDate") Long startDate, @Param("endDate") Long endDate);
 
     /**
      * 查询所有任务的信息

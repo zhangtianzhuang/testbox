@@ -35,8 +35,8 @@ public interface WorkerService {
      * @param endDate
      * @return
      */
-    List<Task> showWorkerTask(int workerId, String taskCity, int taskStatus,
-                              String taskPoint, long startDate, long endDate);
+    List<Task> showWorkerTask(Integer workerId, String taskCity, Integer taskStatus,
+                              String taskPoint, Long startDate, Long endDate);
 
     /**
      * show the detail info of the task.
