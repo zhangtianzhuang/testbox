@@ -40,7 +40,7 @@ public class ApproverController {
      * 测试审批表单的ajax请求
      * @return
      */
-    @GetMapping("/approvers/taskListTest")
+    @PostMapping("/approvers/taskListTest")
     @ResponseBody
     public String approverTaskListTest(){
         String datastr = "{ \"data\":[" +
@@ -56,7 +56,7 @@ public class ApproverController {
      * @param map
      * @return
      */
-    @GetMapping("/taskList")
+    @PostMapping("/taskList")
     @ResponseBody
     public R queryTaskList( @RequestBody Map<String, Object> map){
         String taskCity = (String) map.get("taskCity");
@@ -75,7 +75,7 @@ public class ApproverController {
      * @param map
      * @return
      */
-    @GetMapping("/approvers/taskDetail")
+    @PostMapping("/approvers/taskDetail")
     @ResponseBody
     public R queryTaskDetail(@RequestBody Map<String, Integer> map){
         int taskId = map.get("taskId");

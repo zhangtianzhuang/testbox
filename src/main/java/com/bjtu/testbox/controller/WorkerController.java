@@ -64,7 +64,7 @@ public class WorkerController {
      *
      * @return
      */
-    @GetMapping(value = "/workers/personInfo")
+    @PostMapping(value = "/workers/personInfo")
     @ResponseBody
     // 如果workerId 没有接收到值，则会自动置为空，所以不用int类型，而是用Integer类型
     public R queryWorkerPersonInfo() {
@@ -86,7 +86,7 @@ public class WorkerController {
      * @param map
      * @return
      */
-    @GetMapping("/workers/taskList")
+    @PostMapping("/workers/taskList")
     @ResponseBody
     public R queryTaskList(@RequestBody Map<String, Object> map) {
         Integer taskStatus = (Integer) map.get("taskStatus");
@@ -107,14 +107,14 @@ public class WorkerController {
     }
 
 
-    @GetMapping("/workers/boxes")
+    @PostMapping("/workers/boxes")
     @ResponseBody
     public BoxOption queryUsableBox() {
         BoxOption boxOption = workerService.selectUsableBox();
         return boxOption;
     }
 
-    @GetMapping("/workers/taskDetail")
+    @PostMapping("/workers/taskDetail")
     @ResponseBody
     public R queryTaskDetail(@RequestBody Map<String, Integer> map) {
         Integer taskId = map.get("taskId");
@@ -122,7 +122,7 @@ public class WorkerController {
         return R.success().data(task);
     }
 
-    @GetMapping("/workers/taskStatusNumber")
+    @PostMapping("/workers/taskStatusNumber")
     @ResponseBody
     public R taskStatusNumber() {
         int workerId = 1;
