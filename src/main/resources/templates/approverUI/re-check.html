@@ -351,7 +351,7 @@
                                 <th>任务编号</th>
                                 <th>申请人</th>
                                 <th>申请日期</th>
-                                <th>地点</th>
+                                <th>工区名称</th>
                                 <th>任务状态</th>
                                 <th>操作</th>
                             </tr>
@@ -374,43 +374,43 @@
                                 <div class="form-group col-md-8">
                                     <dl class="row">
                                         <dt class="col-sm-4">任务编号</dt>
-                                        <dd class="col-sm-8">20200517AZTBDSA</dd>
+                                        <dd class="col-sm-8" id="info_taskID">20200517AZTBDSA</dd>
                                         <dt class="col-sm-4">申请人</dt>
-                                        <dd class="col-sm-8">张三</dd>
-                                        <!--              <dd class="col-sm-8 offset-sm-4">Donec id elit non mi porta gravida at eget metus.</dd>-->
+                                        <dd class="col-sm-8" id="info_approverName">张三</dd>
                                         <dt class="col-sm-4">所属工区</dt>
-                                        <dd class="col-sm-8">成都</dd>
+                                        <dd class="col-sm-8" id="info_projectArea">成都</dd>
                                         <dt class="col-sm-4">工程名称</dt>
-                                        <dd class="col-sm-8">列控检修</dd>
+                                        <dd class="col-sm-8" id="info_projectName">列控检修</dd>
                                         <dt class="col-sm-4">工作地点</dt>
-                                        <dd class="col-sm-8">成都普速场</dd>
+                                        <dd class="col-sm-8" id="info_projectPoint">成都普速场</dd>
                                         <dt class="col-sm-4">申请试验箱编号</dt>
-                                        <dd class="col-sm-8">DZ-1、DJ-1、DJ-2、GW-1</dd>
+                                        <dd class="col-sm-8" id="info_boxlist">DZ-1、DJ-1、DJ-2、GW-1</dd>
                                         <dt class="col-sm-4">使用时间</dt>
-                                        <dd class="col-sm-8">2020/05/06 01:00 — 2020/05/06 04:00</dd>
+                                        <dd class="col-sm-8" id="info_dateRange">2020/05/06 01:00 — 2020/05/06 04:00</dd>
                                         <dt class="col-sm-4">任务备注</dt>
-                                        <dd class="col-sm-8">我是任务备注</dd>
+                                        <dd class="col-sm-8" id="info_remark">我是任务备注</dd>
                                         <dt class="col-sm-4">申请时间</dt>
-                                        <dd class="col-sm-8">2020/05/04 16:09</dd>
+                                        <dd class="col-sm-8" id="info_approveDate">2020/05/04 16:09</dd>
+                                        <dd class="col-sm-4" id="info_idInternal" style="display: none"></dd>
 
                                     </dl>
                                 </div>
                                 <!-- 意见框 -->
                                 <div class="form-group col-md-4">
                                     <label>拒绝理由</label>
-                                    <textarea class="form-control" rows="5" placeholder="若拒绝该任务请输入拒绝理由..."></textarea>
+                                    <textarea id="rejectReason" class="form-control" rows="5" placeholder="若拒绝该任务请输入拒绝理由..."></textarea>
                                     <br>
                                     <br>
                                     <!-- 按钮 -->
                                     <div class="form-group row justify-content-center">
                                         <div class="col-md-4">
-                                            <button class="btn btn-success btn-block" type="button">
+                                            <button class="btn btn-success btn-block" type="button" onclick="checkResult(1)">
                                                 接受
                                             </button>
                                         </div>
                                         <div class="col-md-4"></div>
                                         <div class="col-md-4">
-                                            <button class="btn btn-danger btn-block" type="button">
+                                            <button class="btn btn-danger btn-block" type="button" onclick="checkResult(2)">
                                                 拒绝
                                             </button>
                                         </div>
@@ -446,10 +446,7 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>班组</b> <a class="float-right" id="user_groupName">尖刀班</a>
-                    </li>
-                    <li class="list-group-item">
-                        <b>工区</b> <a class="float-right" id="user_projectArea">成都铁路局</a>
+                        <b>等级</b> <a class="float-right" id="user_level">顶级</a>
                     </li>
                     <li class="list-group-item">
                         <b>电话</b> <a class="float-right" id="user_phone">15600928615</a>
@@ -516,25 +513,33 @@
             // ajax请求表格数据
             ajax: function (data, callback) {
                 //封装请求参数
-                var param = {};
-                param.taskStatus = 0;
+                var param = {
+                    "taskPoint": null,
+                    "taskCity": null,
+                    "startDate": null,
+                    "startEnd": null
+                };
+                // param.taskStatus = 0;
                 //ajax请求数据
                 $.ajax({
-                    type: "GET",
-                    url: window.location.pathname + "/taskListTest",
-                    data: param,                    // 传入组装的参数
+                    type: "POST",
+                    url: window.location.pathname + "/taskList",
+                    data: JSON.stringify({}),                    // 传入组装的参数
                     dataType: "json",
+                    contentType:'application/json;charset=UTF-8',
+                    // processData: false,  参数不添加到url上
                     success: function (result) {
                         // 对接收到的数据做处理，也就是对result进行处理
                         console.log(result);
                         var returnData = {};
-                        returnData.draw = data.draw;                // 这里直接自行返回了draw计数器,应该由后台返回
-                        returnData.recordsTotal = result.total;     // 返回数据全部记录
-                        returnData.recordsFiltered = result.total;  // 后台不实现过滤功能，每次查询均视作全部结果
+                        // returnData.draw = data.draw;                // 这里直接自行返回了draw计数器,应该由后台返回
+                        // returnData.recordsTotal = result.total;     // 返回数据全部记录
+                        // returnData.recordsFiltered = result.total;  // 后台不实现过滤功能，每次查询均视作全部结果
                         returnData.data = result.data;              // 返回的数据列表
                         // 处理完后的数据returnData调用callback在DataTables上进行渲染
                         console.log(returnData);
                         // 调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+
                         // 此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                         callback(returnData);
                     }
@@ -556,32 +561,44 @@
             // 数据形式
             columns:[
                 { "data": "taskNumber" },
-                { "data": "approverName" },
-                { "data": "approveDate" },
-                { "data": "projectArea" },
-                { "data": "taskStatus" },
+                { "data": "taskWorkerName" },
+                { "data": "taskDate",
+                    "render" : function (timestamp) {
+                    // 时间戳转日期格式
+                        return moment(timestamp).format("YYYY-MM-DD HH:mm:ss")
+                    }
+                },
+                { "data": "taskArea" },
+                { "data": "taskStatus",
+                    "render" : function(data) {
+                    switch (data) {
+                        case 1:
+                            return "待一级审核";
+                        case 2:
+                            return "待二级审核";
+                    }
+                    }},
                 { "data": "taskId"}
             ]
         });
         // 用户账号登录
         // 获得登录用户信息
-        // $.ajax({
-        //     url: window.location.pathname + "/personInfo",
-        //     type:'GET',
-        //     dataType:'json',
-        //     contentType:'application/json;charset=UTF-8',
-        //     success:function(result){
-        //         console.log(result);
-        //         var userInfo = result.data;
-        //         // 渲染到界面上
-        //         $("#user_nameshow").text(userInfo.workerName);
-        //         $("#user_name").text(userInfo.workerName);
-        //         $("#user_id").text(userInfo.workerNumber);
-        //         $("#user_phone").text(userInfo.workerPhone);
-        //         $("#user_projectArea").text(userInfo.workerArea);
-        //         $("#user_groupName").text(userInfo.workerGroup);
-        //     }
-        // })
+        $.ajax({
+            url: window.location.pathname + "/approverInfo",
+            type:'GET',
+            dataType:'json',
+            contentType:'application/json;charset=UTF-8',
+            success:function(result){
+                console.log(result);
+                var userInfo = result.data;
+                // 渲染到界面上
+                $("#user_nameshow").text(userInfo.approverName);
+                $("#user_name").text(userInfo.approverName);
+                $("#user_id").text(userInfo.approverNumber);
+                $("#user_phone").text(userInfo.approverPhone);
+                $("#user_level").text(userInfo.approverLevel===1?"动态检查室":"段生产调度室");
+            }
+        })
     });
 
     // 根据taskId请求task的详细信息
@@ -591,17 +608,75 @@
         // ajax请求
         var param = {"taskId": parseInt(taskId)};
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: window.location.pathname + "/taskDetail",
             contentType:'application/json;charset=UTF-8',
-            data: param,                    // 传入组装的参数
+            data: JSON.stringify(param),                    // 传入组装的参数
             dataType: "json",
             success: function (result) {
                 // 对接收到的数据做处理，也就是对result进行处理
                 console.log(result);
+                // 解析返回的数据，修改显示申请的表单内容
+                var task = result.data;
+                console.log(task)
+                var borrowDate = moment(task.borrowDate).format("YYYY-MM-DD HH:mm:ss");
+                var returnDate = moment(task.returnDate).format("YYYY-MM-DD HH:mm:ss");
+                var boxList = "";
+                for(var i = 0; i < task.boxes.length; i++){
+                    boxList += task.boxes[i].boxNumber;
+                    boxList += " ";
+                }
+
+                $("#info_taskID").text(task.taskNumber);
+                $("#info_approverName").text(task.taskWorkerName);
+                $("#info_projectArea").text(task.Area);
+                $("#info_projectName").text(task.taskName);
+                $("#info_projectPoint").text(task.taskPoint);
+                $("#info_boxlist").text(boxList);
+                $("#info_dateRange").text(borrowDate + "~" + returnDate);
+                $("#info_remark").text(task.taskDesc);
+                $("#info_approveDate").text(moment(task.taskDate).format("YYYY-MM-DD HH:mm:ss"));
+                $("#info_idInternal").val(task.taskId);
+
             }
         })
 
+        // 显示任务的详细信息以供审批者审批
+        // 显示表单申请结果，隐藏表单界面
+        $("#taskCheckList").toggle();
+        $("#jobinfo").css("display","block");
+    }
+
+    // 审核结果
+    function checkResult(result){
+        // result：1表示接受；2表示拒绝
+        // 如果拒绝，检查拒绝理由是否为空，为空提示
+        var rejectReasion = $("#rejectReason").val();
+        console.log(rejectReasion);
+        if(result === 2 && rejectReasion === ""){
+            alert("请输入拒绝理由！");
+            return;
+        }
+
+        // ajax 发送数据
+        var param = {
+            "taskId": $("#info_idInternal").val(),
+            "examineResult":result,
+            "examineReason":rejectReasion
+        }
+        $.ajax({
+            type: "POST",
+            url: window.location.pathname + "/examine",
+            contentType:'application/json;charset=UTF-8',
+            data: JSON.stringify(param),                    // 传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                console.log("审批任务完成")
+            }
+        })
+
+        // 刷新界面回到审批列表
+        window.location.reload()  // 刷新当前页面.
     }
 </script>
 </body>

@@ -57,7 +57,7 @@ public class ApproverController {
      * @param map
      * @return
      */
-    @PostMapping("/taskList")
+    @PostMapping("/approvers/taskList")
     @ResponseBody
     public R queryTaskList( @RequestBody Map<String, Object> map){
         String taskCity = (String) map.get("taskCity");
@@ -88,7 +88,7 @@ public class ApproverController {
      *
      * @return
      */
-    @PostMapping("/approvers/approverInfo")
+    @GetMapping("/approvers/approverInfo")
     @ResponseBody
     public R approverInfo(){
         Integer approverId = 1;
@@ -100,7 +100,7 @@ public class ApproverController {
      * 审批者审批
      * @return
      */
-    @PostMapping("/examine")
+    @PostMapping("approvers/examine")
     @ResponseBody
     public R workshopExamineTask(@RequestBody Examine examine){
          Examine examineTask = approverService.examineTask(examine);
