@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class R implements Serializable {
     // msg属性的一般取值
-    public static final String SUCCESS = "SUCCESS";
-    public static final String FAILURE = "FAILURE";
+    public static final String SUCCESS = "success";
+    public static final String FAILURE = "failure";
 
     // 结果-代码
     private Integer code;

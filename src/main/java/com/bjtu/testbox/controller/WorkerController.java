@@ -92,6 +92,9 @@ public class WorkerController {
         Integer taskStatus = (Integer) map.get("taskStatus");
         String taskPoint = (String) map.get("taskPoint");
         String taskCity = (String) map.get("taskCity");
+        // Map只能获取Integer，不能转化为Long
+//        Long startDate =  Long.valueOf(((Integer) map.get("startDate")).toString());
+//        Long endDate = Long.valueOf(((Integer) map.get("endDate")).toString());
         Long startDate = (Long) map.get("startDate");
         Long endDate = (Long) map.get("endDate");
         logger.info("taskStatus:"+taskStatus+", taskPoint:"+taskPoint+", taskCity:"+taskCity+

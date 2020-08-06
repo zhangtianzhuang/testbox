@@ -67,7 +67,7 @@ public class ApproverController {
         Integer taskStatus = Status.TASK_WAIT_WORKSHOP;
         List<Task> tasks = approverService.showTaskListByStatus(null, taskCity, taskStatus,
                 taskPoint, startDate, endDate);
-        return R.success().data(tasks).code(Code.OK);
+        return R.success().data(tasks).code(Code.OK).msg(R.SUCCESS);
     }
 
     /**
