@@ -10,14 +10,20 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
     <!-- Font Awesome Icons 图标风格-->
-    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/testbox/static/plugins/fontawesome-free/css/all.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css">
 
     <!-- Theme style 主题样式-->
-    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/testbox/static/dist/css/adminlte.min.css">
 
     <!-- 日期表样式 -->
-    <link rel="stylesheet" href="../../static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="/testbox/static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/testbox/static/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/testbox/static/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -47,7 +53,7 @@
                     <a href="#" class="dropdown-item">
                         <!-- Message Start -->
                         <div class="media">
-                            <img src="../../static/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                            <img src="/testbox/static/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
                                     Brad Diesel
@@ -63,7 +69,7 @@
                     <a href="#" class="dropdown-item">
                         <!-- Message Start -->
                         <div class="media">
-                            <img src="../../static/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <img src="/testbox/static/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
                                     John Pierce
@@ -79,7 +85,7 @@
                     <a href="#" class="dropdown-item">
                         <!-- Message Start -->
                         <div class="media">
-                            <img src="../../static/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                            <img src="/testbox/static/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
                             <div class="media-body">
                                 <h3 class="dropdown-item-title">
                                     Nora Silvester
@@ -136,7 +142,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
-            <img src="../../static/dist/img/ChengduLogo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="/testbox/static/dist/img/ChengduLogo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">模拟装置管理系统</span>
         </a>
 
@@ -146,10 +152,10 @@
             <!-- 用户图标和信息 -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="../../static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="/testbox/static/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block"> 张三 </a>
+                    <a href="#" class="d-block" id="user_nameshow"> 张三 </a>
                 </div>
             </div>
 
@@ -171,15 +177,15 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="taskapply.html" class="nav-link">
+                                <a href="workers/taskapply" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>提交任务申请</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="workers/taskshow" class="nav-link active">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>查看申请结果</p>
+                                    <p>查看任务申请</p>
                                 </a>
                             </li>
                         </ul>
@@ -213,7 +219,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">查看任务申请结果</h1>
+                        <h1 class="m-0 text-dark">我的任务</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -231,9 +237,83 @@
         <div class="content">
             <div class="container-fluid">
 
+                <!-- 我的任务列表 --->
+                <div class="card card-primary" id="taskList">
+                    <div class="card-header">
+                        <h3 class="card-title">任务列表</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="table" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>任务编号</th>
+                                <th>申请人</th>
+                                <th>申请日期</th>
+                                <th>工区名称</th>
+                                <th>任务状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>任务编号</th>
+                                <th>申请人</th>
+                                <th>申请日期</th>
+                                <th>工区名称</th>
+                                <th>任务状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <!-- 任务详情 -->
+                <div class="card card-default" id="taskInfo" style="display: none"> <!-- 默认隐藏 -->
+                    <div class="card-header">
+                        <h3 class="card-title">任务详情</h3>
+                    </div>
+                    <!-- 显示申请表单结果 -->
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">任务编号</dt>
+                            <dd class="col-sm-8" id="info_taskID">20200517AZTBDSA</dd>
+                            <dt class="col-sm-4">申请人</dt>
+                            <dd class="col-sm-8" id="info_approverName">张三</dd>
+                            <dt class="col-sm-4">所属工区</dt>
+                            <dd class="col-sm-8" id="info_projectArea">成都</dd>
+                            <dt class="col-sm-4">工程名称</dt>
+                            <dd class="col-sm-8" id="info_projectName">列控检修</dd>
+                            <dt class="col-sm-4">工作地点</dt>
+                            <dd class="col-sm-8" id="info_projectPoint">成都普速场</dd>
+                            <dt class="col-sm-4">申请试验箱编号</dt>
+                            <dd class="col-sm-8" id="info_boxlist">DZ-1、DJ-1、DJ-2、GW-1</dd>
+                            <dt class="col-sm-4">使用时间</dt>
+                            <dd class="col-sm-8" id="info_dateRange">2020/05/06 01:00 — 2020/05/06 04:00</dd>
+                            <dt class="col-sm-4">任务备注</dt>
+                            <dd class="col-sm-8" id="info_remark">我是任务备注</dd>
+                            <dt class="col-sm-4">申请时间</dt>
+                            <dd class="col-sm-8" id="info_approveDate">2020/05/04 16:09</dd>
+                        </dl>
+                        <!-- 确认按钮 返回申请页-->
+                        <div class="row">
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <button type="reset" class="btn btn-primary btn-block" onclick="refresh()"> 返回 </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
             </div>
             <!-- /.container-fluid -->
-
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
@@ -241,12 +321,37 @@
     <!-- Control Sidebar -->
 
     <!-- 右侧呼出栏，可以设计成用户登录登出-->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-        <div class="p-3">
-            <h5>个人信息</h5>
-            <p>Sidebar content</p>
+    <aside class="control-sidebar">
+        <!-- Profile Image -->
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle"
+                         src="/testbox/static/dist/img/user1-128x128.jpg"
+                         alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center " id="user_name">张三</h3>
+
+                <p class="text-muted text-center" id="user_id">20209527</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>班组</b> <a class="float-right" id="user_groupName">尖刀班</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>工区</b> <a class="float-right" id="user_projectArea">成都铁路局</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>电话</b> <a class="float-right" id="user_phone">15600928615</a>
+                    </li>
+                </ul>
+
+                <a href="#" class="btn btn-primary btn-block"><b>退出登录</b></a>
+            </div>
+            <!-- /.card-body -->
         </div>
+        <!-- /.card -->
     </aside>
     <!-- /.control-sidebar -->
 
@@ -265,20 +370,189 @@
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
-<script src="../../static/plugins/jquery/jquery.min.js"></script>
+<script src="/testbox/static/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/testbox/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <!-- 一些动态响应 -->
-<script src="../../static/dist/js/adminlte.min.js"></script>
+<script src="/testbox/static/dist/js/adminlte.min.js"></script>
 
 <!-- InputMask -->
 <!-- 选择日期需要-->
-<script src="../../static/plugins/moment/moment.min.js"></script>
-<script src="../../static/plugins/inputmask/jquery.inputmask.min.js"></script>
+<script src="/testbox/static/plugins/moment/moment.min.js"></script>
+<script src="/testbox/static/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!--&lt;!&ndash; date-range-picker &ndash;&gt;-->
 <!--<script src="plugins/daterangepicker/daterangepicker.js"></script>-->
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="../../static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/testbox/static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- DataTables -->
+<script src="/testbox/static/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/testbox/static/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/testbox/static/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/testbox/static/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+    // 该页面的处理脚本
+    $(function () {
+        // 表格配置
+        $("#table").DataTable({
+            responsive: true,
+            autoWidth: false,
+            // 使用汉化
+            language: {
+                url: '//cdn.datatables.net/plug-ins/3cfcc339e89/i18n/Chinese.json'
+            },
+
+            processing: true,   //载入数据的时候是否显示“载入中”
+            pageLength: 10,     //首次加载的数据条
+            // serverSide: true,   //开启服务器模式，数据量多时可使用，每次只返回一部分数据
+            cache: false,       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+
+            // ajax请求表格数据
+            ajax: function (data, callback) {
+                //封装请求参数
+                var param = {
+                    "taskPoint": null,
+                    "taskCity": null,
+                    "startDate": null,
+                    "startEnd": null
+                };
+                // param.taskStatus = 0;
+                //ajax请求数据
+                $.ajax({
+                    type: "POST",
+                    url: window.location.pathname + "/taskList",
+                    data: JSON.stringify({}),                    // 传入组装的参数
+                    dataType: "json",
+                    contentType:'application/json;charset=UTF-8',
+                    // processData: false,  参数不添加到url上
+                    success: function (result) {
+                        // 对接收到的数据做处理，也就是对result进行处理
+                        console.log(result);
+                        var returnData = {};
+                        // returnData.draw = data.draw;                // 这里直接自行返回了draw计数器,应该由后台返回
+                        // returnData.recordsTotal = result.total;     // 返回数据全部记录
+                        // returnData.recordsFiltered = result.total;  // 后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;              // 返回的数据列表
+                        // 处理完后的数据returnData调用callback在DataTables上进行渲染
+                        console.log(returnData);
+                        // 调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+
+                        // 此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                    }
+                });
+            },
+            //给table内自定义按钮
+            "columnDefs": [
+                {
+                    // targets用于指定操作的列，从第0列开始，-1为最后一列，这里第六列
+                    // return后边是我们希望在指定列填入的按钮代码
+                    "targets": -1,
+                    "render": function ( data, type, full, meta ) { // data:表格数据 full:该行所有数据 数组形式 所以 data==full[n]
+                        var taskId = data;
+                        // 不知道为啥加''有效
+                        return '<a class="btn btn-primary btn-sm" onclick="taskDetail('+taskId+')"><i class="icon-edit"></i>查看详情</a>'
+                    }
+                }
+            ],
+            // 数据形式
+            columns:[
+                { "data": "taskNumber" },
+                { "data": "taskWorkerName" },
+                { "data": "taskDate",
+                    "render" : function (timestamp) {
+                        // 时间戳转日期格式
+                        return moment(timestamp).format("YYYY-MM-DD HH:mm:ss")
+                    }
+                },
+                { "data": "taskArea" },
+                { "data": "taskStatus",
+                    "render" : function(data) {
+                        switch (data) {
+                            case 1:
+                                return "待一级审核";
+                            case 2:
+                                return "待二级审核";
+                            default:
+                                return "状态有误:"+data;
+                        }
+                    }},
+                { "data": "taskId"}
+            ]
+        });
+        // 用户账号登录
+        // 获得登录用户信息
+        $.ajax({
+            url: window.location.pathname + "/personInfo",
+            type:'GET',
+            dataType:'json',
+            contentType:'application/json;charset=UTF-8',
+            success:function(result){
+                console.log(result);
+                var userInfo = result.data;
+                // 渲染到界面上
+                $("#user_nameshow").text(userInfo.workerName);
+                $("#user_name").text(userInfo.workerName);
+                $("#user_id").text(userInfo.workerNumber);
+                $("#user_phone").text(userInfo.workerPhone);
+                $("#user_projectArea").text(userInfo.workerArea);
+                $("#user_groupName").text(userInfo.workerGroup);
+            }
+        })
+    });
+
+    // 工人查看自己的任务详情
+    // 显示任务详情
+    function taskDetail(taskId) {
+        console.log(taskId);
+        // ajax请求
+        var param = {"taskId": parseInt(taskId)};
+        $.ajax({
+            type: "POST",
+            url: window.location.pathname + "/taskDetail",
+            contentType:'application/json;charset=UTF-8',
+            data: JSON.stringify(param),                    // 传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                // 对接收到的数据做处理，也就是对result进行处理
+                console.log(result);
+                // 解析返回的数据，修改显示申请的表单内容
+                var task = result.data;
+                console.log(task)
+                var borrowDate = moment(task.borrowDate).format("YYYY-MM-DD HH:mm:ss");
+                var returnDate = moment(task.returnDate).format("YYYY-MM-DD HH:mm:ss");
+                var boxList = "";
+                for(var i = 0; i < task.boxes.length; i++){
+                    boxList += task.boxes[i].boxNumber;
+                    boxList += " ";
+                }
+
+                $("#info_taskID").text(task.taskNumber);
+                $("#info_approverName").text(task.taskWorkerName);
+                $("#info_projectArea").text(task.Area);
+                $("#info_projectName").text(task.taskName);
+                $("#info_projectPoint").text(task.taskPoint);
+                $("#info_boxlist").text(boxList);
+                $("#info_dateRange").text(borrowDate + "~" + returnDate);
+                $("#info_remark").text(task.taskDesc);
+                $("#info_approveDate").text(moment(task.taskDate).format("YYYY-MM-DD HH:mm:ss"));
+                $("#info_idInternal").val(task.taskId);
+
+            }
+        })
+
+        // 显示任务的详细信息以供审批者审批
+        // 显示表单申请结果，隐藏表单界面
+        $("#taskList").toggle();
+        $("#taskInfo").css("display","block");
+    }
+
+    // 返回主界面
+    function refresh() {
+        window.location.reload()  // 刷新当前页面.
+    }
+</script>
+
 </body>
 </html>

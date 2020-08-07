@@ -33,13 +33,15 @@ public class WorkerController {
      */
     @RequestMapping("/workers")
     public String workersUI() {
-        return "workerUI/taskapply";
+        return "workerUI/taskshow";
     }
+
 
     @RequestMapping("/workers/boxes")
     public String workersboxes() {
         return "index";
     }
+
 
     /**
      * 工人申请任务
@@ -64,7 +66,7 @@ public class WorkerController {
      *
      * @return
      */
-    @PostMapping(value = "/workers/personInfo")
+    @GetMapping(value = "/workers/personInfo")
     @ResponseBody
     // 如果workerId 没有接收到值，则会自动置为空，所以不用int类型，而是用Integer类型
     public R queryWorkerPersonInfo() {
