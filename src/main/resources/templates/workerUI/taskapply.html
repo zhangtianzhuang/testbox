@@ -176,13 +176,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="workers/taskapply" class="nav-link active">
+                <a href="/testbox/workers/taskapply" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>提交任务申请</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="workers/taskshow" class="nav-link">
+                <a href="/testbox/workers/taskshow" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>查看申请结果</p>
                 </a>
@@ -470,7 +470,7 @@
     $('#boxList').select2({
       // 绑定服务器的json数据为所有可用的试验箱
       ajax: {
-        url: window.location.pathname + "/boxes",
+        url: "/testbox/workers/boxes",
         type:'GET',
         dataType: 'json',
       }
@@ -478,7 +478,7 @@
 
     // 获得登录用户信息
     $.ajax({
-      url: window.location.pathname + "/personInfo",
+      url: "/testbox/workers/personInfo",
       type:'GET',
       dataType:'json',
       contentType:'application/json;charset=UTF-8',
@@ -543,7 +543,7 @@
 
     // 将数据表发送给服务器的对应端口
     $.ajax({
-      url: window.location.pathname + "/task",
+      url: "/testbox/workers/task",
       type:'POST',
       dataType:'json',
       contentType:'application/json;charset=UTF-8',

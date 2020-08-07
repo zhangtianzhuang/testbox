@@ -177,13 +177,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="workers/taskapply" class="nav-link">
+                                <a href="/testbox/workers/taskapply" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>提交任务申请</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="workers/taskshow" class="nav-link active">
+                                <a href="/testbox/workers/taskshow" class="nav-link active">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>查看任务申请</p>
                                 </a>
@@ -421,7 +421,7 @@
                 //ajax请求数据
                 $.ajax({
                     type: "POST",
-                    url: window.location.pathname + "/taskList",
+                    url: "/testbox/workers/taskList",
                     data: JSON.stringify({}),                    // 传入组装的参数
                     dataType: "json",
                     contentType:'application/json;charset=UTF-8',
@@ -484,7 +484,7 @@
         // 用户账号登录
         // 获得登录用户信息
         $.ajax({
-            url: window.location.pathname + "/personInfo",
+            url: "/testbox/workers/personInfo",
             type:'GET',
             dataType:'json',
             contentType:'application/json;charset=UTF-8',
@@ -510,7 +510,7 @@
         var param = {"taskId": parseInt(taskId)};
         $.ajax({
             type: "POST",
-            url: window.location.pathname + "/taskDetail",
+            url: "/testbox/workers/taskDetail",
             contentType:'application/json;charset=UTF-8',
             data: JSON.stringify(param),                    // 传入组装的参数
             dataType: "json",

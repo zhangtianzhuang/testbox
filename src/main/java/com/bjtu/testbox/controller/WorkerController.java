@@ -33,9 +33,18 @@ public class WorkerController {
      */
     @RequestMapping("/workers")
     public String workersUI() {
-        return "workerUI/taskshow";
+        return "workerUI/taskapply";
     }
 
+    @RequestMapping("/workers/taskapply")
+    public String workerTaskApply() {
+        return "workerUI/taskapply";
+    }
+
+    @RequestMapping("/workers/taskshow")
+    public String workerTaskShow() {
+        return "workerUI/taskshow";
+    }
 
     @RequestMapping("/workers/boxes")
     public String workersboxes() {
