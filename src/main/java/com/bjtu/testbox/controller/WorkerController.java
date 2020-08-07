@@ -31,17 +31,20 @@ public class WorkerController {
     /**
      * 工人UI的入口
      */
-    @RequestMapping("/workers")
+    @RequestMapping(value = {"/workers"})
     public String workersUI() {
+        return "workerUI/taskapply";
+    }
+
+    @RequestMapping(value = {"/workers/taskshow"})
+    public String taskshow() {
         return "workerUI/taskshow";
     }
 
-
-    @RequestMapping("/workers/boxes")
-    public String workersboxes() {
-        return "index";
+    @RequestMapping(value = {"/workers/taskapply"})
+    public String taskapply() {
+        return "workerUI/taskapply";
     }
-
 
     /**
      * 工人申请任务
@@ -52,7 +55,10 @@ public class WorkerController {
     @PostMapping(value = "/workers/task")
     @ResponseBody
     public R applyTask(@RequestBody Task task) {
-        // 判断参数是否合法
+        logger.info(task.toString());
+        // 测试
+        Integer workerId = 1;
+        task.setTaskWorkerId(workerId);
         Task returnTask = workerService.applyTask(task);
         if (returnTask != null) {
             return R.success().msg("success").code(Code.OK).data(returnTask);
@@ -109,7 +115,7 @@ public class WorkerController {
     }
 
 
-    @PostMapping("/workers/boxes")
+    @GetMapping("/workers/boxes")
     @ResponseBody
     public BoxOption queryUsableBox() {
         BoxOption boxOption = workerService.selectUsableBox();

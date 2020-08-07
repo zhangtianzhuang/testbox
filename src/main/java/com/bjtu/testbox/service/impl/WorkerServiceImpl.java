@@ -60,6 +60,8 @@ public class WorkerServiceImpl implements WorkerService {
             // 待动态车间审核的状态
             task.setTaskStatus(Status.TASK_WAIT_WORKSHOP);
             task.setTaskWorkerId(worker.getWorkerId());
+        }else{
+            return null;
         }
         try {
             // 查询任务表中ID最大值
