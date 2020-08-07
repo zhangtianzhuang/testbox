@@ -34,7 +34,7 @@ public class ApproverController {
      */
     @RequestMapping("/approvers")
     public String approverUITest(){
-        return "approverUI/re-check";
+        return "approverUI/reject";
     }
 
     /**
