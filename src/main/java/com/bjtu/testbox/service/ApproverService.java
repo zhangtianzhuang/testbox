@@ -35,6 +35,17 @@ public interface ApproverService {
      */
     Examine examineTask(Examine examine);
 
-
+    /**
+     * show approver's basic info
+     * @param approverId
+     * @return
+     */
     Approver showApproverInfo(Integer approverId);
+
+    /**
+     * @param approverId
+     * @param examineResult
+     * @return
+     */
+    List<Task> showHistoryTask(Integer approverId, Integer examineResult);
 }

@@ -116,6 +116,13 @@ public class MapperLayerTest {
         taskMapper.insertTaskBox(1, 2);
     }
 
+    @Test
+    public void test_task_queryTaskByApprover(){
+        List<Task> tasks = taskMapper.queryTaskByApprover(1, 1);
+        for (Task task : tasks) {
+            System.out.println("taskId：" + task.getTaskId()+", taskNumber:"+task.getTaskNumber());
+        }
+    }
     //////////////////  Task   //////////////////////////
 
 

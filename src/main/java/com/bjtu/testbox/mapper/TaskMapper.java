@@ -50,6 +50,15 @@ public interface TaskMapper {
      */
     Task queryTaskDetail(@Param("taskId") int taskId);
 
+    /**
+     * 查询ID为@param approverId的审批者 审批结果为@param examineResult的任务列表
+     * @param approverId
+     * @param examineResult
+     * @return
+     */
+    List<Task> queryTaskByApprover(@Param("approverId")Integer approverId,
+                                   @Param("examineResult")Integer examineResult);
+
     // 查询任务最大的ID
     @Select("select max(task_id) from task")
     Integer selectMaxId();

@@ -87,4 +87,9 @@ public class ApproverServiceImpl implements ApproverService {
     public Approver showApproverInfo(Integer approverId) {
         return approverMapper.queryApproverById(approverId);
     }
+
+    @Override
+    public List<Task> showHistoryTask(Integer approverId, Integer examineResult) {
+        return taskMapper.queryTaskByApprover(approverId, examineResult);
+    }
 }

@@ -148,4 +148,15 @@
         order by task_date desc;
     </select>
 
+
+    <select id="queryTaskByApprover" resultMap="simpleTaskMap">
+      select
+        t.*
+      from task t, examine e
+      where
+        e.approver_id = #{approverId}
+        and e.examine_result = #{examineResult}
+        and t.task_id = e.task_id
+        order by e.examine_date desc
+    </select>
 </mapper>

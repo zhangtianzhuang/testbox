@@ -112,4 +112,17 @@ public class ApproverController {
          else
              return R.fail().code(Code.SERVER_ERROR).msg(R.FAILURE);
     }
+
+    /**
+     * 审批者查看历史审批记录，已同意或者已拒绝
+     * @param examineResult
+     * @return
+     */
+    @GetMapping("approvers/historyRecord")
+    @ResponseBody
+    public R queryHistoryTask(@RequestParam Integer examineResult){
+        int approverId = 1;
+        List<Task> tasks = approverService.showHistoryTask(approverId, examineResult);
+        return R.success().data(tasks).code(Code.OK).msg(R.SUCCESS);
+    }
 }
