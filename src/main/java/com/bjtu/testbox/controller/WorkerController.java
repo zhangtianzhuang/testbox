@@ -31,9 +31,14 @@ public class WorkerController {
     /**
      * 工人UI的入口
      */
-    @RequestMapping("/workers")
+    @RequestMapping(value = {"/workers", "/workers/taskshow"})
     public String workersUI() {
         return "workerUI/taskshow";
+    }
+
+    @RequestMapping()
+    public String taskapply(){
+        return "workerUI/taskapply";
     }
 
 
@@ -76,7 +81,7 @@ public class WorkerController {
         int workerId = 1;
         Worker worker = workerService.showWorkerInfo(workerId);
         worker.setWorkerId(-1);
-        if (worker != null){
+        if (worker != null) {
             return R.success().msg("success").code(Code.OK).data(worker);
         }
         return R.fail().msg("failure").code(Code.SERVER_ERROR);
@@ -99,8 +104,8 @@ public class WorkerController {
 //        Long endDate = Long.valueOf(((Integer) map.get("endDate")).toString());
         Long startDate = (Long) map.get("startDate");
         Long endDate = (Long) map.get("endDate");
-        logger.info("taskStatus:"+taskStatus+", taskPoint:"+taskPoint+", taskCity:"+taskCity+
-                ", startDate:"+startDate+", endDate:"+endDate);
+        logger.info("taskStatus:" + taskStatus + ", taskPoint:" + taskPoint + ", taskCity:" + taskCity +
+                ", startDate:" + startDate + ", endDate:" + endDate);
 //        User user = userService.obtainUserDetailInfo();
         Integer taskWorkerId = 1;
         List<Task> tasks = workerService.showWorkerTask(taskWorkerId, taskCity, taskStatus,
