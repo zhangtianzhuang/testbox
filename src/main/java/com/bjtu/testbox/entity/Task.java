@@ -22,6 +22,9 @@ public class Task implements Serializable {
     // 一个任务可申请多个试验箱
     private List<Box> boxes;
 
+    // 审批信息，查询任务详情时用到
+    private List<Examine> examines;
+
     @Override
     public String toString() {
         return "Task{" +
@@ -39,7 +42,16 @@ public class Task implements Serializable {
                 ", taskCity='" + taskCity + '\'' +
                 ", taskArea='" + taskArea + '\'' +
                 ", \nboxes=" + boxes +
-                '}'+"\n";
+                ", \nexamines=" + examines +
+                "}\n";
+    }
+
+    public List<Examine> getExamines() {
+        return examines;
+    }
+
+    public void setExamines(List<Examine> examines) {
+        this.examines = examines;
     }
 
     public int getTaskId() {

@@ -67,7 +67,7 @@
         <result property="taskDesc" column="task_desc"/>
         <result property="taskCity" column="task_city"/>
         <result property="taskArea" column="task_area"/>
-        <!--该任务中包含的-->
+        <!-- 该任务中包含的试验箱和线缆 -->
         <collection property="boxes" ofType="box">
             <id property="boxId" column="box_id"/>
             <result property="boxNumber" column="box_number"/>
@@ -84,32 +84,29 @@
                 <result property="cableArea" column="cable_Area"/>
             </collection>
         </collection>
+        <!-- 任务审批信息 -->
+        <collection property="examines" ofType="examine">
+            <id property="examineId" column="examine_Id"/>
+            <result property="examineLevel" column="examine_Level"/>
+            <result property="examineResult" column="examine_Result"/>
+            <result property="approverId" column="approver_Id"/>
+            <result property="examineDate" column="examine_Date"/>
+            <result property="examineReason" column="examine_Reason"/>
+        </collection>
     </resultMap>
 
     <!--查询任务的详细信息-->
     <select id="queryTaskDetail" resultMap="detailTaskMap" parameterType="int">
         select
-          t.*, b.*, c.*
-        from task t, box b, cable c, taskbox tb
+          t.*, b.*, c.*, e.*
+        from task t, box b, cable c, taskbox tb, examine e
         where
           t.task_id = #{taskId}
-          and t.task_id = tb.task_id
+          and e.task_id = t.task_id
+          and tb.task_id = t.task_id
           and b.box_id = tb.box_id
           and c.cable_box_id = b.box_id
     </select>
-    <!--
-              t.task_id, t.task_number, t.task_worker_name, t.task_point, t.task_date, t.borrow_date,
-          t.return_date, t.task_status, t.task_desc, t.task_city, t.task_area, task_name,
-          b.*,c.*,
-          tb.task_id, tb.box_id
-        from task t
-           t.task_id = #{taskId} and tb.task_id = #{taskId} and c.cable_box_id = b.box_id
-          left outer join taskbox tb on tb.task_id = t.task_id
-          left outer join box b on b.box_id = tb.box_id
-          left outer join cable c on c.cable_box_id = b.box_id
-        where
-          t.task_id = #{taskId}
-    -->
 
     <!--创建一个任务-->
     <insert id="insertTask" parameterType="task">

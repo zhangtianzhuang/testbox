@@ -83,7 +83,7 @@ public class MapperLayerTest {
     }
     @Test
     public void taskSelectTest2(){
-        Task task = taskMapper.queryTaskDetail(1);
+        Task task = taskMapper.queryTaskDetail(13);
         System.out.println(task);
     }
     @Test
