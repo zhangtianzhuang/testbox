@@ -37,25 +37,25 @@ class ControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-    @Test
-    public void testAPI() throws Exception{
-        MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders.get("/worker/taskDetail")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding("utf-8")
-                        .param("taskId", "1")
-        ).andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
+//    @Test
+//    public void testAPI() throws Exception{
+//        MvcResult mvcResult = mockMvc.perform(
+//                MockMvcRequestBuilders.get("/worker/taskDetail")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .characterEncoding("utf-8")
+//                        .param("taskId", "1")
+//        ).andExpect(MockMvcResultMatchers.status().isOk())
+//                .andDo(MockMvcResultHandlers.print())
+//                .andReturn();
+//    }
 
-    @Test
-    public void test_queryTaskList() throws Exception{
-        MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders.get("/approvers/taskList")
-                        .characterEncoding("utf-8")
-        ).andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
+//    @Test
+//    public void test_queryTaskList() throws Exception{
+//        MvcResult mvcResult = mockMvc.perform(
+//                MockMvcRequestBuilders.get("/approvers/taskList")
+//                        .characterEncoding("utf-8")
+//        ).andExpect(MockMvcResultMatchers.status().isOk())
+//                .andDo(MockMvcResultHandlers.print())
+//                .andReturn();
+//    }
 }

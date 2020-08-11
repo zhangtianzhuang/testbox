@@ -1,6 +1,6 @@
 # basic configuration
 server:
-  port: 80
+  port: 8080
   servlet:
     context-path: /testbox/
 

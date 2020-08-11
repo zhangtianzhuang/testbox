@@ -122,7 +122,7 @@ public class WorkerController {
         return boxOption;
     }
 
-    @PostMapping("/workers/taskDetail")
+    @GetMapping("/workers/taskDetail")
     @ResponseBody
     public R queryTaskDetail(@RequestBody Map<String, Integer> map) {
         Integer taskId = map.get("taskId");
