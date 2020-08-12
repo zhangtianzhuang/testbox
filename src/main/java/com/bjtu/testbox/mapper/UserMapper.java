@@ -9,6 +9,17 @@ public interface UserMapper {
 
     User Sel(int id);
 
-    @Select("select * from user where username = #{username}")
+    @Select("select type, bind_user from user where username = #{username}")
     User selectByUsername(String username);
+
+    /**
+     * 查询是否存在用户名username
+     * @param username
+     * @return
+     */
+    @Select("select username from user where username = #{username}")
+    String hasUsername(String username);
+
+    @Select("select password from user where username = #{username}")
+    String selectPassword(String username);
 }

@@ -38,20 +38,22 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User obtainUserDetailInfo() {
-        User user = AppSecurityUtils.obtainLoginedUser();
-        // 如果用户是工人
-        if (user.getType() == Status.USER_TYPE_WORKER) {
-            Worker worker = workerMapper.selectById(user.getBindUser());
-            user.setWorker(worker);
-            return user;
-        }
-        // 如果用户是审批者
-        else if (user.getType() == Status.USER_TYPE_WORKSHOP_APPROVER ||
-                user.getType() == Status.USER_TYPE_SEGMENT_APPROVER){
-            Approver approver = approverMapper.queryApproverById(user.getBindUser());
-            user.setApprover(approver);
-            return user;
-        }
-        return user;
+//
+//        User user = AppSecurityUtils.obtainLoginedUser();
+//        // 如果用户是工人
+//        if (user.getType() == Status.USER_TYPE_WORKER) {
+//            Worker worker = workerMapper.selectById(user.getBindUser());
+//            user.setWorker(worker);
+//            return user;
+//        }
+//        // 如果用户是审批者
+//        else if (user.getType() == Status.USER_TYPE_WORKSHOP_APPROVER ||
+//                user.getType() == Status.USER_TYPE_SEGMENT_APPROVER){
+//            Approver approver = approverMapper.queryApproverById(user.getBindUser());
+//            user.setApprover(approver);
+//            return user;
+//        }
+//        return user;
+        return null;
     }
 }

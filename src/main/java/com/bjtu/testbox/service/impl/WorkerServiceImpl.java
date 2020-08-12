@@ -48,10 +48,10 @@ public class WorkerServiceImpl implements WorkerService {
             // 城市
             task.setTaskCity(worker.getWorkerCity());
             // 申请人的工区
-            if (task.getTaskArea() == null)
+            if (task.getTaskArea() == null || task.getTaskArea().equals(""))
                 task.setTaskArea(worker.getWorkerArea());
             // 申请人的名字
-            if (task.getTaskWorkerName() == null)
+            if (task.getTaskWorkerName() == null || task.getTaskWorkerName().equals(""))
                 task.setTaskWorkerName(worker.getWorkerName());
             // 申请编号
             task.setTaskNumber(TestboxTool.randomTaskNum());

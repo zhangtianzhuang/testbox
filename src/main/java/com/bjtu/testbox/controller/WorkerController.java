@@ -72,7 +72,8 @@ public class WorkerController {
      *
      * @return
      */
-    @GetMapping(value = "/workers/personInfo")
+    // 注意要加上produces="application/json;charset=UTF-8"，编码为UTF-8，不设置编码默认是ISO-8859-1字符集
+    @GetMapping(value = "/workers/personInfo", produces = "application/json;charset=UTF-8")
     @ResponseBody
     // 如果workerId 没有接收到值，则会自动置为空，所以不用int类型，而是用Integer类型
     public R queryWorkerPersonInfo() {
@@ -122,12 +123,12 @@ public class WorkerController {
         return boxOption;
     }
 
-    @GetMapping("/workers/taskDetail")
+    @RequestMapping("/workers/taskDetail")
     @ResponseBody
     public R queryTaskDetail(@RequestBody Map<String, Integer> map) {
         Integer taskId = map.get("taskId");
         Task task = workerService.showTaskDetail(taskId);
-        return R.success().data(task);
+        return R.success().data(task).msg(R.SUCCESS).code(Code.OK);
     }
 
     @PostMapping("/workers/taskStatusNumber")

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 public interface ShiroMapper {
     /**
      * 根据用户ID获取所拥有的角色和权限
-     * @param id
+     * @param username
      * @return
      */
-    User getRoleAndPerm(@Param("id") Integer id);
+    User getRoleAndPerm(@Param("username") String username);
 }

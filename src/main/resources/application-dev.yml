@@ -14,18 +14,13 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 
   #thymeleaf
-  thymeleaf:
-    cache: false
-    prefix: classpath:/templates/
-    check-template-location: true
-    suffix: .html
-    encoding: utf-8
-    mode: HTML
-#  #这个是关键，放开springboot对静态资源的拦截
-#  mvc:
-#    static-path-pattern: /static/**
-swagger:
-  enable : true
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/templates/
+#    check-template-location: true
+#    suffix: .html
+#    encoding: utf-8
+#    mode: HTML
 
 
 mybatis:

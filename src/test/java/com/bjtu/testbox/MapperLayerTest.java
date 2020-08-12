@@ -270,7 +270,7 @@ public class MapperLayerTest {
     ShiroMapper shiroMapper;
     @Test
     public void getRole(){
-        User user = shiroMapper.getRoleAndPerm(1);
+        User user = shiroMapper.getRoleAndPerm("");
         System.out.println(user.getUid());
         List<SysRole> roles =  user.getRoleList();
         for (SysRole role : roles) {
