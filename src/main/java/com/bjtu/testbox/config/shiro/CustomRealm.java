@@ -14,6 +14,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +32,9 @@ import java.util.List;
  */
 @Component
 public class CustomRealm extends AuthorizingRealm {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomRealm.class);
+
     private final UserMapper userMapper;
 
     @Resource
@@ -53,15 +58,17 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("————身份认证方法————");
+        logger.info("doGetAuthenticationInfo" + ":");
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);
         if (username == null || !JWTUtil.verify(token, username)) {
+            logger.info("doGetAuthenticationInfo" + ":token认证失败！");
             throw new AuthenticationException("token认证失败！");
         }
         String hasUsername = userMapper.hasUsername(username);
         if (hasUsername == null) {
+            logger.info("doGetAuthenticationInfo" + ":该用户不存在！");
             throw new AuthenticationException("该用户不存在！");
         }
         return new SimpleAuthenticationInfo(token, token, "MyRealm");
@@ -72,18 +79,16 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        System.out.println("————权限认证————");
+        logger.info("doGetAuthorizationInfo" + ":————权限认证————");
         String username = JWTUtil.getUsername(principals.toString());
-
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-
         List<SysRole> roleList = shiroMapper.getRoleAndPerm(username).getRoleList();
         for(SysRole role:roleList){
             authorizationInfo.addRole(role.getRole());
-            System.out.println("添加角色:"+role.getRole());
+            logger.info("doGetAuthorizationInfo" + ":添加角色"+role.getRole());
             for(SysPermission p:role.getPermissions()){
                 authorizationInfo.addStringPermission(p.getPermission());
-                System.out.println("添加权限:"+p.getPermission());
+                logger.info("doGetAuthorizationInfo" + ":" + "添加权限:"+p.getPermission());
             }
         }
         //设置该用户拥有的角色和权限

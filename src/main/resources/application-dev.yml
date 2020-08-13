@@ -10,18 +10,11 @@ spring:
     url: jdbc:mysql://59.110.223.75:3306/testbox?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     username: user_testbox
     password: bjtu1234.COM
+#    springboot-2.3.1
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    springboot-1.5.6
+#    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-
-  #thymeleaf
-#  thymeleaf:
-#    cache: false
-#    prefix: classpath:/templates/
-#    check-template-location: true
-#    suffix: .html
-#    encoding: utf-8
-#    mode: HTML
-
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -32,6 +25,11 @@ mybatis:
 logging:
   level:
     com:
-      ztz:
-        mapper : info
+      bjtu:
+        testbox:
+          mapper : debug
+          controller: debug
+    org:
+      springframework:
+        web: debug
 

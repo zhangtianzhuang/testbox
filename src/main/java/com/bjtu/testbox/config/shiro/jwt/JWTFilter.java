@@ -23,21 +23,26 @@ import java.net.URLEncoder;
  * @Time 12:36
  */
 public class JWTFilter extends BasicHttpAuthenticationFilter {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private static final Logger logger = LoggerFactory.getLogger(JWTFilter.class);
 
     /**
      * 如果带有 token，则对 token 进行检查，否则直接通过
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
+        logger.info("isAccessAllowed" + ":开始执行");
         //判断请求的请求头是否带上 "Token"
         if (isLoginAttempt(request, response)) {
             //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
             try {
+                logger.info("isAccessAllowed" + ":执行登录");
                 executeLogin(request, response);
                 return true;
             } catch (Exception e) {
                 //token 错误
+                logger.error("isAccessAllowed" + ":executeLogin()发生异常");
+                logger.error(e.getMessage());
                 responseError(response, e.getMessage());
             }
         }
@@ -51,6 +56,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
+        logger.info("isLoginAttempt" + ":");
         HttpServletRequest req = (HttpServletRequest) request;
         String token = req.getHeader("Token");
         return token != null;
@@ -92,6 +98,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      * 将非法请求跳转到 /unauthorized/**
      */
     private void responseError(ServletResponse response, String message) {
+        logger.info("responseError" + ":");
         try {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             //设置编码，否则中文字符在重定向时会变为空字符串

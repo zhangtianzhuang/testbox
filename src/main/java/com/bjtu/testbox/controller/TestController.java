@@ -19,7 +19,7 @@ public class TestController {
      * 拥有 user, admin 角色的用户可以访问下面的页面
      */
     @GetMapping("/getMessage")
-    @RequiresRoles(logical = Logical.OR, value = {"user", "admin"})
+    @RequiresRoles(logical = Logical.OR, value = {"worker"})
     public R getMessage() {
         // 测试能不能获取当前登录用户信息
         String username = AppSecurityUtils.getUsername();

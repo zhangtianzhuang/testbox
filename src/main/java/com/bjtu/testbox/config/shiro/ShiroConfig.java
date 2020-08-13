@@ -7,6 +7,8 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,15 +26,17 @@ import java.util.Map;
  * @Date 2018-04-09
  * @Time 16:56
  */
-//@Configuration
+@Configuration
 public class ShiroConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
     /**
      * 先走 filter ，然后 filter 如果检测到请求头存在 token，则用 token 去 login，走 Realm 去验证
      */
     @Bean
     public ShiroFilterFactoryBean factory(SecurityManager securityManager) {
+        logger.info("factory" + ":");
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
-
         // 添加自己的过滤器并且取名为jwt
         Map<String, Filter> filterMap = new LinkedHashMap<>();
         //设置我们自定义的JWT过滤器
