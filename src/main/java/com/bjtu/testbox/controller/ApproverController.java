@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-//@RequestMapping("/approvers")
+@RestController
+@RequestMapping(value = "/approvers", produces = "application/json;charset=UTF-8")
 public class ApproverController {
 
     private static final String TAG = "ApproverController";
@@ -29,51 +29,11 @@ public class ApproverController {
     private ApproverService approverService;
 
     /**
-     * 审批者主界面
-     * @return
-     */
-    @RequestMapping("/approvers")
-    public String approverUI(){
-        return "approverUI/re-check";
-    }
-
-    @RequestMapping("/approvers/re-check")
-    public String approverReCheck(){
-        return "approverUI/re-check";
-    }
-
-    @RequestMapping("/approvers/accept")
-    public String approverAccept(){
-        return "approverUI/accept";
-    }
-
-    @RequestMapping("/approvers/reject")
-    public String approverReject(){
-        return "approverUI/reject";
-    }
-
-    /**
-     * 测试审批表单的ajax请求
-     * @return
-     */
-    @PostMapping("/approvers/taskListTest")
-    @ResponseBody
-    public String approverTaskListTest(){
-        String datastr = "{ \"data\":[" +
-                "{ \"taskNumber\" : 25543254345325, \"approverName\" : \"张三\", \"approveDate\" : 12288087, \"projectArea\" : false, \"taskStatus\" : 0, \"taskId\" : 1}, " +
-                "{ \"taskNumber\" : 43242354325432, \"approverName\" : \"张三\", \"approveDate\" : 37601280, \"projectArea\" : false, \"taskStatus\" : 1, \"taskId\" : 2}, " +
-                "{ \"taskNumber\" : 35432543254325, \"approverName\" : \"张三\", \"approveDate\" : 40783872, \"projectArea\" : true, \"taskStatus\" : 2, \"taskId\" : 3}, " +
-                "{ \"taskNumber\" : 45432543253253, \"approverName\" : \"张三\", \"approveDate\" : 29380608, \"projectArea\" : true, \"taskStatus\" : 3, \"taskId\" : 4}]}";
-        return datastr;
-    }
-
-    /**
      * 审批者查询要审批的任务
      * @param map
      * @return
      */
-    @PostMapping("/approvers/taskList")
-    @ResponseBody
+    @PostMapping("/taskList")
     public R queryTaskList( @RequestBody Map<String, Object> map){
         String taskCity = (String) map.get("taskCity");
         String taskPoint = (String) map.get("taskPoint");
@@ -91,8 +51,7 @@ public class ApproverController {
      * @param map
      * @return
      */
-    @PostMapping("/approvers/taskDetail")
-    @ResponseBody
+    @PostMapping("/taskDetail")
     public R queryTaskDetail(@RequestBody Map<String, Integer> map){
         int taskId = map.get("taskId");
         Task task = approverService.showTaskDetail(taskId);
@@ -100,11 +59,10 @@ public class ApproverController {
     }
 
     /**
-     *
+     * 审批者查询个人信息
      * @return
      */
-    @GetMapping("/approvers/approverInfo")
-    @ResponseBody
+    @GetMapping("/approverInfo")
     public R approverInfo(){
         Integer approverId = 1;
         Approver approver = approverService.showApproverInfo(approverId);
@@ -115,8 +73,7 @@ public class ApproverController {
      * 审批者审批
      * @return
      */
-    @PostMapping("approvers/examine")
-    @ResponseBody
+    @PostMapping("/examine")
     public R workshopExamineTask(@RequestBody Examine examine){
          Examine examineTask = approverService.examineTask(examine);
          String info = "taskID:"+examine.getTaskId()+", Result:" +
@@ -133,8 +90,7 @@ public class ApproverController {
      * @param examineResult
      * @return
      */
-    @GetMapping("approvers/historyRecord")
-    @ResponseBody
+    @GetMapping("/historyRecord")
     public R queryHistoryTask(@RequestParam Integer examineResult){
         int approverId = 1;
         List<Task> tasks = approverService.showHistoryTask(approverId, examineResult);

@@ -14,7 +14,6 @@ public class LoginController {
     @Autowired
     private UserMapper userMapper;
 
-
     @PostMapping("/login")
     public R login(@RequestParam("username") String username,
                            @RequestParam("password") String password) {
