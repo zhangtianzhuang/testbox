@@ -5,6 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.apache.shiro.authc.AuthenticationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -18,6 +21,8 @@ import java.util.Date;
  * @Time 22:48
  */
 public class JWTUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(JWTUtil.class);
     // 过期时间 24 小时
     private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000;
 //    private static final long EXPIRE_TIME = 3000;
@@ -83,11 +88,17 @@ public class JWTUtil {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        String token = createToken("zhangtianzhuang");
-        System.out.println("token:"+token);
-        Thread.sleep(2000);
-        System.out.println("验证token:"+ (verify(token, getUsername(token))==true?"成功":"失败"));
-        Thread.sleep(2000);
-        System.out.println("验证token:"+ (verify(token, getUsername(token))==true?"成功":"失败"));
+//        String token = createToken("zhangtianzhuang");
+//        System.out.println("token:"+token);
+//        Thread.sleep(2000);
+//        System.out.println("验证token:"+ (verify(token, getUsername(token))==true?"成功":"失败"));
+//        Thread.sleep(2000);
+//        System.out.println("验证token:"+ (verify(token, getUsername(token))==true?"成功":"失败"));
+        String token = "zhang";
+        String username = JWTUtil.getUsername(token);
+        if (username == null || !JWTUtil.verify(token, username)) {
+            logger.error("doGetAuthenticationInfo" + ":token认证失败！");
+            throw new AuthenticationException("token认证失败！");
+        }
     }
 }

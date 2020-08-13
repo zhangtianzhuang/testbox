@@ -4,21 +4,11 @@ import com.bjtu.testbox.config.api.R;
 import org.apache.shiro.ShiroException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Created with IntelliJ IDEA
- *
- * @Author yuanhaoyue swithaoy@gmail.com
- * @Description 异常处理
- * @Date 2018-04-09
- * @Time 17:09
- */
 @RestControllerAdvice
 public class ExceptionController {
 
@@ -35,9 +25,7 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     public R globalException(HttpServletRequest request, Throwable ex) {
         logger.info("拦截其他异常...");
-        return R.fail()
-                .code(getStatus(request).value())
-                .msg("访问出错，无法访问: " + ex.getMessage());
+        return R.fail().code(getStatus(request).value()).msg("访问出错，无法访问: " + ex.getMessage());
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {

@@ -1,8 +1,9 @@
 # basic configuration
 server:
   port: 8080
-  servlet:
-    context-path: /testbox/
+#  统一移除项目名
+#  servlet:
+#    context-path: /testbox/
 
 # database configuration
 spring:
@@ -15,6 +16,10 @@ spring:
 #    springboot-1.5.6
 #    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+#  mvc:
+#    throw-exception-if-no-handler-found: true
+#  resources:
+#    add-mappings: false
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

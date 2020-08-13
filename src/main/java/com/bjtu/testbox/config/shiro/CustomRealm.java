@@ -63,14 +63,15 @@ public class CustomRealm extends AuthorizingRealm {
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);
         if (username == null || !JWTUtil.verify(token, username)) {
-            logger.info("doGetAuthenticationInfo" + ":token认证失败！");
+            logger.error("doGetAuthenticationInfo" + ":token认证失败！");
             throw new AuthenticationException("token认证失败！");
         }
         String hasUsername = userMapper.hasUsername(username);
         if (hasUsername == null) {
-            logger.info("doGetAuthenticationInfo" + ":该用户不存在！");
+            logger.error("doGetAuthenticationInfo" + ":该用户不存在！");
             throw new AuthenticationException("该用户不存在！");
         }
+        logger.info("doGetAuthenticationInfo" + ": 身份认证成功 <<<<<<<< ");
         return new SimpleAuthenticationInfo(token, token, "MyRealm");
     }
 

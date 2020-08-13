@@ -42,7 +42,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             } catch (Exception e) {
                 //token 错误
                 logger.error("isAccessAllowed" + ":executeLogin()发生异常");
-                logger.error(e.getMessage());
                 responseError(response, e.getMessage());
             }
         }
@@ -67,11 +66,14 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+        logger.info("executeLogin" + ":");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String token = httpServletRequest.getHeader("Token");
         JWTToken jwtToken = new JWTToken(token);
+        logger.info("executeLogin" + ": Before getSubject <<<<<<");
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(jwtToken);
+        logger.info("executeLogin" + ": After getSubject >>>>>>");
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
     }
@@ -101,8 +103,10 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         logger.info("responseError" + ":");
         try {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-            //设置编码，否则中文字符在重定向时会变为空字符串
+            // 设置编码，否则中文字符在重定向时会变为空字符串
             message = URLEncoder.encode(message, "UTF-8");
+            // 注意这里，如果有项目名，则跳转地址修改为[/项目名/unauthorized/+message],
+            // /unathorized是自定地址，在LoginController定义
             httpServletResponse.sendRedirect("/unauthorized/" + message);
         } catch (IOException e) {
             logger.error(e.getMessage());
