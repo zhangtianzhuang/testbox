@@ -4,11 +4,14 @@ import com.bjtu.testbox.config.api.R;
 import com.bjtu.testbox.config.shiro.AppSecurityUtils;
 import com.bjtu.testbox.entity.User;
 import com.bjtu.testbox.mapper.UserMapper;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@Api(value = "PageController", description = "用户登录登出接口")
 @RestController
 @RequestMapping(value = "/user", produces = "application/json;charset=UTF-8")
 public class TestController {
@@ -18,6 +21,7 @@ public class TestController {
     /**
      * 拥有 user, admin 角色的用户可以访问下面的页面
      */
+    @ApiOperation(value="用户登录", notes="用户登录接口")
     @GetMapping("/getMessage")
     @RequiresRoles(logical = Logical.OR, value = {"worker"})
     public R getMessage() {

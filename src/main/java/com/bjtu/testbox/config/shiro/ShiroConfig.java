@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
@@ -46,6 +47,16 @@ public class ShiroConfig {
         // 设置无权限时跳转的 url;
         factoryBean.setUnauthorizedUrl("/unauthorized/无权限");
         Map<String, String> filterRuleMap = new HashMap<>();
+        //swagger配置放行
+//        filterRuleMap.put("/swagger-ui.html","anon");
+//        filterRuleMap.put("/swagger/**","anon");
+//        filterRuleMap.put("/webjars/**","anon");
+//        filterRuleMap.put("/swagger-resources/**","anon");
+//        filterRuleMap.put("/v2/**","anon");
+//        //静态资源放行
+//        filterRuleMap.put("/**/*.html","anon");
+//        filterRuleMap.put("/**/*.jpg","anon");
+//        filterRuleMap.put("/**/*.png","anon");
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
         // 访问 /unauthorized/** 不通过JWTFilter
@@ -62,7 +73,6 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置自定义 realm.
         securityManager.setRealm(customRealm);
-
         /*
          * 关闭shiro自带的session，详情见文档
          * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29

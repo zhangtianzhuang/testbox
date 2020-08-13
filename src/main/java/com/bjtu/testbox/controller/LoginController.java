@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 
 @RestController
+@RequestMapping(value = "/", produces = "application/json;charset=UTF-8")
 public class LoginController {
 
     @Autowired
