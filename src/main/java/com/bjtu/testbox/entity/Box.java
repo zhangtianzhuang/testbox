@@ -15,6 +15,12 @@ public class Box implements Serializable {
 
     // 级联,1:n
     private List<Cable> cables;
+    // 长度为1.5米线缆数量
+    private Integer len15 = 0;
+    // 长度为2.2米线缆数量
+    private Integer len22 =0;
+    // 其他长度线缆数量
+    private Integer lenOther=0;
 
     @Override
     public String toString() {
@@ -27,6 +33,9 @@ public class Box implements Serializable {
                 ", boxArea='" + boxArea + '\'' +
                 ", boxStatus=" + boxStatus +
                 ", \ncables=" + cables +
+                ", len15=" + len15 +
+                ", len22=" + len22 +
+                ", lenOther=" + lenOther +
                 '}'+"\n";
     }
 
@@ -94,4 +103,27 @@ public class Box implements Serializable {
         this.cables = cables;
     }
 
+    public Integer getLen15() {
+        return len15;
+    }
+
+    public void setLen15(Integer len15) {
+        this.len15 = len15;
+    }
+
+    public Integer getLen22() {
+        return len22;
+    }
+
+    public void setLen22(Integer len22) {
+        this.len22 = len22;
+    }
+
+    public Integer getLenOther() {
+        return lenOther;
+    }
+
+    public void setLenOther(Integer lenOther) {
+        this.lenOther = lenOther;
+    }
 }

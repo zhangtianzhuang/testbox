@@ -1,5 +1,7 @@
 package com.bjtu.testbox.controller;
 
+import com.bjtu.testbox.config.api.Code;
+import com.bjtu.testbox.config.api.R;
 import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.AdminService;
@@ -8,14 +10,17 @@ import com.bjtu.testbox.tools.TestboxTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Controller
+@RestController
+@RequestMapping(value = "/admins", produces = "application/json;charset=UTF-8")
 public class AdminController {
 
     @Autowired
@@ -24,6 +29,47 @@ public class AdminController {
     @Autowired
     private BoxService boxService;
 
+    /**
+     * 获取个人信息
+     * @return
+     */
+    @GetMapping("/adminInfo")
+    public R getPersonInfo(){
+        return R.success().msg(R.SUCCESS).data(adminService.showPersonInfo()).code(Code.OK);
+    }
+
+    /**
+     * 查看试验箱列表
+     * @param boxStatus
+     * @param boxType
+     * @param boxArea
+     * @return
+     */
+    @GetMapping("/boxes")
+    public R getBoxes(
+            @RequestParam(value = "boxStatus", required = false) Integer boxStatus,
+            @RequestParam(value = "boxType", required = false) Integer boxType,
+            @RequestParam(value = "boxArea", required = false) String boxArea
+        ){
+        List<Box> boxes = adminService.showBoxes(boxStatus, boxType, boxArea);
+        return R.success().data(boxes).msg(R.SUCCESS).code(Code.OK);
+    }
+
+    /**
+     * 查询单个试验箱
+     * @return
+     */
+    @GetMapping("/box")
+    public R getBox(@RequestParam("boxId") Integer boxId){
+        Box box = adminService.showBoxInfo(boxId);
+        return R.success().data(box).msg(R.SUCCESS).code(Code.OK);
+    }
+
+    @GetMapping("/boxCount")
+    public R getBoxNumber(@RequestParam(value = "boxType", required = false) Integer boxType){
+        Map<Integer, Integer> map = adminService.boxNubmerByTypeAndStatus(boxType);
+        return R.success().data(map).code(Code.OK).msg(R.SUCCESS);
+    }
 
     @RequestMapping("/jobadmin")
     public String taskAdmin(Model model){

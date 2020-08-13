@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BoxMapper {
@@ -53,6 +54,12 @@ public interface BoxMapper {
                                   @Param("boxArea") String boxArea,
                                   @Param("boxType") Integer boxType);
 
+    /**
+     * 对类型为boxType的试验箱进行查询，统计不同状态的试验箱的数量
+     * @param boxType
+     * @return
+     */
+    List<Map<String, Object>> boxByTypeAndStatus(@Param("boxType") Integer boxType);
 
     // +++++++++++++++++ insert
 

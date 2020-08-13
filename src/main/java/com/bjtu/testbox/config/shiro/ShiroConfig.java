@@ -24,7 +24,7 @@ import java.util.Map;
  * @Date 2018-04-09
  * @Time 16:56
  */
-@Configuration
+//@Configuration
 public class ShiroConfig {
     /**
      * 先走 filter ，然后 filter 如果检测到请求头存在 token，则用 token 去 login，走 Realm 去验证
