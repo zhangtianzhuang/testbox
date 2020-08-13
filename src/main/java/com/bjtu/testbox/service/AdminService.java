@@ -1,5 +1,7 @@
 package com.bjtu.testbox.service;
 
+import com.bjtu.testbox.entity.Admin;
+import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 
 import java.util.List;
@@ -31,4 +33,28 @@ public interface AdminService {
      * @return
      */
     public Task queryTaskDetial(int taskId);
+
+    /**
+     * 查询个人信息
+     * @return
+     */
+    Admin showPersonInfo();
+
+    /**
+     * 查询boxId试验箱的详细信息
+     * @param boxId
+     * @return
+     */
+    Box showBoxInfo(Integer boxId);
+
+    /**
+     * 根据条件查询试验箱列表
+     * @param boxStatus
+     * @param boxType
+     * @param boxArea
+     * @return
+     */
+    List<Box> showBoxes(Integer boxStatus, Integer boxType, String boxArea);
+
+    Map<Integer, Integer> boxNubmerByTypeAndStatus(Integer boxType);
 }

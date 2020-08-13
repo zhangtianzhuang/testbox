@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface CableMapper {
@@ -35,6 +36,8 @@ public interface CableMapper {
     @Select("select * from cable where cable_id = #{cableId}")
     Cable findCable(int cableId);
 
+    // 查询试验箱boxId中，不同类型线缆的数量
+    List<Map<String, Object>> cableNumberByType(Integer boxId);
     // insert
 
     /**

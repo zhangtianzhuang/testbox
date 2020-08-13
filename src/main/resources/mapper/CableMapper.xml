@@ -16,6 +16,15 @@
         where b.box_id = c.cable_box_id and b.box_id = #{id}
     </select>
 
+    <select id="cableNumberByType" resultType="map">
+        select
+          cable_type as type,
+          count(cable_type) as number
+        from cable
+        where cable_box_id = #{boxId}
+        group by cable_type
+    </select>
+
 
     <!-- update cable basic info -->
     <update id="updateCableInfo">

@@ -61,6 +61,19 @@
         group by box_type
     </select>
 
+    <!--对类型为boxType的试验箱进行查询，统计不同状态的试验箱的数量-->
+    <select id="boxByTypeAndStatus" resultType="map">
+        select
+          box_status as status,
+          count(box_status) as number
+        from box
+        <where>
+            <if test="boxType!=null">box_type = #{boxType}</if>
+        </where>
+        group by
+          box_status
+    </select>
+
     <!-- insert -->
     <insert id="insertBox">
         insert into box
