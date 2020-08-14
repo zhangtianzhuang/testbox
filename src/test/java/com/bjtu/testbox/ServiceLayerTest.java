@@ -75,7 +75,7 @@ public class ServiceLayerTest {
 
     @Test
     public void queryTaskDetail(){
-        Task task = workerService.showTaskDetail(5);
+        Task task = workerService.showTaskDetail(1);
         System.out.println(task);
     }
 

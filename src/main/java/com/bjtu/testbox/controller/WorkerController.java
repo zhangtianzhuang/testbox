@@ -84,11 +84,11 @@ public class WorkerController {
     })
     @GetMapping("/taskList")
     public ResultMap queryTaskList(
-            @RequestParam(value = "taskStatus", required = false, defaultValue = "null") Integer taskStatus,
-            @RequestParam(value = "taskPoint", required = false, defaultValue = "null") String taskPoint,
-            @RequestParam(value = "taskCity", required = false, defaultValue = "null") String taskCity,
-            @RequestParam(value = "startDate", required = false, defaultValue = "null") Long startDate,
-            @RequestParam(value = "endDate", required = false, defaultValue = "null") Long endDate
+            @RequestParam(value = "taskStatus", required = false) Integer taskStatus,
+            @RequestParam(value = "taskPoint", required = false) String taskPoint,
+            @RequestParam(value = "taskCity", required = false) String taskCity,
+            @RequestParam(value = "startDate", required = false) Long startDate,
+            @RequestParam(value = "endDate", required = false) Long endDate
             ) {
         logger.info("taskStatus:"+taskStatus+", taskPoint:"+taskPoint+", taskCity:"+taskCity+
                 ", startDate:"+startDate+", endDate:"+endDate);
@@ -105,13 +105,16 @@ public class WorkerController {
         return boxOption;
     }
 
+
     @ApiOperation("工人查看某个任务的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, paramType = "query")
     })
     @GetMapping("/taskDetail")
     public ResultMap queryTaskDetail(@RequestParam("taskId") Integer taskId) {
+        logger.debug(">>>>> 工人查看任务详细信息 <<<<<<<<");
         Task task = workerService.showTaskDetail(taskId);
+        logger.debug(task.toString());
         return resultMap.success().data(task).code(ResultMap.OK);
     }
 

@@ -98,6 +98,17 @@
     <!--查询任务的详细信息-->
     <select id="queryTaskDetail" resultMap="detailTaskMap" parameterType="int">
         select
+          t.*, b.*, c.*
+        from task t, box b, cable c, taskbox tb
+        where
+          t.task_id = #{taskId}
+          and tb.task_id = t.task_id
+          and b.box_id = tb.box_id
+          and c.cable_box_id = b.box_id
+    </select>
+    <!--
+    <select id="queryTaskDetail" resultMap="detailTaskMap" parameterType="int">
+        select
           t.*, b.*, c.*, e.*
         from task t, box b, cable c, taskbox tb, examine e
         where
@@ -107,6 +118,7 @@
           and b.box_id = tb.box_id
           and c.cable_box_id = b.box_id
     </select>
+    -->
 
     <!--创建一个任务-->
     <insert id="insertTask" parameterType="task">

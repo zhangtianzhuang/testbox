@@ -51,10 +51,10 @@ public class ApproverController {
     })
     @GetMapping("/taskList")
     public ResultMap queryTaskList(
-            @RequestParam(value = "taskCity", required = false, defaultValue = "null") String taskCity,
-            @RequestParam(value = "taskPoint", required = false, defaultValue = "null") String taskPoint,
-            @RequestParam(value = "startDate", required = false, defaultValue = "null") Long startDate,
-            @RequestParam(value = "endDate", required = false, defaultValue = "null") Long endDate
+            @RequestParam(value = "taskCity", required = false) String taskCity,
+            @RequestParam(value = "taskPoint", required = false) String taskPoint,
+            @RequestParam(value = "startDate", required = false) Long startDate,
+            @RequestParam(value = "endDate", required = false) Long endDate
     ) {
         // 测试，待动态车间审批
         Integer taskStatus = -1;
