@@ -60,7 +60,6 @@ public class WorkerController {
     public ResultMap queryWorkerPersonInfo() {
         Integer workerId = appSecurity.getBindId();
         Worker worker = workerService.showWorkerInfo(workerId);
-        worker.setWorkerId(-1);
         if (worker != null){
             return resultMap.success().code(ResultMap.OK).data(worker);
         }
@@ -73,11 +72,11 @@ public class WorkerController {
      */
     @ApiOperation("工人查看任务列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "taskStatus", value = "任务状态", required = false, paramType = "query"),
-            @ApiImplicitParam(name = "taskPoint", value = "任务地点", required = false, paramType = "query"),
-            @ApiImplicitParam(name = "taskCity", value = "任务城市", required = false, paramType = "query"),
-            @ApiImplicitParam(name = "startDate", value = "查找起始日期", required = false, paramType = "query"),
-            @ApiImplicitParam(name = "endDate", value = "查找终止日期", required = false, paramType = "query")
+            @ApiImplicitParam(name = "taskStatus", value = "任务状态", paramType = "query"),
+            @ApiImplicitParam(name = "taskPoint", value = "任务地点", paramType = "query"),
+            @ApiImplicitParam(name = "taskCity", value = "任务城市", paramType = "query"),
+            @ApiImplicitParam(name = "startDate", value = "查找起始日期", paramType = "query"),
+            @ApiImplicitParam(name = "endDate", value = "查找终止日期", paramType = "query")
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "请求成功")
@@ -95,7 +94,7 @@ public class WorkerController {
         Integer workerId = appSecurity.getBindId();
         List<Task> tasks = workerService.showWorkerTask(workerId, taskCity, taskStatus,
                 taskPoint, startDate, endDate);
-        return resultMap.success().data(tasks).code(ResultMap.OK).msg("任务查看成功");
+        return resultMap.success().data(tasks).code(ResultMap.OK).msg("查询任务成功");
     }
 
     @ApiOperation("工人查看可用的试验箱，按类型分类")

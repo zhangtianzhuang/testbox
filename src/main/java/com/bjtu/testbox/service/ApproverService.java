@@ -33,7 +33,7 @@ public interface ApproverService {
      * @param examine
      * @return
      */
-    Examine examineTask(Examine examine);
+    Integer examineTask(Examine examine);
 
     /**
      * show approver's basic info

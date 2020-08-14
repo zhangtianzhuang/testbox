@@ -72,9 +72,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin showPersonInfo() {
+    public Admin showPersonInfo(Integer adminId) {
         // 测试
-        Integer adminId = 1;
         return adminMapper.showPersonInfo(adminId);
     }
 

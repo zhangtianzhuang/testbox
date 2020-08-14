@@ -83,5 +83,9 @@ public interface TaskMapper {
      * @param taskStatus
      * @return
      */
-    List<Task>  queryTaskByStatus(@Param("taskStatus") int taskStatus);
+    List<Task> queryTaskByStatus(@Param("taskStatus") int taskStatus);
+
+    // 根据ID查询任务状态
+    @Select("select task_status from task where task_id = #{taskId}")
+    Integer statusById(Integer taskId);
 }

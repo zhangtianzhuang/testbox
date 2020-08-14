@@ -3,6 +3,7 @@ package com.bjtu.testbox.controller;
 import com.bjtu.testbox.config.api.R;
 import com.bjtu.testbox.config.api.ResultMap;
 import com.bjtu.testbox.config.shiro.AppSecurityUtils;
+import com.bjtu.testbox.entity.Admin;
 import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.AdminService;
@@ -52,7 +53,9 @@ public class AdminController {
     @GetMapping("/adminInfo")
     @ApiOperation("管理员获取个人信息")
     public ResultMap getPersonInfo(){
-        return resultMap.success().msg("个人信息获取成功").data(adminService.showPersonInfo()).code(ResultMap.OK);
+        int adminId = appSecurity.getBindId();
+        Admin admin = adminService.showPersonInfo(adminId);
+        return resultMap.success().msg("个人信息获取成功").data(admin).code(ResultMap.OK);
     }
 
     /**
@@ -75,7 +78,7 @@ public class AdminController {
             @RequestParam(value = "boxArea", required = false) String boxArea
         ){
         List<Box> boxes = adminService.showBoxes(boxStatus, boxType, boxArea);
-        return resultMap.success().data(boxes).msg(R.SUCCESS).code(ResultMap.OK);
+        return resultMap.success().data(boxes).msg("查找成功").code(ResultMap.OK);
     }
 
     /**
@@ -87,7 +90,7 @@ public class AdminController {
     @GetMapping("/box")
     public ResultMap getBox(@RequestParam("boxId") Integer boxId){
         Box box = adminService.showBoxInfo(boxId);
-        return resultMap.success().data(box).msg(R.SUCCESS).code(ResultMap.OK);
+        return resultMap.success().data(box).msg("查询成功").code(ResultMap.OK);
     }
 
     @ApiOperation("管理员按照类型查看每个状态下的试验箱的数量")

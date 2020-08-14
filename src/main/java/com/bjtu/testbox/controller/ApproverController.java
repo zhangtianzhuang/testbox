@@ -18,9 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Map;
 
 @Api(description = "审批者API接口")
 @RequiresRoles(logical = Logical.OR, value = {"dynamic_workshop", "segment"})
@@ -94,7 +92,9 @@ public class ApproverController {
     @GetMapping("/approverInfo")
     public ResultMap approverInfo() {
         Integer approverId = appSecurity.getBindId();
+        logger.info("approverInfo" + ": 当前登录审批者ID："+ approverId);
         Approver approver = approverService.showApproverInfo(approverId);
+        logger.info("approverInfo" + ":" + approver);
         return resultMap.success().code(ResultMap.OK).data(approver);
     }
 
@@ -105,14 +105,21 @@ public class ApproverController {
     @PostMapping("/examine")
     @ApiOperation("审批者审批任务")
     public ResultMap workshopExamineTask(@RequestBody Examine examine) {
-        Examine examineTask = approverService.examineTask(examine);
+        Integer res = approverService.examineTask(examine);
         String info = "taskID:" + examine.getTaskId() + ", Result:" +
                 examine.getExamineResult() + ", Reason:" + examine.getExamineReason();
         logger.info(info);
-        if (examineTask != null)
-            return resultMap.success().data(examineTask).msg(R.SUCCESS).code(ResultMap.OK);
-        else
-            return resultMap.fail().code(ResultMap.SERVER_ERROR).msg(R.FAILURE);
+        if (res == -1){
+            return resultMap.fail().code(ResultMap.FORBIDDEN).msg("任务已被审批过");
+        }else if (res == -2) {
+            return resultMap.fail().code(ResultMap.FORBIDDEN).msg("审批者级别和任务不匹配");
+        }else if (res == -3){
+            return resultMap.fail().code(ResultMap.SERVER_ERROR).msg("系统异常");
+        }else if(res == -4){
+            return resultMap.fail().code(ResultMap.FORBIDDEN).msg("任务不可被审批");
+        }else{
+            return resultMap.success().code(ResultMap.OK).msg("审批通过");
+        }
     }
 
     /**
@@ -126,6 +133,9 @@ public class ApproverController {
     public ResultMap queryHistoryTask(@RequestParam Integer examineResult) {
         int approverId = appSecurity.getBindId();
         List<Task> tasks = approverService.showHistoryTask(approverId, examineResult);
-        return resultMap.success().data(tasks).code(ResultMap.OK).msg(R.SUCCESS);
+        if (tasks == null || tasks.size() ==0){
+            return resultMap.success().data(tasks).code(ResultMap.OK).msg("没有符合要求的数据");
+        }
+        return resultMap.success().data(tasks).code(ResultMap.OK).msg("查询成功");
     }
 }

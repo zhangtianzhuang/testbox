@@ -1,6 +1,5 @@
 package com.bjtu.testbox.controller;
 
-import com.alibaba.druid.support.spring.stat.annotation.Stat;
 import com.bjtu.testbox.config.api.R;
 import com.bjtu.testbox.config.api.ResultMap;
 import com.bjtu.testbox.config.constant.Status;

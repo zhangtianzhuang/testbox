@@ -38,7 +38,7 @@ public interface AdminService {
      * 查询个人信息
      * @return
      */
-    Admin showPersonInfo();
+    Admin showPersonInfo(Integer adminId);
 
     /**
      * 查询boxId试验箱的详细信息
