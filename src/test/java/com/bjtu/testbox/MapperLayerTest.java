@@ -31,8 +31,7 @@ public class MapperLayerTest {
     @Autowired
     ExamineMapper examineMapper;
 
-    private Logger logger = LoggerFactory.getLogger(MapperLayerTest.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(MapperLayerTest.class);
     //////////////////  Worker   //////////////////////////
 
     @Test
@@ -294,4 +293,12 @@ public class MapperLayerTest {
         }
         System.out.println(m);
     }
+
+    //////////////////// USER ///////////////////////////
+    @Autowired
+    UserMapper userMapper;
+    @Test
+    public void test_user_getArray(){
+    }
+    //////////////////// USER ///////////////////////////
 }

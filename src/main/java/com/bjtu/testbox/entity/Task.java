@@ -1,11 +1,17 @@
 package com.bjtu.testbox.entity;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@ApiModel("任务实体")
 public class Task implements Serializable {
     private int taskId;
+    @ApiModelProperty("任务编号,由系统自动生成")
     private String taskNumber;
     private String taskName;
     private int taskWorkerId;

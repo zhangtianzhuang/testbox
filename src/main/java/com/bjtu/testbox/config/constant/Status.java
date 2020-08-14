@@ -35,11 +35,12 @@ public class Status {
 
     //////   审批者级别   ///////
     // （7）	动态车间
-    public static final int APPROVER_LEVEL_WORKSHOP = 1;
+    // 2020/08/14修改  值from 1 --> 2
+    public static final int APPROVER_LEVEL_WORKSHOP = 2;
     // （8）	段生产调度室
-    public static final int APPROVER_LEVEL_SEGMENT = 2;
+    // 2020/08/14修改  值from 2 --> 3
+    public static final int APPROVER_LEVEL_SEGMENT = 3;
     //////   审批者级别   ///////
-
 
     //////   试验箱类型   ///////
     // （1）	直流岔道型
@@ -77,7 +78,10 @@ public class Status {
     public static final int USER_TYPE_WORKSHOP_APPROVER = 2;
     // 段生产审批者 3
     public static final int USER_TYPE_SEGMENT_APPROVER = 3;
+    // 管理员 4
+    public static final int USER_TYPE_ADMIN = 4;
     //////   用户类型标识   ///////
+
 
 
     static {

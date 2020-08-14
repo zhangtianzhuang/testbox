@@ -1,7 +1,5 @@
 package com.bjtu.testbox.service.impl;
 
-import com.bjtu.testbox.config.api.Code;
-import com.bjtu.testbox.config.api.R;
 import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.entity.Approver;
 import com.bjtu.testbox.entity.Examine;

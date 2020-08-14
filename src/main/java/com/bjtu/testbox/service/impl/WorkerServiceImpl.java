@@ -39,8 +39,6 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public Task applyTask(Task task) {
-        // 获取当前登录的工人信息
-//        Worker worker = workerMapper.selectById(AppSecurityUtils.obtainLoginedUser().getBindUser());
         // 判断workerId是否合法
         Worker worker = workerMapper.selectById(task.getTaskWorkerId());
         // 系统自动设置字段

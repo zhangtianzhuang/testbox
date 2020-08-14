@@ -1,22 +1,24 @@
 package com.bjtu.testbox.controller;
 
-import com.bjtu.testbox.config.api.Code;
-import com.bjtu.testbox.config.api.R;
+import com.bjtu.testbox.config.api.ResultMap;
+import com.bjtu.testbox.config.shiro.AppSecurityUtils;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
-import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.model.BoxOption;
+import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 // 注意要加上produces="application/json;charset=UTF-8"，编码为UTF-8，不设置编码默认是ISO-8859-1字符集
+@Api(description = "工人API接口")
+@RequiresRoles("worker")
 @RestController
 @RequestMapping(value = "/workers", produces = "application/json;charset=UTF-8")
 public class WorkerController {
@@ -25,88 +27,99 @@ public class WorkerController {
 
     @Autowired
     private WorkerService workerService;
+    @Autowired
+    private AppSecurityUtils appSecurity;
+    @Autowired
+    private ResultMap resultMap;
 
     /**
      * 工人申请任务
      * @param task
      * @return
      */
+    @ApiOperation("工人提交一个任务申请")
     @PostMapping(value = "/task")
-    public R applyTask(@RequestBody Task task) {
+    public ResultMap applyTask(@RequestBody Task task) {
         logger.info(task.toString());
-        // 测试
-        Integer workerId = 1;
+        Integer workerId = appSecurity.getBindId();
         task.setTaskWorkerId(workerId);
         Task returnTask = workerService.applyTask(task);
         if (returnTask != null) {
-            return R.success().msg("success").code(Code.OK).data(returnTask);
+            return resultMap.success().msg("任务提交成功").code(ResultMap.OK).data(returnTask);
         } else {
-            return R.fail().code(Code.SERVER_ERROR).msg("failure");
+            return resultMap.fail().msg("任务提交失败").code(ResultMap.SERVER_ERROR);
         }
     }
 
     /**
      * 工人查询个人信息
-     *
      * @return
      */
-
-    @GetMapping(value = "/personInfo")
-    // 如果workerId 没有接收到值，则会自动置为空，所以不用int类型，而是用Integer类型
-    public R queryWorkerPersonInfo() {
-        // 测试
-        int workerId = 1;
+    @ApiOperation("工人查看个人信息")
+    @GetMapping(value = "/workerInfo")
+    public ResultMap queryWorkerPersonInfo() {
+        Integer workerId = appSecurity.getBindId();
         Worker worker = workerService.showWorkerInfo(workerId);
         worker.setWorkerId(-1);
         if (worker != null){
-            return R.success().msg("success").code(Code.OK).data(worker);
+            return resultMap.success().code(ResultMap.OK).data(worker);
         }
-        return R.fail().msg("failure").code(Code.SERVER_ERROR);
+        return resultMap.fail().code(ResultMap.SERVER_ERROR);
     }
 
     /**
      * 工人查询个人申请的任务列表
-     *
-     * @param map
      * @return
      */
-    @PostMapping("/taskList")
-    public R queryTaskList(@RequestBody Map<String, Object> map) {
-        Integer taskStatus = (Integer) map.get("taskStatus");
-        String taskPoint = (String) map.get("taskPoint");
-        String taskCity = (String) map.get("taskCity");
-        // Map只能获取Integer，不能转化为Long
-//        Long startDate =  Long.valueOf(((Integer) map.get("startDate")).toString());
-//        Long endDate = Long.valueOf(((Integer) map.get("endDate")).toString());
-        Long startDate = (Long) map.get("startDate");
-        Long endDate = (Long) map.get("endDate");
+    @ApiOperation("工人查看任务列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "taskStatus", value = "任务状态", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "taskPoint", value = "任务地点", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "taskCity", value = "任务城市", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "startDate", value = "查找起始日期", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "endDate", value = "查找终止日期", required = false, paramType = "query")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "请求成功")
+    })
+    @GetMapping("/taskList")
+    public ResultMap queryTaskList(
+            @RequestParam(value = "taskStatus", required = false, defaultValue = "null") Integer taskStatus,
+            @RequestParam(value = "taskPoint", required = false, defaultValue = "null") String taskPoint,
+            @RequestParam(value = "taskCity", required = false, defaultValue = "null") String taskCity,
+            @RequestParam(value = "startDate", required = false, defaultValue = "null") Long startDate,
+            @RequestParam(value = "endDate", required = false, defaultValue = "null") Long endDate
+            ) {
         logger.info("taskStatus:"+taskStatus+", taskPoint:"+taskPoint+", taskCity:"+taskCity+
                 ", startDate:"+startDate+", endDate:"+endDate);
-//        User user = userService.obtainUserDetailInfo();
-        Integer taskWorkerId = 1;
-        List<Task> tasks = workerService.showWorkerTask(taskWorkerId, taskCity, taskStatus,
+        Integer workerId = appSecurity.getBindId();
+        List<Task> tasks = workerService.showWorkerTask(workerId, taskCity, taskStatus,
                 taskPoint, startDate, endDate);
-        return R.success().data(tasks).code(Code.OK).msg("success");
+        return resultMap.success().data(tasks).code(ResultMap.OK).msg("任务查看成功");
     }
 
-
+    @ApiOperation("工人查看可用的试验箱，按类型分类")
     @GetMapping("/boxes")
     public BoxOption queryUsableBox() {
         BoxOption boxOption = workerService.selectUsableBox();
         return boxOption;
     }
 
-    @RequestMapping("/taskDetail")
-    public R queryTaskDetail(@RequestBody Map<String, Integer> map) {
-        Integer taskId = map.get("taskId");
+    @ApiOperation("工人查看某个任务的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, paramType = "query")
+    })
+    @GetMapping("/taskDetail")
+    public ResultMap queryTaskDetail(@RequestParam("taskId") Integer taskId) {
         Task task = workerService.showTaskDetail(taskId);
-        return R.success().data(task).msg(R.SUCCESS).code(Code.OK);
+        return resultMap.success().data(task).code(ResultMap.OK);
     }
 
-    @PostMapping("/taskStatusNumber")
-    public R taskStatusNumber() {
-        int workerId = 1;
+    @ApiOperation("工人按任务状态统计每个状态的任务数量")
+    @GetMapping("/taskStatusNumber")
+    public ResultMap taskStatusNumber() {
+        int workerId = appSecurity.getBindId();
         Map<String, Integer> map = workerService.selectTaskStatusNumber(workerId);
-        return R.success().msg(R.SUCCESS).code(Code.OK).data(map);
+        return resultMap.success().code(ResultMap.OK).data(map);
     }
 }

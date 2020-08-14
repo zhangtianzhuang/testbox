@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
 
-    User Sel(int id);
-
-    @Select("select type, bind_user from user where username = #{username}")
+    @Select("select username, type, bind_user from user where username = #{username}")
     User selectByUsername(String username);
 
     /**

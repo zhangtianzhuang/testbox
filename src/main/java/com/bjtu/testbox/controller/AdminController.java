@@ -1,25 +1,33 @@
 package com.bjtu.testbox.controller;
 
-import com.bjtu.testbox.config.api.Code;
 import com.bjtu.testbox.config.api.R;
+import com.bjtu.testbox.config.api.ResultMap;
+import com.bjtu.testbox.config.shiro.AppSecurityUtils;
 import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.AdminService;
 import com.bjtu.testbox.service.BoxService;
 import com.bjtu.testbox.tools.TestboxTool;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Api(description = "管理员API接口")
 @RestController
+@RequiresRoles("admin")
 @RequestMapping(value = "/admins", produces = "application/json;charset=UTF-8")
 public class AdminController {
 
@@ -29,13 +37,22 @@ public class AdminController {
     @Autowired
     private BoxService boxService;
 
+    @Autowired
+    private AppSecurityUtils appSecurity;
+
+    @Autowired
+    private ResultMap resultMap;
+
+
+
     /**
      * 获取个人信息
      * @return
      */
     @GetMapping("/adminInfo")
-    public R getPersonInfo(){
-        return R.success().msg(R.SUCCESS).data(adminService.showPersonInfo()).code(Code.OK);
+    @ApiOperation("管理员获取个人信息")
+    public ResultMap getPersonInfo(){
+        return resultMap.success().msg("个人信息获取成功").data(adminService.showPersonInfo()).code(ResultMap.OK);
     }
 
     /**
@@ -45,32 +62,43 @@ public class AdminController {
      * @param boxArea
      * @return
      */
+    @ApiOperation("管理查看所有的试验箱")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "boxStatus", value = "试验箱状态", paramType = "query"),
+            @ApiImplicitParam(name = "boxType", value = "试验箱类型", paramType = "query"),
+            @ApiImplicitParam(name = "boxArea", value = "试验箱所属城市", paramType = "query")
+    })
     @GetMapping("/boxes")
-    public R getBoxes(
+    public ResultMap getBoxes(
             @RequestParam(value = "boxStatus", required = false) Integer boxStatus,
             @RequestParam(value = "boxType", required = false) Integer boxType,
             @RequestParam(value = "boxArea", required = false) String boxArea
         ){
         List<Box> boxes = adminService.showBoxes(boxStatus, boxType, boxArea);
-        return R.success().data(boxes).msg(R.SUCCESS).code(Code.OK);
+        return resultMap.success().data(boxes).msg(R.SUCCESS).code(ResultMap.OK);
     }
 
     /**
      * 查询单个试验箱
      * @return
      */
+    @ApiOperation("管理员查看单个试验箱的详细信息")
+    @ApiImplicitParam(name = "boxId", value = "试验箱ID", required = true, paramType = "query")
     @GetMapping("/box")
-    public R getBox(@RequestParam("boxId") Integer boxId){
+    public ResultMap getBox(@RequestParam("boxId") Integer boxId){
         Box box = adminService.showBoxInfo(boxId);
-        return R.success().data(box).msg(R.SUCCESS).code(Code.OK);
+        return resultMap.success().data(box).msg(R.SUCCESS).code(ResultMap.OK);
     }
 
+    @ApiOperation("管理员按照类型查看每个状态下的试验箱的数量")
+    @ApiImplicitParam(name = "boxType", value = "试验箱类型", paramType = "query")
     @GetMapping("/boxCount")
-    public R getBoxNumber(@RequestParam(value = "boxType", required = false) Integer boxType){
+    public ResultMap getBoxNumber(@RequestParam(value = "boxType", required = false) Integer boxType){
         Map<Integer, Integer> map = adminService.boxNubmerByTypeAndStatus(boxType);
-        return R.success().data(map).code(Code.OK).msg(R.SUCCESS);
+        return resultMap.success().data(map).code(ResultMap.OK).msg(R.SUCCESS);
     }
 
+    @ApiIgnore
     @RequestMapping("/jobadmin")
     public String taskAdmin(Model model){
 
@@ -120,6 +148,7 @@ public class AdminController {
         return "adminUI/jobadmin";
     }
 
+    @ApiIgnore
     @RequestMapping("/jobadmin/status")
     public String showJobByStatus(Model model,@RequestParam(value = "statusCode") int statusCode){
         System.out.println("ajax请求:statusCode="+statusCode);
@@ -148,6 +177,7 @@ public class AdminController {
         return "adminUI/jobadmin::queryresult";
     }
 
+    @ApiIgnore
     @RequestMapping("/jobinfo")
     public String jobInfo(@RequestParam(value="taskId")String taskId, Model model){
         System.out.println("查看详情："+taskId);
@@ -186,6 +216,7 @@ public class AdminController {
         return "adminUI/jobinfo";
     }
 
+    @ApiIgnore
     @RequestMapping("/boxadmin")
     public String boxAdmin(Model model){
         // 查询所有试验箱的信息，将试验箱的编号、状态列表加入到model中

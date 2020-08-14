@@ -1,6 +1,7 @@
 package com.bjtu.testbox.controller;
 
 import com.bjtu.testbox.config.api.R;
+import io.swagger.annotations.Api;
 import org.apache.shiro.ShiroException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.servlet.http.HttpServletRequest;
 
+@Api(description = "全局异常处理API")
 @RestControllerAdvice
 public class ExceptionController {
 
