@@ -31,8 +31,8 @@
         update cable
         <set>
             <if test="cableTagId!=null">cable_tag_id = #{cableTagId},</if>
-            <if test="cableArea!=null">cable_area = #{cableArea},</if>
-            <if test="cableBoxId!=null">cable_box_id = #{cableBoxId},</if>
+            <if test="cableArea!=null">and cable_area = #{cableArea},</if>
+            <if test="cableBoxId!=null">and cable_box_id = #{cableBoxId},</if>
         </set>
         where cable_id = #{cableId}
     </update>

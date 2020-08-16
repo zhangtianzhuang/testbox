@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjtu.testbox.mapper.ExamineMapper">
-    <!-- private int examineId;
-    private int approverId;
-    private int taskId;
-    private int examineLevel;
-    private int examineResult;
-    private long examineDate;
-    private String examineReason;-->
-    <!-- insert a record of examine -->
     <insert id="insertExamine" parameterType="examine">
         insert into examine
             (approver_Id, task_Id, examine_Level, examine_Result, examine_Date, examine_Reason)

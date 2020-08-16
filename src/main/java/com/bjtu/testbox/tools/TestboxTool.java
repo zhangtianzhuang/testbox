@@ -40,6 +40,30 @@ public class TestboxTool {
         return sb.toString();
     }
 
+    /**
+     * Checks whether the request comes from mobile phone or PC
+     * @param requestHeader the user-agent of the request's header.
+     * @return <code>true</code> if the request comes from a mobile device;
+     *         <code>false</code> otherwise
+     */
+    public static boolean isMobileDevice(String requestHeader){
+        /**
+         * android : 所有android设备
+         * mac os : iphone ipad
+         * windows phone:Nokia等windows系统的手机
+         */
+        String[] deviceArray = new String[]{"android","mac os","windows phone"};
+        if(requestHeader == null)
+            return false;
+        requestHeader = requestHeader.toLowerCase();
+        for(int i=0;i<deviceArray.length;i++){
+            if(requestHeader.indexOf(deviceArray[i])>0){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static String randomTaskNum() {
         return "T" + currentTimeString() + randomNumber(4) + randomString(4);
     }

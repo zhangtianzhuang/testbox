@@ -76,13 +76,13 @@
             <result property="boxTagId" column="box_tag_id"/>
             <result property="boxArea" column="box_area"/>
             <result property="boxStatus" column="box_status"/>
-            <collection property="cables" ofType="cable">
-                <id property="cableId" column="cable_id"/>
-                <result property="cableNumber" column="cable_number"/>
-                <result property="cableType" column="cable_Type"/>
-                <result property="cableTagId" column="cable_Tag_Id"/>
-                <result property="cableArea" column="cable_Area"/>
-            </collection>
+            <!--<collection property="cables" ofType="cable">-->
+                <!--<id property="cableId" column="cable_id"/>-->
+                <!--<result property="cableNumber" column="cable_number"/>-->
+                <!--<result property="cableType" column="cable_Type"/>-->
+                <!--<result property="cableTagId" column="cable_Tag_Id"/>-->
+                <!--<result property="cableArea" column="cable_Area"/>-->
+            <!--</collection>-->
         </collection>
         <!-- 任务审批信息 -->
         <collection property="examines" ofType="examine">
@@ -98,6 +98,15 @@
     <!--查询任务的详细信息-->
     <select id="queryTaskDetail" resultMap="detailTaskMap" parameterType="int">
         select
+          t.*, b.*
+        from task t, box b, taskbox tb
+        where
+          t.task_id = #{taskId}
+          and tb.task_id = t.task_id
+          and b.box_id = tb.box_id
+    </select>
+    <!--
+    select
           t.*, b.*, c.*
         from task t, box b, cable c, taskbox tb
         where
@@ -105,7 +114,7 @@
           and tb.task_id = t.task_id
           and b.box_id = tb.box_id
           and c.cable_box_id = b.box_id
-    </select>
+    -->
     <!--
     <select id="queryTaskDetail" resultMap="detailTaskMap" parameterType="int">
         select

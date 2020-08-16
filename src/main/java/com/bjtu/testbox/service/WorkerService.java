@@ -16,7 +16,7 @@ public interface WorkerService {
      * @param task
      * @return succes 1, failure -1
      */
-    Task applyTask(Task task);
+    Integer applyTask(Task task);
 
     /**
      * show the worker's basic info

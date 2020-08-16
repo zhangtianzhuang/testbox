@@ -180,6 +180,12 @@ public class MapperLayerTest {
         System.out.println(boxOption);
     }
 
+    @Test
+    public void boxTest_selectBoxNumber1(){
+        List<Box> boxes = boxMapper.selectBoxNumberMul(0, "成都", 1);
+        System.out.println(boxes);
+    }
+
 
     //////////////////  Box   //////////////////////////
 

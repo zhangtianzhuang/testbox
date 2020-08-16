@@ -32,9 +32,15 @@
         select box_id, box_number, box_type, box_area, box_name, box_tag_id
         from box
         <where>
-            <if test="boxStatus!=null">box_status = #{boxStatus}</if>
-            <if test="boxArea!=null">box_area = #{boxArea}</if>
-            <if test="boxType!=null">box_type = #{boxType}</if>
+            <if test="boxStatus!=null">
+                and box_status = #{boxStatus}
+            </if>
+            <if test="boxArea!=null">
+                and box_area = #{boxArea}
+            </if>
+            <if test="boxType!=null">
+                and box_type = #{boxType}
+            </if>
         </where>
     </select>
 
@@ -54,9 +60,15 @@
           box_type as results_text
         from box
         <where>
-            <if test="boxStatus!=null">box_status = #{boxStatus}</if>
-            <if test="boxArea!=null">box_area = #{boxArea}</if>
-            <if test="boxType!=null">box_type = #{boxType}</if>
+            <if test="boxStatus!=null">
+                and box_status = #{boxStatus}
+            </if>
+            <if test="boxArea!=null">
+                and box_area = #{boxArea}
+            </if>
+            <if test="boxType!=null">
+                and box_type = #{boxType}
+            </if>
         </where>
         group by box_type
     </select>
@@ -91,7 +103,7 @@
         update box
           <set>
             <if test="boxArea!=null">box_area = #{boxArea},</if>
-            <if test="boxTagId!=null">box_tag_id = #{boxTagId}</if>
+            <if test="boxTagId!=null">and box_tag_id = #{boxTagId}</if>
           </set>
         where box_id = #{boxId}
     </update>

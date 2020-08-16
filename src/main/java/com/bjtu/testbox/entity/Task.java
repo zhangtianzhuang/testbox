@@ -1,5 +1,6 @@
 package com.bjtu.testbox.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @ApiModel("任务实体")
+
 public class Task implements Serializable {
     private int taskId;
     @ApiModelProperty("任务编号,由系统自动生成")

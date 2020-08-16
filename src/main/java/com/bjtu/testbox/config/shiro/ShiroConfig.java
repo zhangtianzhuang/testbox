@@ -58,6 +58,7 @@ public class ShiroConfig {
 //        filterRuleMap.put("/**/*.jpg","anon");
 //        filterRuleMap.put("/**/*.png","anon");
         // 所有请求通过我们自己的JWT Filter
+        filterRuleMap.put("/user/**", "anon");
         filterRuleMap.put("/**", "jwt");
         // 访问 /unauthorized/** 不通过JWTFilter
         filterRuleMap.put("/unauthorized/**", "anon");

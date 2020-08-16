@@ -78,26 +78,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Box showBoxInfo(Integer boxId) {
-        // 查询试验箱基本信息
-        Box box = boxMapper.selectBoxAndCable(boxId);
-        // 查询不同类型线缆数量
-        List<Map<String, Object>> maps = cableMapper.cableNumberByType(boxId);
-        for (Map<String, Object> map : maps) {
-            Integer type = Integer.parseInt(String.valueOf(map.get("type")));
-            Integer number = Integer.parseInt(String.valueOf(map.get("number")));
-            if (type==1){  // 1.5米线缆
-                box.setLen15(number);
-            }else if (type==2){ // 2.2米线缆
-                box.setLen22(number);
-            }else { // 其他线缆
-                box.setLenOther(number);
-            }
-        }
-        return box;
-    }
-
-    @Override
     public List<Box> showBoxes(Integer boxStatus, Integer boxType, String boxArea) {
         return boxMapper.selectBoxNumberMul(boxStatus, boxArea, boxType);
     }
@@ -113,14 +93,6 @@ public class AdminServiceImpl implements AdminService {
             Integer status = Integer.parseInt(String.valueOf(map.get("status")));
             Integer number = Integer.parseInt(String.valueOf(map.get("number")));
             result.put(status, number);
-//            if (status==Status.BOX_STATUS_IN_REPOSITORY){  // 在库中
-//            }else if (status==Status.BOX_STATUS_BUG){  // 故障
-//                box.setLen15(number);
-//            }else if (status==Status.BOX_STATUS_OUT_REPOSITORY){ // 出库
-//                box.setLen22(number);
-//            }else if(status==Status.BOX_STATUS_LOST){ // 丢失
-//                box.setLenOther(number);
-//            }
         }
         return result;
     }

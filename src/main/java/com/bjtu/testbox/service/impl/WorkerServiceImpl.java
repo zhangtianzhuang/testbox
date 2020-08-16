@@ -25,20 +25,22 @@ import java.util.Map;
 @Service
 @Transactional
 public class WorkerServiceImpl implements WorkerService {
-
     private Logger logger = LoggerFactory.getLogger(WorkerServiceImpl.class);
-
     @Autowired
     private WorkerMapper workerMapper;
-
     @Autowired
     private TaskMapper taskMapper;
-
     @Autowired
     private BoxMapper boxMapper;
-
+    /**
+     * @param task
+     * @return
+     *  <code>taskId</code> success
+     *  <code>-1</code> can't find out the worker
+     *  <doce>-2</doce> other exception
+     */
     @Override
-    public Task applyTask(Task task) {
+    public Integer applyTask(Task task) {
         // 判断workerId是否合法
         Worker worker = workerMapper.selectById(task.getTaskWorkerId());
         // 系统自动设置字段
@@ -59,11 +61,12 @@ public class WorkerServiceImpl implements WorkerService {
             task.setTaskStatus(Status.TASK_WAIT_WORKSHOP);
             task.setTaskWorkerId(worker.getWorkerId());
         }else{
-            return null;
+            return -1;
         }
+        Integer taskId = -2;
         try {
             // 查询任务表中ID最大值
-            Integer taskId = taskMapper.selectMaxId();
+            taskId = taskMapper.selectMaxId();
             if (taskId == null) {
                 taskId = 1;
             } else {
@@ -79,10 +82,10 @@ public class WorkerServiceImpl implements WorkerService {
             }
         } catch (Exception e) {
             logger.info("发生异常:" + e.toString());
-            return null;
+            return -2;
         }
         logger.info("当前任务对象是否为空?" + task == null ? "是的" : "不是");
-        return task;
+        return taskId;
     }
 
     @Override
@@ -93,7 +96,6 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public List<Task> showWorkerTask(Integer workerId, String taskCity, Integer taskStatus, String taskPoint,
                                      Long startDate, Long endDate) {
-        // if workId
         return taskMapper.queryTask(taskCity, workerId, taskStatus, taskPoint, startDate, endDate);
     }
 
@@ -109,7 +111,6 @@ public class WorkerServiceImpl implements WorkerService {
     public Task showTaskDetail(int taskId) {
         return taskMapper.queryTaskDetail(taskId);
     }
-
 
     /**
      * 查询ID为@workerId的工人所申请所有任务状态以及数量

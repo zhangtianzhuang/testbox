@@ -10,7 +10,9 @@ public class User implements Serializable {
     private String password;
     private Integer bindUser;
     private String salt;//加密密码的盐
-    private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
+    //用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）
+    // --等待验证的用户 , 1:正常状态,2：用户被锁定.
+    private byte state;
     private int type;
     private List<SysRole> roleList;// 一个用户具有多个角色
 
@@ -84,7 +86,7 @@ public class User implements Serializable {
      * 密码盐.
      * @return
      */
-    public String getCredentialsSalt(){
+    public String credentialsSalt(){
         return this.username+this.salt;
     }
     //重新对盐重新进行了定义，用户名+salt，这样就更加不容易被破解

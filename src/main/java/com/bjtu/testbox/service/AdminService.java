@@ -41,13 +41,6 @@ public interface AdminService {
     Admin showPersonInfo(Integer adminId);
 
     /**
-     * 查询boxId试验箱的详细信息
-     * @param boxId
-     * @return
-     */
-    Box showBoxInfo(Integer boxId);
-
-    /**
      * 根据条件查询试验箱列表
      * @param boxStatus
      * @param boxType

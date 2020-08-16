@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Api(description = "审批者API接口")
@@ -67,13 +68,18 @@ public class ApproverController {
                 taskPoint, startDate, endDate);
         // 没有查找到任务
         if (tasks == null || tasks.size() == 0) {
-            return resultMap.success().msg("没有符合要求的任务").code(ResultMap.NO_CONTENT);
+            return resultMap.fail()
+                    .code(ResultMap.FAIL)
+                    .msg(ResultMap.NO_CONTENT_QUERY);
         }
-        return resultMap.success().data(tasks).code(ResultMap.OK).msg("查询成功");
+        return resultMap.success().data(tasks)
+                .code(ResultMap.OK)
+                .msg(ResultMap.SUCCESS_QUERY);
     }
 
     /**
      * 审批者查询任务的详情
+     *
      * @return
      */
     @ApiOperation("审批者查看某个任务的详情")
@@ -81,25 +87,39 @@ public class ApproverController {
     @GetMapping("/taskDetail")
     public ResultMap queryTaskDetail(@RequestParam("taskId") Integer taskId) {
         Task task = approverService.showTaskDetail(taskId);
-        return resultMap.success().code(ResultMap.OK).msg("查询成功").data(task);
+        if (task != null) {
+            return resultMap.success().data(task)
+                    .code(ResultMap.OK)
+                    .msg(ResultMap.SUCCESS_QUERY);
+        }
+        return resultMap.fail().code(ResultMap.FAIL)
+                .msg(ResultMap.INTERNET_ERROR);
     }
 
     /**
      * 审批者查询个人信息
+     *
      * @return
      */
     @ApiOperation("审批者查看个人信息")
     @GetMapping("/approverInfo")
     public ResultMap approverInfo() {
         Integer approverId = appSecurity.getBindId();
-        logger.info("approverInfo" + ": 当前登录审批者ID："+ approverId);
+        logger.info("approverInfo" + ": 当前登录审批者ID：" + approverId);
         Approver approver = approverService.showApproverInfo(approverId);
         logger.info("approverInfo" + ":" + approver);
-        return resultMap.success().code(ResultMap.OK).data(approver);
+        if (approver != null) {
+            return resultMap.success().data(approver)
+                    .code(ResultMap.OK)
+                    .msg(ResultMap.SUCCESS_QUERY);
+        }
+        return resultMap.fail().code(ResultMap.FAIL)
+                .msg(ResultMap.INTERNET_ERROR);
     }
 
     /**
      * 审批者审批
+     *
      * @return
      */
     @PostMapping("/examine")
@@ -109,16 +129,16 @@ public class ApproverController {
         String info = "taskID:" + examine.getTaskId() + ", Result:" +
                 examine.getExamineResult() + ", Reason:" + examine.getExamineReason();
         logger.info(info);
-        if (res == -1){
-            return resultMap.fail().code(ResultMap.FORBIDDEN).msg("任务已被审批过");
-        }else if (res == -2) {
-            return resultMap.fail().code(ResultMap.FORBIDDEN).msg("审批者级别和任务不匹配");
-        }else if (res == -3){
-            return resultMap.fail().code(ResultMap.SERVER_ERROR).msg("系统异常");
-        }else if(res == -4){
-            return resultMap.fail().code(ResultMap.FORBIDDEN).msg("任务不可被审批");
-        }else{
-            return resultMap.success().code(ResultMap.OK).msg("审批通过");
+        if (res == -1) {
+            return resultMap.fail().code(res).msg("您已审批过该任务");
+        } else if (res == -2) {
+            return resultMap.fail().code(res).msg("任务可能已被其他审批员审批");
+        } else if (res == -3) {
+            return resultMap.fail().code(res).msg("系统异常");
+        } else if (res == -4) {
+            return resultMap.fail().code(res).msg("任务已经结束，不可审批");
+        } else {
+            return resultMap.success().code(ResultMap.OK).msg("审批成功").data(examine.getTaskId());
         }
     }
 
@@ -133,9 +153,12 @@ public class ApproverController {
     public ResultMap queryHistoryTask(@RequestParam Integer examineResult) {
         int approverId = appSecurity.getBindId();
         List<Task> tasks = approverService.showHistoryTask(approverId, examineResult);
-        if (tasks == null || tasks.size() ==0){
-            return resultMap.success().data(tasks).code(ResultMap.OK).msg("没有符合要求的数据");
+        if (tasks == null || tasks.size() == 0) {
+            return resultMap.fail().code(ResultMap.FAIL)
+                    .msg(ResultMap.NO_CONTENT_QUERY);
         }
-        return resultMap.success().data(tasks).code(ResultMap.OK).msg("查询成功");
+        return resultMap.success().data(tasks)
+                .code(ResultMap.OK)
+                .msg(ResultMap.SUCCESS_QUERY);
     }
 }
