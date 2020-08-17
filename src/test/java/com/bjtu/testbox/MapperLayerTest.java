@@ -267,6 +267,13 @@ public class MapperLayerTest {
         logger.info(info);
     }
 
+    @Test
+    public void test_queryTaskExamineRecord(){
+        List<Examine> examines = examineMapper.queryTaskExamineRecord(3);
+        logger.info("test_queryTaskExamineRecord" + " >>> " + examines);
+    }
+
+
     //////////////////  Examine   //////////////////////////
 
     //////////////////  Shiro   //////////////////////////

@@ -123,4 +123,9 @@ public class ApproverServiceImpl implements ApproverService {
     public List<Task> showHistoryTask(Integer approverId, Integer examineResult) {
         return taskMapper.queryTaskByApprover(approverId, examineResult);
     }
+
+    @Override
+    public Examine queryExamine(Integer approverId, Integer taskId) {
+        return examineMapper.hasExamined(approverId, taskId);
+    }
 }

@@ -48,4 +48,9 @@ public interface ApproverService {
      * @return
      */
     List<Task> showHistoryTask(Integer approverId, Integer examineResult);
+
+    /**
+     *
+     */
+    Examine queryExamine(Integer approverId, Integer taskId);
 }

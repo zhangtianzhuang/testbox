@@ -8,6 +8,7 @@ import com.bjtu.testbox.entity.Approver;
 import com.bjtu.testbox.entity.Examine;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.service.ApproverService;
+import com.bjtu.testbox.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -34,11 +35,12 @@ public class ApproverController {
     @Autowired
     private AppSecurityUtils appSecurity;
     @Autowired
+    private UserService userService;
+    @Autowired
     private ResultMap resultMap;
 
     /**
      * 审批者查询要审批的任务
-     *
      * @return
      */
     @ApiOperation("审批者查看待审批的任务")
@@ -64,12 +66,17 @@ public class ApproverController {
             taskStatus = Status.TASK_WAIT_SEGMENT;
         }
         // 查找任务
-        List<Task> tasks = approverService.showTaskListByStatus(null, taskCity, taskStatus,
+        List<Task> tasks = userService.showTaskList(null, taskCity, taskStatus,
                 taskPoint, startDate, endDate);
         // 没有查找到任务
         if (tasks == null || tasks.size() == 0) {
             return resultMap.fail()
                     .code(ResultMap.FAIL)
+                    .msg(ResultMap.NO_CONTENT_QUERY);
+        }
+        if (tasks.size()==0) {
+            return resultMap.success()
+                    .code(ResultMap.OK_NO_DATA)
                     .msg(ResultMap.NO_CONTENT_QUERY);
         }
         return resultMap.success().data(tasks)
@@ -79,14 +86,13 @@ public class ApproverController {
 
     /**
      * 审批者查询任务的详情
-     *
      * @return
      */
     @ApiOperation("审批者查看某个任务的详情")
     @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, paramType = "query")
     @GetMapping("/taskDetail")
     public ResultMap queryTaskDetail(@RequestParam("taskId") Integer taskId) {
-        Task task = approverService.showTaskDetail(taskId);
+        Task task = userService.showTaskDetail(null, taskId);
         if (task != null) {
             return resultMap.success().data(task)
                     .code(ResultMap.OK)
@@ -125,10 +131,14 @@ public class ApproverController {
     @PostMapping("/examine")
     @ApiOperation("审批者审批任务")
     public ResultMap workshopExamineTask(@RequestBody Examine examine) {
+        // 审批人ID
+        Integer approverId = appSecurity.getBindId();
         Integer res = approverService.examineTask(examine);
         String info = "taskID:" + examine.getTaskId() + ", Result:" +
                 examine.getExamineResult() + ", Reason:" + examine.getExamineReason();
         logger.info(info);
+        // 查询审批结果，根据{approverId, taskId}
+        Examine examine1 = approverService.queryExamine(approverId, examine.getTaskId());
         if (res == -1) {
             return resultMap.fail().code(res).msg("您已审批过该任务");
         } else if (res == -2) {
@@ -138,7 +148,7 @@ public class ApproverController {
         } else if (res == -4) {
             return resultMap.fail().code(res).msg("任务已经结束，不可审批");
         } else {
-            return resultMap.success().code(ResultMap.OK).msg("审批成功").data(examine.getTaskId());
+            return resultMap.success().code(ResultMap.OK).msg("审批成功").data(examine1);
         }
     }
 

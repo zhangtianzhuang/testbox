@@ -24,8 +24,8 @@ public class JWTUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(JWTUtil.class);
     // 过期时间 24 小时
-    private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000;
-//    private static final long EXPIRE_TIME = 3000;
+    private static final long EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000;
+    //    private static final long EXPIRE_TIME = 3000;
     // 密钥
     private static final String SECRET = "SHIRO+JWT";
 

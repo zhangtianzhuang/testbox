@@ -13,6 +13,7 @@ public class ResultMap extends HashMap<String, Object> {
 
 
     public static final int OK = 1;
+    public static final int OK_NO_DATA = 2;
     public static final int FAIL = 0;
 
     // 服务器返回数据成功 -- GET

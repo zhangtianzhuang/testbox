@@ -5,11 +5,15 @@ import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
+import com.bjtu.testbox.service.AdminService;
 import com.bjtu.testbox.service.ApproverService;
+import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.TestboxTool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,11 +26,15 @@ import java.util.Map;
 @SpringBootTest
 public class ServiceLayerTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(ServiceLayerTest.class);
     @Autowired
     WorkerService workerService;
-
     @Autowired
     ApproverService approverService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private AdminService adminService;
 
     /////////////////////// Worker ///////////////////////////
     @Test
@@ -103,5 +111,24 @@ public class ServiceLayerTest {
         }
     }
     /////////////////////// Approver ///////////////////////////
+
+
+    /////////////////////// USER ///////////////////////////
+
+    @Test
+    public void user_showTaskDetail(){
+        Task task = userService.showTaskDetail(null, 26);
+        logger.info("user_showTaskDetail" + " >>> " + task);
+    }
+
+    @Test
+    public void test_selectTaskStatusNumber(){
+        Map<String, Integer> map = userService.selectTaskStatusNumber(null);
+        logger.info("test_selectTaskStatusNumber" + " >>> " + map);
+    }
+
+
+
+    /////////////////////// USER ///////////////////////////
 
 }

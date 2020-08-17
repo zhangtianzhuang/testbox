@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
     private CableMapper cableMapper;
     @Autowired
     private TaskMapper taskMapper;
+    @Autowired
+    private ExamineMapper examineMapper;
 
     @Override
     public User selectByUsername(String username) {
@@ -39,13 +41,24 @@ public class UserServiceImpl implements UserService {
                 taskPoint, startDate, endDate);
     }
 
+    /**
+     * 查看任务详情
+     * @param workerId
+     * @param taskId
+     * @return
+     */
     @Override
     public Task showTaskDetail(Integer workerId, int taskId) {
-        return taskMapper.queryTaskDetail(taskId);
+        // 查询任务基本信息
+        Task task = taskMapper.queryTaskDetail(taskId);
+        // 查询审批情况
+        List<Examine> examines = examineMapper.queryTaskExamineRecord(taskId);
+        task.setExamines(examines);
+        return task;
     }
 
     @Override
-    public Map<String, Integer> selectTaskStatusNumber(int workerId) {
+    public Map<String, Integer> selectTaskStatusNumber(Integer workerId) {
         List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum(workerId);
         Map<String, Integer> hashMap = new HashMap<>();
         // 初始值

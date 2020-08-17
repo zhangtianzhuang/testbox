@@ -40,7 +40,7 @@ public interface UserService {
      * @param workerId
      * @return
      */
-    Map<String, Integer> selectTaskStatusNumber(int workerId);
+    Map<String, Integer> selectTaskStatusNumber(Integer workerId);
 
     /**
      * 根据条件查询试验箱列表

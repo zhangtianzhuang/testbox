@@ -75,7 +75,7 @@ public interface TaskMapper {
      * @return status ： 1
      *         num : 1
      */
-    List<Map<String,Object>> queryTaskStatusNum(@Param("workerId") int workerId);
+    List<Map<String,Object>> queryTaskStatusNum(@Param("workerId") Integer workerId);
 
 
     /**

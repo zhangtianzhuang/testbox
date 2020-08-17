@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjtu.testbox.mapper.ExamineMapper">
+    <!-- insert a record of the task examine -->
     <insert id="insertExamine" parameterType="examine">
         insert into examine
             (approver_Id, task_Id, examine_Level, examine_Result, examine_Date, examine_Reason)
         values
             (#{approverId}, #{taskId}, #{examineLevel}, #{examineResult}, #{examineDate}, #{examineReason})
     </insert>
+
+<!--
+    <resultMap id="examineRecord" type="examine">
+        <id property="examineId" column="examine_id"/>
+        <result property=""
+    </resultMap>
+-->
+    <!--
+    查询某个任务被审批的记录
+    @param taskId 被审批的任务ID
+    @return 审批记录的集合，可能有1条或者多条审批记录
+    包括每一条记录包括审批ID，审批人ID，审批人级别，审批结果，审批日期，审批理由
+    */-->
+    <select id="queryTaskExamineRecord" resultType="examine">
+        select examine_id, approver_id, examine_level, examine_result, examine_date, examine_reason
+        from examine
+        where task_id = #{taskId}
+    </select>
 </mapper>

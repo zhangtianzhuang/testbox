@@ -4,6 +4,7 @@ import com.bjtu.testbox.config.api.ResultMap;
 import com.bjtu.testbox.config.shiro.AppSecurityUtils;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
+import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.model.BoxOption;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
@@ -29,12 +30,15 @@ public class WorkerController {
     @Autowired
     private WorkerService workerService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private AppSecurityUtils appSecurity;
     @Autowired
     private ResultMap resultMap;
 
     /**
      * 工人申请任务
+     *
      * @param task
      * @return
      */
@@ -46,7 +50,9 @@ public class WorkerController {
         task.setTaskWorkerId(workerId);
         Integer taskId = workerService.applyTask(task);
         if (taskId > 0) {
-            return resultMap.success().msg("任务申请成功，等待审批").code(ResultMap.OK).data(taskId);
+            // 这里再查询出来任务的详细情况
+            Task task1 = userService.showTaskDetail(null, taskId);
+            return resultMap.success().msg("任务申请成功，等待审批").code(ResultMap.OK).data(task1);
         } else if (taskId == -1) {
             return resultMap.fail().msg("当前登录账户异常").code(taskId);
         } else {
@@ -100,12 +106,17 @@ public class WorkerController {
         logger.info("taskStatus:" + taskStatus + ", taskPoint:" + taskPoint + ", taskCity:" + taskCity +
                 ", startDate:" + startDate + ", endDate:" + endDate);
         Integer workerId = appSecurity.getBindId();
-        List<Task> tasks = workerService.showWorkerTask(workerId, taskCity, taskStatus,
+        List<Task> tasks = userService.showTaskList(workerId, taskCity, taskStatus,
                 taskPoint, startDate, endDate);
         // 查询到数据
         if (tasks != null && tasks.size() != 0) {
             return resultMap.success().data(tasks)
                     .code(ResultMap.OK)
+                    .msg(ResultMap.SUCCESS_QUERY);
+        }
+        if (tasks.size() == 0){
+            return resultMap.success().data(tasks)
+                    .code(ResultMap.OK_NO_DATA)
                     .msg(ResultMap.SUCCESS_QUERY);
         }
         return resultMap.fail().code(ResultMap.FAIL)
@@ -119,7 +130,6 @@ public class WorkerController {
         return boxOption;
     }
 
-
     @ApiOperation("工人查看某个任务的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, paramType = "query")
@@ -127,7 +137,7 @@ public class WorkerController {
     @GetMapping("/taskDetail")
     public ResultMap queryTaskDetail(@RequestParam("taskId") Integer taskId) {
         logger.debug(">>>>> 工人查看任务详细信息 <<<<<<<<");
-        Task task = workerService.showTaskDetail(taskId);
+        Task task = userService.showTaskDetail(null, taskId);
         logger.debug(task.toString());
         if (task != null) {
             return resultMap.success().data(task)
@@ -142,7 +152,7 @@ public class WorkerController {
     @GetMapping("/taskStatusNumber")
     public ResultMap taskStatusNumber() {
         int workerId = appSecurity.getBindId();
-        Map<String, Integer> map = workerService.selectTaskStatusNumber(workerId);
+        Map<String, Integer> map = userService.selectTaskStatusNumber(workerId);
         if (map != null) {
             return resultMap.success().code(ResultMap.OK).data(map);
         }
