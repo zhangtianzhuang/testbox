@@ -145,7 +145,7 @@ public class AdminController {
         }
         if (tasks.size() == 0) {
             return resultMap.success()
-                    .code(ResultMap.OK_NO_DATA)
+                    .code(ResultMap.OK_NO_DATA).data(tasks)
                     .msg(ResultMap.NO_CONTENT_QUERY);
         }
         return resultMap.fail().code(ResultMap.FAIL)
