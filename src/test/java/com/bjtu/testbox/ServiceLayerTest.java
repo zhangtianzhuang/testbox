@@ -89,8 +89,8 @@ public class ServiceLayerTest {
 
     @Test
     public void queryTaskStatusNumber(){
-        Map<String, Integer> stringIntegerMap = workerService.selectTaskStatusNumber(-1);
-        System.out.println(stringIntegerMap);
+//        Map<String, Integer> stringIntegerMap = workerService.selectTaskStatusNumber(-1);
+//        System.out.println(stringIntegerMap);
     }
 
     @Test

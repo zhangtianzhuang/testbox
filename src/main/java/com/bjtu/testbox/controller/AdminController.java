@@ -64,6 +64,7 @@ public class AdminController {
 
     /**
      * 查看试验箱列表
+     *
      * @param boxStatus
      * @param boxType
      * @param boxArea
@@ -86,7 +87,7 @@ public class AdminController {
             return resultMap.fail().code(ResultMap.FAIL)
                     .msg(ResultMap.NO_CONTENT_QUERY);
         }
-        if (boxes.size()==0){
+        if (boxes.size() == 0) {
             return resultMap.success()
                     .code(ResultMap.OK_NO_DATA)
                     .msg(ResultMap.NO_CONTENT_QUERY);
@@ -98,6 +99,7 @@ public class AdminController {
 
     /**
      * 查询单个试验箱
+     *
      * @return
      */
     @ApiOperation("管理员查看单个试验箱的详细信息")
@@ -141,6 +143,11 @@ public class AdminController {
                     .code(ResultMap.OK)
                     .msg(ResultMap.SUCCESS_QUERY);
         }
+        if (tasks.size() == 0) {
+            return resultMap.success()
+                    .code(ResultMap.OK_NO_DATA)
+                    .msg(ResultMap.NO_CONTENT_QUERY);
+        }
         return resultMap.fail().code(ResultMap.FAIL)
                 .msg(ResultMap.NO_CONTENT_QUERY);
     }
@@ -163,9 +170,9 @@ public class AdminController {
 
     @ApiOperation("管理查看不同状态下的任务的数量")
     @GetMapping("/taskStatusNumber")
-    public ResultMap getTaskStatusCount(){
+    public ResultMap getTaskStatusCount() {
         Map<String, Integer> map = userService.selectTaskStatusNumber(null);
-        if (map != null){
+        if (map != null) {
             return resultMap.success().code(ResultMap.OK)
                     .data(map)
                     .msg(ResultMap.SUCCESS_QUERY);

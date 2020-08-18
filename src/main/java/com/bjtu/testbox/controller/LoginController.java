@@ -43,7 +43,8 @@ public class LoginController {
             }
             return resultMap.success().code(ResultMap.OK).msg(JWTUtil.createToken(username))
                     .putData("userType", type)
-                    .putData("userId", user.getBindUser());
+                    .putData("userId", user.getBindUser())
+                    .putData("timestamp", System.currentTimeMillis());
         }
     }
 

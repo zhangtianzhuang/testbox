@@ -44,11 +44,13 @@ public interface TaskMapper {
     List<Task> queryAllTasks();
 
     /**
-     * 查询某个表单的详细信息
+     * 查询某个表单的详细信息，不包含线缆
      * @param taskId
      * @return
      */
     Task queryTaskDetail(@Param("taskId") int taskId);
+
+    Task queryTaskDetailWithCables(@Param("taskId") Integer taskId);
 
     /**
      * 查询ID为@param approverId的审批者 审批结果为@param examineResult的任务列表

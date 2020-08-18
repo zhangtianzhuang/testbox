@@ -1,7 +1,6 @@
 package com.bjtu.testbox.service.impl;
 
 import com.bjtu.testbox.config.constant.Status;
-import com.bjtu.testbox.config.shiro.AppSecurityUtils;
 import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
@@ -115,28 +114,34 @@ public class WorkerServiceImpl implements WorkerService {
     /**
      * 查询ID为@workerId的工人所申请所有任务状态以及数量
      *
-     * @param workerId
+//     * @param workerId
      * @return 以Map数据结构返回{状态名,数量}，状态名在TestboxTool类中定义
      */
-    public Map<String, Integer> selectTaskStatusNumber(int workerId) {
-        List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum(workerId);
-        Map<String, Integer> hashMap = new HashMap<>();
-        // 初始值
-        for (int i = 1; i <= 6; i++) {
-            hashMap.put(TestboxTool.mapStatusCode.get(i), 0);
-        }
-        for (Map<String, Object> map : maps) {
-            Integer num = Integer.valueOf(String.valueOf(map.get("num")));
-            Integer status = Integer.valueOf(String.valueOf(map.get("status")));
-            hashMap.put(TestboxTool.mapStatusCode.get(status), num);
-        }
-        return hashMap;
-    }
+//    public Map<String, Integer> selectTaskStatusNumber(int workerId) {
+//        List<Map<String, Object>> maps = taskMapper.queryTaskStatusNum(workerId);
+//        Map<String, Integer> hashMap = new HashMap<>();
+//        // 初始值
+//        for (int i = 1; i <= 6; i++) {
+//            hashMap.put(TestboxTool.mapStatusCode.get(i), 0);
+//        }
+//        for (Map<String, Object> map : maps) {
+//            Integer num = Integer.valueOf(String.valueOf(map.get("num")));
+//            Integer status = Integer.valueOf(String.valueOf(map.get("status")));
+//            hashMap.put(TestboxTool.mapStatusCode.get(status), num);
+//        }
+//        return hashMap;
+//    }
 
     @Override
     public BoxOption selectUsableBox() {
         List<Box> boxes = boxMapper.selectBoxNumberMul(0, null, null);
         BoxOption convert = new BoxOption().convert(boxes);
         return convert;
+    }
+
+    @Override
+    public Task taskDetailWithCables(Integer taskId) {
+        Task task = taskMapper.queryTaskDetailWithCables(taskId);
+        return task;
     }
 }

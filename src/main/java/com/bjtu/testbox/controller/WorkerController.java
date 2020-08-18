@@ -159,4 +159,22 @@ public class WorkerController {
         return resultMap.fail().code(ResultMap.FAIL)
                 .msg(ResultMap.INTERNET_ERROR);
     }
+
+    @ApiOperation("工人查看某个任务的详细信息-手机版，包括线缆信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, paramType = "query")
+    })
+    @GetMapping("/taskDetailByPhone")
+    public ResultMap queryTaskDetailByPhone(@RequestParam("taskId") Integer taskId) {
+        logger.debug(">>>>> 工人查看任务详细信息 <<<<<<<<");
+        Task task = workerService.taskDetailWithCables(taskId);
+        logger.debug(task.toString());
+        if (task != null) {
+            return resultMap.success().data(task)
+                    .code(ResultMap.OK)
+                    .msg(ResultMap.SUCCESS_QUERY);
+        }
+        return resultMap.fail().code(ResultMap.FAIL)
+                .msg(ResultMap.INTERNET_ERROR);
+    }
 }

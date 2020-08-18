@@ -94,7 +94,6 @@
             <result property="examineReason" column="examine_Reason"/>
         </collection>
     </resultMap>
-
     <!--查询任务的详细信息-->
     <select id="queryTaskDetail" resultMap="detailTaskMap" parameterType="int">
         select
@@ -105,6 +104,59 @@
           and tb.task_id = t.task_id
           and b.box_id = tb.box_id
     </select>
+
+    <resultMap id="detailTaskWithCablesMap" type="task">
+        <id property="taskId" column="task_id"/>
+        <result property="taskNumber" column="task_number"/>
+        <result property="taskName" column="task_name"/>
+        <result property="taskWorkerId" column="task_worker_id"/>
+        <result property="taskWorkerName" column="task_worker_name"/>
+        <result property="taskPoint" column="task_point"/>
+        <result property="taskDate" column="task_date"/>
+        <result property="borrowDate" column="borrow_date"/>
+        <result property="returnDate" column="return_date"/>
+        <result property="taskStatus" column="task_status"/>
+        <result property="taskDesc" column="task_desc"/>
+        <result property="taskCity" column="task_city"/>
+        <result property="taskArea" column="task_area"/>
+        <!-- 该任务中包含的试验箱和线缆 -->
+        <collection property="boxes" ofType="box">
+            <id property="boxId" column="box_id"/>
+            <result property="boxNumber" column="box_number"/>
+            <result property="boxName" column="box_name"/>
+            <result property="boxType" column="box_type"/>
+            <result property="boxTagId" column="box_tag_id"/>
+            <result property="boxArea" column="box_area"/>
+            <result property="boxStatus" column="box_status"/>
+            <collection property="cables" ofType="cable">
+            <id property="cableId" column="cable_id"/>
+            <result property="cableNumber" column="cable_number"/>
+            <result property="cableType" column="cable_Type"/>
+            <result property="cableTagId" column="cable_Tag_Id"/>
+            <result property="cableArea" column="cable_Area"/>
+            </collection>
+        </collection>
+        <!-- 任务审批信息 -->
+        <collection property="examines" ofType="examine">
+            <id property="examineId" column="examine_Id"/>
+            <result property="examineLevel" column="examine_Level"/>
+            <result property="examineResult" column="examine_Result"/>
+            <result property="approverId" column="approver_Id"/>
+            <result property="examineDate" column="examine_Date"/>
+            <result property="examineReason" column="examine_Reason"/>
+        </collection>
+    </resultMap>
+    <select id="queryTaskDetailWithCables" resultMap="detailTaskWithCablesMap" parameterType="int">
+        select
+          t.*, b.*, c.*
+        from task t, box b, cable c, taskbox tb
+        where
+          t.task_id = #{taskId}
+          and tb.task_id = t.task_id
+          and b.box_id = tb.box_id
+          and c.cable_box_id = b.box_id
+    </select>
+
     <!--
     select
           t.*, b.*, c.*

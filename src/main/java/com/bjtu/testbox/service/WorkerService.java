@@ -50,11 +50,13 @@ public interface WorkerService {
      * @param workerId
      * @return
      */
-    Map<String, Integer> selectTaskStatusNumber(int workerId);
+    //Map<String, Integer> selectTaskStatusNumber(int workerId);
 
     /**
      * query usable box when a worker apply for a task.
      * @return
      */
     BoxOption selectUsableBox();
+
+    Task taskDetailWithCables(Integer taskId);
 }
