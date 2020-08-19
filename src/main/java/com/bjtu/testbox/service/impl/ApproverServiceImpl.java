@@ -126,6 +126,8 @@ public class ApproverServiceImpl implements ApproverService {
 
     @Override
     public Examine queryExamine(Integer approverId, Integer taskId) {
-        return examineMapper.hasExamined(approverId, taskId);
+        // 查询审批人的信息
+        Examine examine = examineMapper.hasExamined(approverId, taskId);
+        return examine;
     }
 }

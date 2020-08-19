@@ -28,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private TaskMapper taskMapper;
     @Autowired
     private ExamineMapper examineMapper;
+    @Autowired
+    private ApproverMapper approverMapper;
 
     @Override
     public User selectByUsername(String username) {
@@ -54,6 +56,12 @@ public class UserServiceImpl implements UserService {
         Task task = taskMapper.queryTaskDetail(taskId);
         // 查询审批情况
         List<Examine> examines = examineMapper.queryTaskExamineRecord(taskId);
+        for (Examine examine : examines) {
+            Integer approverId = examine.getApproverId();
+            // 查询审批人的姓名
+            Approver approver = approverMapper.queryApproverById(approverId);
+            examine.setExamineApproverName(approver.getApproverName());
+        }
         task.setExamines(examines);
         return task;
     }

@@ -43,6 +43,7 @@ public class ApproverController {
      * 审批者查询要审批的任务
      * @return
      */
+    @CrossOrigin
     @ApiOperation("审批者查看待审批的任务")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskCity", value = "任务城市", required = false, paramType = "query"),
@@ -88,6 +89,7 @@ public class ApproverController {
      * 审批者查询任务的详情
      * @return
      */
+    @CrossOrigin
     @ApiOperation("审批者查看某个任务的详情")
     @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, paramType = "query")
     @GetMapping("/taskDetail")
@@ -107,6 +109,7 @@ public class ApproverController {
      *
      * @return
      */
+    @CrossOrigin
     @ApiOperation("审批者查看个人信息")
     @GetMapping("/approverInfo")
     public ResultMap approverInfo() {
@@ -128,6 +131,7 @@ public class ApproverController {
      *
      * @return
      */
+    @CrossOrigin
     @PostMapping("/examine")
     @ApiOperation("审批者审批任务")
     public ResultMap workshopExamineTask(@RequestBody Examine examine) {
@@ -158,6 +162,7 @@ public class ApproverController {
      * @param examineResult
      * @return
      */
+    @CrossOrigin
     @ApiOperation("查看历史审批记录")
     @GetMapping("/historyRecord")
     public ResultMap queryHistoryTask(@RequestParam Integer examineResult) {

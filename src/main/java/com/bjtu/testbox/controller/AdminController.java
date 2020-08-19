@@ -14,10 +14,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 
 @Api(description = "管理员API接口")
@@ -42,6 +40,7 @@ public class AdminController {
      *
      * @return
      */
+    @CrossOrigin
     @GetMapping("/adminInfo")
     @ApiOperation("管理员获取个人信息")
     public ResultMap getPersonInfo() {
@@ -64,6 +63,7 @@ public class AdminController {
      * @param boxArea
      * @return
      */
+    @CrossOrigin
     @ApiOperation("管理查看所有的试验箱")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boxStatus", value = "试验箱状态", paramType = "query"),
@@ -96,6 +96,7 @@ public class AdminController {
      *
      * @return
      */
+    @CrossOrigin
     @ApiOperation("管理员查看单个试验箱的详细信息")
     @ApiImplicitParam(name = "boxId", value = "试验箱ID", required = true, paramType = "query")
     @GetMapping("/box")
@@ -110,6 +111,7 @@ public class AdminController {
                 .msg(ResultMap.INTERNET_ERROR);
     }
 
+    @CrossOrigin
     @ApiOperation("管理员按照类型查看每个状态下的试验箱的数量")
     @ApiImplicitParam(name = "boxType", value = "试验箱类型", paramType = "query")
     @GetMapping("/boxCount")
@@ -124,6 +126,7 @@ public class AdminController {
                 .msg(ResultMap.INTERNET_ERROR);
     }
 
+    @CrossOrigin
     @ApiOperation("管理员查看任务列表")
     @ApiImplicitParam(name = "taskStatus", value = "任务状态", paramType = "query")
     @GetMapping("/taskList")
@@ -146,6 +149,7 @@ public class AdminController {
                 .msg(ResultMap.NO_CONTENT_QUERY);
     }
 
+    @CrossOrigin
     @ApiOperation("管理员查看任务详情")
     @ApiImplicitParam(name = "taskId", value = "任务ID", paramType = "query")
     @GetMapping("/taskDetail")
@@ -162,6 +166,7 @@ public class AdminController {
                 .msg(ResultMap.INTERNET_ERROR);
     }
 
+    @CrossOrigin
     @ApiOperation("管理查看不同状态下的任务的数量")
     @GetMapping("/taskStatusNumber")
     public ResultMap getTaskStatusCount() {

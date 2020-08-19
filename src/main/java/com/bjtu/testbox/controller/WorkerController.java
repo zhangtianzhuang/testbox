@@ -42,6 +42,7 @@ public class WorkerController {
      * @param task
      * @return
      */
+    @CrossOrigin
     @ApiOperation("工人提交一个任务申请")
     @PostMapping(value = "/task")
     public ResultMap applyTask(@RequestBody Task task) {
@@ -65,6 +66,7 @@ public class WorkerController {
      *
      * @return
      */
+    @CrossOrigin
     @ApiOperation("工人查看个人信息")
     @GetMapping(value = "/workerInfo")
     public ResultMap queryWorkerPersonInfo() {
@@ -84,6 +86,7 @@ public class WorkerController {
      *
      * @return
      */
+    @CrossOrigin
     @ApiOperation("工人查看任务列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskStatus", value = "任务状态", paramType = "query"),
@@ -123,6 +126,7 @@ public class WorkerController {
                 .msg(ResultMap.NO_CONTENT_QUERY);
     }
 
+    @CrossOrigin
     @ApiOperation("工人查看可用的试验箱，按类型分类")
     @GetMapping("/boxes")
     public BoxOption queryUsableBox() {
@@ -130,6 +134,7 @@ public class WorkerController {
         return boxOption;
     }
 
+    @CrossOrigin
     @ApiOperation("工人查看某个任务的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, paramType = "query")
@@ -148,6 +153,7 @@ public class WorkerController {
                 .msg(ResultMap.INTERNET_ERROR);
     }
 
+    @CrossOrigin
     @ApiOperation("工人按任务状态统计每个状态的任务数量")
     @GetMapping("/taskStatusNumber")
     public ResultMap taskStatusNumber() {
@@ -160,6 +166,7 @@ public class WorkerController {
                 .msg(ResultMap.INTERNET_ERROR);
     }
 
+    @CrossOrigin
     @ApiOperation("工人查看某个任务的详细信息-手机版，包括线缆信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, paramType = "query")

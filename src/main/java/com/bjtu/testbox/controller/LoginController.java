@@ -22,14 +22,15 @@ public class LoginController {
     @Autowired
     private ResultMap resultMap;
 
+    @CrossOrigin
     @PostMapping("/login")
     public ResultMap login(@RequestParam("username") String username,
                            @RequestParam("password") String password) {
         String realPassword = userMapper.selectPassword(username);
         if (realPassword == null) {
-            return resultMap.fail().code(401).msg("用户名错误");
+            return resultMap.fail().code(-1).msg("用户名不存在");
         } else if (!realPassword.equals(password)) {
-            return resultMap.fail().code(401).msg("密码错误");
+            return resultMap.fail().code(-2).msg("密码错误");
         } else {
             User user = userMapper.selectByUsername(username);
             String type = null;
@@ -48,6 +49,7 @@ public class LoginController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(path = "/unauthorized/{message}")
     public R unauthorized(@PathVariable String message) throws UnsupportedEncodingException {
         return R.success().code(ResultMap.UNAUTHORIZED).msg(message);

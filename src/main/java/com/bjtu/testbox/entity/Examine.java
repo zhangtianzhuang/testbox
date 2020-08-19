@@ -10,6 +10,8 @@ public class Examine implements Serializable {
     private int examineResult;
     private long examineDate;
     private String examineReason ="";
+//    private Approver approver;
+    private String examineApproverName;
 
     @Override
     public String toString() {
@@ -21,6 +23,7 @@ public class Examine implements Serializable {
                 ", examineResult=" + examineResult +
                 ", examineDate=" + examineDate +
                 ", examineReason='" + examineReason + '\'' +
+//                ", \napprover='" + approver +'\'' +
                 '}'+"\n";
     }
 
@@ -78,5 +81,13 @@ public class Examine implements Serializable {
 
     public void setExamineReason(String examineReason) {
         this.examineReason = examineReason;
+    }
+
+    public String getExamineApproverName() {
+        return examineApproverName;
+    }
+
+    public void setExamineApproverName(String examineApproverName) {
+        this.examineApproverName = examineApproverName;
     }
 }

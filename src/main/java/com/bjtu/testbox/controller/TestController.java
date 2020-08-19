@@ -1,6 +1,7 @@
 package com.bjtu.testbox.controller;
 
 import com.bjtu.testbox.config.api.R;
+import com.bjtu.testbox.config.api.ResultMap;
 import com.bjtu.testbox.config.shiro.AppSecurityUtils;
 import com.bjtu.testbox.entity.User;
 import com.bjtu.testbox.tools.TestboxTool;
@@ -21,17 +22,17 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(value = "/user", produces = "application/json;charset=UTF-8")
 public class TestController {
-
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
-
+    @Autowired
+    private ResultMap resultMap;
     @Autowired
     private AppSecurityUtils appSecurityUtils;
     @Autowired
     private HttpServletRequest request;
-
     /**
      * 拥有 user, admin 角色的用户可以访问下面的页面
      */
+    @CrossOrigin
     @ApiOperation(value = "获取消息", notes = "测试登录")
     @GetMapping(value = "/getMessage", produces = "application/json;charset=UTF-8")
 //    @RequiresRoles(logical = Logical.OR, value = {"worker", "dynamic_workshop", "segment", "admin"})
@@ -53,8 +54,9 @@ public class TestController {
 
     // 测试屏蔽接口
     @ApiIgnore
+    @CrossOrigin
     @GetMapping("/testCoverApi")
-    public R testCoverApi() {
-        return R.success();
+    public ResultMap testCoverApi() {
+        return resultMap.success().data("hello").msg("success");
     }
 }
