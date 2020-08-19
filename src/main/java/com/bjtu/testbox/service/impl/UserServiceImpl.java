@@ -1,5 +1,6 @@
 package com.bjtu.testbox.service.impl;
 
+import com.alibaba.druid.support.spring.stat.annotation.Stat;
 import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.config.shiro.AppSecurityUtils;
 import com.bjtu.testbox.entity.*;
@@ -88,9 +89,9 @@ public class UserServiceImpl implements UserService {
         for (Map<String, Object> map : maps) {
             Integer type = Integer.parseInt(String.valueOf(map.get("type")));
             Integer number = Integer.parseInt(String.valueOf(map.get("number")));
-            if (type==1){  // 1.5米线缆
+            if (type==Status.CABLE_TYPE_1){  // 1.5米线缆
                 box.setLen15(number);
-            }else if (type==2){ // 2.2米线缆
+            }else if (type==Status.CABLE_TYPE_2){ // 2.2米线缆
                 box.setLen22(number);
             }else { // 其他线缆
                 box.setLenOther(number);

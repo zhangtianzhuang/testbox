@@ -9,7 +9,7 @@ public class Examine implements Serializable {
     private int examineLevel;
     private int examineResult;
     private long examineDate;
-    private String examineReason;
+    private String examineReason ="";
 
     @Override
     public String toString() {

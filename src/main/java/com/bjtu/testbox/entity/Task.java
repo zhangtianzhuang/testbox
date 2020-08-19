@@ -23,7 +23,7 @@ public class Task implements Serializable {
     private long borrowDate;
     private long returnDate;
     private int taskStatus;
-    private String taskDesc;
+    private String taskDesc="";
     private String taskCity;
     private String taskArea;
 

@@ -5,6 +5,7 @@ import com.bjtu.testbox.entity.Box;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
 import com.bjtu.testbox.mapper.BoxMapper;
+import com.bjtu.testbox.mapper.CableMapper;
 import com.bjtu.testbox.mapper.TaskMapper;
 import com.bjtu.testbox.mapper.WorkerMapper;
 import com.bjtu.testbox.service.WorkerService;
@@ -31,6 +32,8 @@ public class WorkerServiceImpl implements WorkerService {
     private TaskMapper taskMapper;
     @Autowired
     private BoxMapper boxMapper;
+    @Autowired
+    private CableMapper cableMapper;
     /**
      * @param task
      * @return
@@ -142,6 +145,22 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public Task taskDetailWithCables(Integer taskId) {
         Task task = taskMapper.queryTaskDetailWithCables(taskId);
+        List<Box> boxes = task.getBoxes();
+        for (Box box : boxes) {
+            Integer boxId = box.getBoxId();
+            List<Map<String, Object>> maps = cableMapper.cableNumberByType(boxId);
+            for (Map<String, Object> map : maps) {
+                Integer type = Integer.parseInt(String.valueOf(map.get("type")));
+                Integer number = Integer.parseInt(String.valueOf(map.get("number")));
+                if (type==Status.CABLE_TYPE_1){
+                    box.setLen15(number);
+                }else if (type==Status.CABLE_TYPE_2){
+                    box.setLen22(number);
+                }else { // 其他线缆
+                    box.setLenOther(number);
+                }
+            }
+        }
         return task;
     }
 }

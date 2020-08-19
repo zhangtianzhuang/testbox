@@ -63,6 +63,15 @@ public class Status {
     public static final int BOX_STATUS_LOST = 3;
     //////   试验箱状态   ///////
 
+    //////   线缆类型   ///////
+    // （1）1.5米线缆
+    public static final int CABLE_TYPE_1 = 1;
+    // （1）2.2米线缆
+    public static final int CABLE_TYPE_2 = 2;
+    // （1）其他类型线缆
+    public static final int CABLE_TYPE_3 = 3;
+
+    //////   线缆类型   ///////
 
     //////   审批结果   ///////
     // 通过 1
