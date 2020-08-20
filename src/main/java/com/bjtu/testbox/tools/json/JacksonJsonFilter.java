@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 
-@SuppressWarnings("deprecation")
+//@SuppressWarnings("deprecation")
 @JsonFilter("JacksonFilter")
 public class JacksonJsonFilter extends FilterProvider{
 

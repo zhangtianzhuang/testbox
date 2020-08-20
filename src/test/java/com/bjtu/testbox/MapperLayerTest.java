@@ -1,8 +1,10 @@
 package com.bjtu.testbox;
 
+import com.alibaba.druid.support.spring.stat.annotation.Stat;
 import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.entity.*;
 import com.bjtu.testbox.mapper.*;
+import com.bjtu.testbox.tools.TestboxTool;
 import com.bjtu.testbox.tools.model.BoxOption;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -314,4 +317,97 @@ public class MapperLayerTest {
     public void test_user_getArray(){
     }
     //////////////////// USER ///////////////////////////
+
+
+    ////////////// 添加试验箱和线缆 /////////////////
+    @Test
+    public void add_boxes(){
+        //直流岔道型
+        String name1 = Status.BOX_TYPE.get(Status.BOX_TYPE_DC_CROSSROAD);
+        //交流岔道型
+        String name2 = Status.BOX_TYPE.get(Status.BOX_TYPE_AC_CROSSROAD);
+        //轨道电路型
+        String name3 = Status.BOX_TYPE.get(Status.BOX_TYPE_ELECTRICITY);
+        String cities[] = {"成都", "重庆", "贵阳"};
+        String tag[] = {"DZ", "DJ", "GW"};
+        String names[] = {name1, name2, name3};
+        int type[] = {0, 1, 2};
+
+//        int i = 0; // 类型
+//        int j = 0; // 城市
+//        int n = 1; // 箱子数
+        int k = 10;
+        // 先存一个箱子
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int n = 1; n <= k; n++) {
+                    Box box = new Box();
+                    box.setBoxNumber(tag[i]+"-"+((j*k)+n));
+                    box.setBoxType(type[i]);
+                    box.setBoxName(names[i]);
+                    box.setBoxTagId(TestboxTool.randomString(8));
+                    box.setBoxArea(cities[j]);
+                    box.setBoxStatus(Status.BOX_STATUS_IN_REPOSITORY);
+                    logger.info(">>> " + box.getBoxNumber()+"\t"+box.getBoxType()+"\t"
+                    +box.getBoxName()+"\t"+box.getBoxArea());
+                    boxMapper.insertBox(box);
+                }
+            }
+        }
+
+    }
+
+    @Test
+    public void addCableforBox(){
+        List<Box> boxes = boxMapper.selectBoxNumberMul(null, null, null);
+        for (Box box : boxes) {
+            int type = box.getBoxType();
+            String number = box.getBoxNumber();
+            Cable cable = new Cable();
+            int boxId = box.getBoxId();
+            String cableArea = box.getBoxArea();
+            cable.setCableBoxId(boxId);
+            cable.setCableArea(cableArea);
+            cable.setCableTagId(TestboxTool.randomString(10));
+            if (type == Status.BOX_TYPE_DC_CROSSROAD || type == Status.BOX_TYPE_AC_CROSSROAD){ //直流或者交流
+                for (int i = 1; i <= 4; i++) {  // 2.2m
+                    cable.setCableNumber(number+"-"+i);
+                    cable.setCableType(Status.CABLE_TYPE_2);
+                    logger.info(">>> 试验箱编号:"+number+"\t线缆编号:"+cable.getCableNumber()+"\t");
+                    cableMapper.insertCable(cable);
+                }
+                for (int i = 5; i <= 8; i++) {  // 1.5m
+                    cable.setCableNumber(number+"-"+i);
+                    cable.setCableType(Status.CABLE_TYPE_1);
+                    logger.info(">>> 试验箱编号:"+number+"\t线缆编号:"+cable.getCableNumber()+"\t");
+                    cableMapper.insertCable(cable);
+                }
+                for (int i = 0; i < 8; i++) {
+                    cable.setCableNumber("ADAPTER-CABLE");
+                    cable.setCableType(Status.CABLE_TYPE_3);
+                    logger.info(">>> 试验箱编号:"+number+"\t线缆编号:"+cable.getCableNumber()+"\t");
+                    cableMapper.insertCable(cable);
+                }
+            }else{  //轨道电路
+                for (int i = 1; i <= 12; i++) {  // 2.2m
+                    cable.setCableNumber(number+"-"+i);
+                    cable.setCableType(Status.CABLE_TYPE_2);
+                    logger.info(">>> 试验箱编号:"+number+"\t线缆编号:"+cable.getCableNumber()+"\t");
+                    cableMapper.insertCable(cable);
+                }
+                for (int i = 13; i <= 24; i++) {  // 1.5m
+                    cable.setCableNumber(number+"-"+i);
+                    cable.setCableType(Status.CABLE_TYPE_1);
+                    logger.info(">>> 试验箱编号:"+number+"\t线缆编号:"+cable.getCableNumber()+"\t");
+                    cableMapper.insertCable(cable);
+                }
+            }
+        }
+    }
+    ////////////// 添加试验箱和线缆 /////////////////
+
+    @Test
+    public void test1(){
+
+    }
 }
