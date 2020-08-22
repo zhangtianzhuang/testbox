@@ -2,11 +2,13 @@ package com.bjtu.testbox.controller;
 
 import com.bjtu.testbox.config.api.ResultMap;
 import com.bjtu.testbox.config.shiro.AppSecurityUtils;
+import com.bjtu.testbox.entity.CableRecord;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
 import com.bjtu.testbox.service.UserService;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.model.BoxOption;
+import com.bjtu.testbox.tools.model.CableRecordStructAdapter;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import io.swagger.annotations.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -185,5 +187,14 @@ public class WorkerController {
         }
         return resultMap.fail().code(ResultMap.FAIL)
                 .msg(ResultMap.INTERNET_ERROR);
+    }
+
+    @ApiOperation("工人上传手机端的线缆使用记录")
+    @PostMapping("/commitCableRecord")
+    public ResultMap commitCableRecord(@RequestBody CableRecordStructAdapter adapter){
+        List<CableRecord> data = adapter.getData();
+        logger.info("commitCableRecord" + " >>> " + data);
+        workerService.commitCableRecord(data);
+        return resultMap.success();
     }
 }

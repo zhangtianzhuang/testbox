@@ -1,6 +1,7 @@
 package com.bjtu.testbox.service;
 
 import com.bjtu.testbox.entity.Box;
+import com.bjtu.testbox.entity.CableRecord;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
 import com.bjtu.testbox.tools.model.BoxOption;
@@ -58,5 +59,17 @@ public interface WorkerService {
      */
     BoxOption selectUsableBox();
 
+    /**
+     * 查询任务包括试验箱和线缆
+     * @param taskId
+     * @return
+     */
     Task taskDetailWithCables(Integer taskId);
+
+    /**
+     * 提交线缆使用记录
+     * @param cableRecordList
+     * @return
+     */
+    Integer commitCableRecord(List<CableRecord> cableRecordList);
 }

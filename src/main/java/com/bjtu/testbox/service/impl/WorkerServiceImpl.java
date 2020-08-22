@@ -2,12 +2,10 @@ package com.bjtu.testbox.service.impl;
 
 import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.entity.Box;
+import com.bjtu.testbox.entity.CableRecord;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
-import com.bjtu.testbox.mapper.BoxMapper;
-import com.bjtu.testbox.mapper.CableMapper;
-import com.bjtu.testbox.mapper.TaskMapper;
-import com.bjtu.testbox.mapper.WorkerMapper;
+import com.bjtu.testbox.mapper.*;
 import com.bjtu.testbox.service.WorkerService;
 import com.bjtu.testbox.tools.TestboxTool;
 import com.bjtu.testbox.tools.model.BoxOption;
@@ -34,12 +32,14 @@ public class WorkerServiceImpl implements WorkerService {
     private BoxMapper boxMapper;
     @Autowired
     private CableMapper cableMapper;
+    @Autowired
+    private CableRecordMapper cableRecordMapper;
+
     /**
      * @param task
-     * @return
-     *  <code>taskId</code> success
-     *  <code>-1</code> can't find out the worker
-     *  <doce>-2</doce> other exception
+     * @return <code>taskId</code> success
+     * <code>-1</code> can't find out the worker
+     * <doce>-2</doce> other exception
      */
     @Override
     public Integer applyTask(Task task) {
@@ -62,7 +62,7 @@ public class WorkerServiceImpl implements WorkerService {
             // 待动态车间审核的状态
             task.setTaskStatus(Status.TASK_WAIT_WORKSHOP);
             task.setTaskWorkerId(worker.getWorkerId());
-        }else{
+        } else {
             return -1;
         }
         Integer taskId = -2;
@@ -116,8 +116,9 @@ public class WorkerServiceImpl implements WorkerService {
 
     /**
      * 查询ID为@workerId的工人所申请所有任务状态以及数量
+     * <p>
+     * //     * @param workerId
      *
-//     * @param workerId
      * @return 以Map数据结构返回{状态名,数量}，状态名在TestboxTool类中定义
      */
 //    public Map<String, Integer> selectTaskStatusNumber(int workerId) {
@@ -134,7 +135,6 @@ public class WorkerServiceImpl implements WorkerService {
 //        }
 //        return hashMap;
 //    }
-
     @Override
     public BoxOption selectUsableBox() {
         List<Box> boxes = boxMapper.selectBoxNumberMul(0, null, null);
@@ -152,15 +152,40 @@ public class WorkerServiceImpl implements WorkerService {
             for (Map<String, Object> map : maps) {
                 Integer type = Integer.parseInt(String.valueOf(map.get("type")));
                 Integer number = Integer.parseInt(String.valueOf(map.get("number")));
-                if (type==Status.CABLE_TYPE_1){
+                if (type == Status.CABLE_TYPE_1) {
                     box.setLen15(number);
-                }else if (type==Status.CABLE_TYPE_2){
+                } else if (type == Status.CABLE_TYPE_2) {
                     box.setLen22(number);
-                }else { // 其他线缆
+                } else { // 其他线缆
                     box.setLenOther(number);
                 }
             }
         }
         return task;
+    }
+
+    /**
+     * 提交线缆使用记录
+     *
+     * @param cableRecordList
+     * @return
+     * -1 任务状态不符合要求
+     * -2 数据不能为空
+     */
+    @Override
+    public Integer commitCableRecord(List<CableRecord> cableRecordList) {
+        if (cableRecordList==null || cableRecordList.size()==0){
+            return -2;
+        }
+        // 查询任务状态是否满足
+        Integer statusById = taskMapper.statusById(cableRecordList.get(0).getcRecordTask());
+        for (CableRecord cableRecord : cableRecordList) {
+            if (statusById != Status.TASK_WAIT_RETURN) { // 满足条件
+                return -1;
+            }
+            cableRecordMapper.insertCableRecord(cableRecord);
+        }
+        logger.info("commitCableRecord" + " >>> 提交数据成功");
+        return 1;
     }
 }

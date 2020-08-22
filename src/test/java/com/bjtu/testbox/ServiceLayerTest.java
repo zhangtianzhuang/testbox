@@ -3,6 +3,7 @@ package com.bjtu.testbox;
 
 import com.bjtu.testbox.config.constant.Status;
 import com.bjtu.testbox.entity.Box;
+import com.bjtu.testbox.entity.CableRecord;
 import com.bjtu.testbox.entity.Task;
 import com.bjtu.testbox.entity.Worker;
 import com.bjtu.testbox.service.AdminService;
@@ -97,6 +98,18 @@ public class ServiceLayerTest {
     public void test_worker_selectUsableBox(){
         workerService.selectUsableBox();
     }
+
+    @Test
+    public void test_commitCableRecord(){
+        CableRecord cableRecord = new CableRecord();
+        cableRecord.setcRecordTask(2);
+        cableRecord.setcRecordBox("GX-1");
+        cableRecord.setcRecordNumber("GX-1-1");
+        cableRecord.setcRecordStartDate(System.currentTimeMillis());
+        cableRecord.setcRecordEndDate(System.currentTimeMillis());
+//        workerService.commitCableRecord(cableRecord);
+    }
+
 
     /////////////////////// Worker ///////////////////////////
 
