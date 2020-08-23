@@ -124,10 +124,28 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--热部署配置-->
+
                 <configuration>
+                    <!--热部署配置-->
                     <fork>true</fork>
+                    <mainClass>com.bjtu.testbox.TestboxApplication</mainClass>
+                    <layout>ZIP</layout>
+                    <!--这里表示导出的Jar包不包含任何其他第三方Jar包-->
+                    <includes>
+                        <include>
+                            <groupId>nothing</groupId>
+                            <artifactId>nothing</artifactId>
+                        </include>
+                    </includes>
                 </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -152,33 +170,6 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-assembly-plugin</artifactId>-->
-                <!--<version>2.4.1</version>-->
-                <!--<configuration>-->
-                    <!--<descriptorRefs>-->
-                        <!--&lt;!&ndash;打包-依赖包（胖包）&ndash;&gt;-->
-                        <!--&lt;!&ndash;<descriptorRef>fat-package</descriptorRef>&ndash;&gt;-->
-                        <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
-                    <!--</descriptorRefs>-->
-                    <!--<archive>-->
-                        <!--&lt;!&ndash;设置程序程序入口类&ndash;&gt;-->
-                        <!--<manifest>-->
-                            <!--<mainClass>com.bjtu.testbox.TestboxApplication</mainClass>-->
-                        <!--</manifest>-->
-                    <!--</archive>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>make-assembly</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>single</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
         </plugins>
 
         <resources>
