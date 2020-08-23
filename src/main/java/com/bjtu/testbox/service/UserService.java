@@ -57,4 +57,11 @@ public interface UserService {
      * @return
      */
     Box showBoxInfo(Integer boxId);
+
+    /**
+     * 查询手机端线缆使用记录
+     * @param taskId
+     * @return
+     */
+    List<CableRecord> showCableRecordList(Integer taskId);
 }

@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService {
     private ExamineMapper examineMapper;
     @Autowired
     private ApproverMapper approverMapper;
+    @Autowired
+    private CableRecordMapper cableRecordMapper;
+
 
     @Override
     public User selectByUsername(String username) {
@@ -106,5 +109,10 @@ public class UserServiceImpl implements UserService {
             }
         }
         return box;
+    }
+
+    @Override
+    public List<CableRecord> showCableRecordList(Integer taskId) {
+        return cableRecordMapper.queryCableRecordList(taskId);
     }
 }
