@@ -125,6 +125,12 @@ public class MapperLayerTest {
             System.out.println("taskId：" + task.getTaskId()+", taskNumber:"+task.getTaskNumber());
         }
     }
+
+    @Test
+    public void test_updateTaskStatus(){
+        int i = taskMapper.updateTaskStatus(7, 4);
+        logger.info("test_updateTaskStatus" + " >>> " + i);
+    }
     //////////////////  Task   //////////////////////////
 
 

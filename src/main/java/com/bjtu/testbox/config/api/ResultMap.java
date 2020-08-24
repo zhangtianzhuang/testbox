@@ -10,6 +10,7 @@ public class ResultMap extends HashMap<String, Object> {
     public static final String INTERNET_ERROR = "网络错误，查询失败";
     public static final String SUCCESS_QUERY = "查询成功";
     public static final String NO_CONTENT_QUERY = "未查询到符合条件的任务";
+    public static final String ERROR_SERVER = "服务器错误";
 
 
     public static final int OK = 1;

@@ -96,4 +96,24 @@ public class AdminServiceImpl implements AdminService {
         }
         return result;
     }
+
+    /**
+     * 领取或者归还试验箱
+     * @param method 1表示领取，2表示归还
+     * @param taskId 任务Id
+     * @return 1执行成功，-1执行失败
+     */
+    @Override
+    public Integer gotOrReturnBox(Integer method, Integer taskId) {
+        // 领取
+        if (method==1){
+            // 修改为待归还
+            return taskMapper.updateTaskStatus(taskId, Status.TASK_WAIT_RETURN);
+        }
+        // 归还
+        else {
+            // 修改为已完成
+            return taskMapper.updateTaskStatus(taskId, Status.TASK_FINISHED);
+        }
+    }
 }

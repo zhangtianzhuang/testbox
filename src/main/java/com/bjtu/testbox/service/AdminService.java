@@ -50,4 +50,12 @@ public interface AdminService {
     List<Box> showBoxes(Integer boxStatus, Integer boxType, String boxArea);
 
     Map<Integer, Integer> boxNubmerByTypeAndStatus(Integer boxType);
+
+    /**
+     * 领取或者归还试验箱
+     * @param method 1表示领取，2表示归还
+     * @param taskId 任务Id
+     * @return 1执行成功，-1执行失败
+     */
+    Integer gotOrReturnBox(Integer method, Integer taskId);
 }

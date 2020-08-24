@@ -180,6 +180,27 @@ public class AdminController {
                 .msg(ResultMap.INTERNET_ERROR);
     }
 
+    @ApiOperation("确认领取试验箱")
+    @PostMapping("/confirmBoxGot")
+    public ResultMap confirmGetTask(@RequestParam("taskId") Integer taskId){
+        Integer returnBox = adminService.gotOrReturnBox(1, taskId);
+        if (returnBox==1){
+            return resultMap.success().code(ResultMap.OK).msg("领取成功");
+        }
+        return resultMap.fail().code(ResultMap.FAIL).msg(ResultMap.ERROR_SERVER);
+    }
+
+    @ApiOperation("确认归还试验箱")
+    @PostMapping("/confirmBoxReturned")
+    public ResultMap confirmTask(@RequestParam("taskId") Integer taskId){
+        Integer returnBox = adminService.gotOrReturnBox(2, taskId);
+        if (returnBox==1){
+            return resultMap.success().code(ResultMap.OK).msg("归还成功");
+        }
+        return resultMap.fail().code(ResultMap.FAIL).msg(ResultMap.ERROR_SERVER);
+    }
+
+
 //    @ApiIgnore
 //    @RequestMapping("/jobadmin")
 //    public String taskAdmin(Model model) {
